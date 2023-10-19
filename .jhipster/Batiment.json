@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201738",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "batiment",
+  "fields": [
+    {
+      "fieldName": "adresse",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "batimentNom",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Batiment",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

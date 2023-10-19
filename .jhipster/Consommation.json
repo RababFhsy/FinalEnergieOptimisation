@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201733",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "consommation",
+  "fields": [
+    {
+      "fieldName": "energieConsommation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateConsommation",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Consommation",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "locale",
+      "relationshipName": "locale",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "energie",
+      "otherEntityRelationshipName": "consommations",
+      "relationshipName": "energie",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201731",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "preference",
+  "fields": [
+    {
+      "fieldName": "tempMinValue",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "tempMaxValue",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "plageHoraire",
+      "fieldType": "Double"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Preference",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "energie",
+      "relationshipName": "energie",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

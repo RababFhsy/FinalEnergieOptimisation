@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity LocaleBoitier.
+    -->
+    <changeSet id="20231019201741-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="locale_id"
+                                 baseTableName="locale_boitier"
+                                 constraintName="fk_locale_boitier__locale_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="locale"/>
+
+        <addForeignKeyConstraint baseColumnNames="boitier_id"
+                                 baseTableName="locale_boitier"
+                                 constraintName="fk_locale_boitier__boitier_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="boitier"/>
+    </changeSet>
+</databaseChangeLog>

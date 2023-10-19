@@ -1,0 +1,26 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201736",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "etage",
+  "fields": [
+    {
+      "fieldName": "etageNumero",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Etage",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "batiment",
+      "relationshipName": "batiment",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201741",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "locale_boitier",
+  "fields": [
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "LocaleBoitier",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "locale",
+      "relationshipName": "locale",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "boitier",
+      "relationshipName": "boitier",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

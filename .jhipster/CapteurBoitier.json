@@ -1,0 +1,31 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201742",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "capteur_boitier",
+  "fields": [
+    {
+      "fieldName": "branche",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "CapteurBoitier",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "capteur",
+      "relationshipName": "capteur",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "boitier",
+      "relationshipName": "boitier",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

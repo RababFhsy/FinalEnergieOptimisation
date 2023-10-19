@@ -1,0 +1,117 @@
+entity User {
+  // add attributes for the User entity if needed
+}
+
+entity Preference {
+  tempMinValue Double,
+  tempMaxValue Double,
+  plageHoraire Double,
+}
+
+entity Energie {
+  nomSystemEnergitique String,
+}
+
+entity Consommation {
+  energieConsommation String,
+  dateConsommation LocalDate,
+}
+
+entity Anomalie {
+  zoneNormaleMin Double,
+  zoneNormaleMax Double,
+  dateAnomalie LocalDate,
+  descriptionAnomalie String,
+}
+
+entity Prediction {
+  dateDebut LocalDate,
+  dateFin LocalDate,
+  consommationPredit Double,
+  precision String
+}
+
+entity Etage {
+  etageNumero Integer
+}
+
+entity Locale {
+  numero Integer,
+  typeLocal String
+}
+
+entity Batiment {
+  adresse String,
+  batimentNom String
+}
+
+entity Capteur {
+  capteurReference String,
+  type String,
+  photo ImageBlob,
+  valeurMin Double,
+  valeurMax Double
+}
+
+entity Boitier {
+  boitierReference String,
+  type String,
+  nbrBranche Integer
+}
+
+entity LocaleBoitier {
+  dateDebut LocalDate,
+  dateFin LocalDate
+}
+
+entity CapteurBoitier {
+  branche String
+}
+
+relationship ManyToOne {
+  Preference{user(login)} to User
+}
+
+relationship ManyToOne {
+  Preference{energie} to Energie
+}
+
+relationship OneToMany {
+  Energie{consommations} to Consommation,
+  Energie{anomalies} to Anomalie,
+  Energie{predictions} to Prediction
+}
+
+relationship ManyToOne {
+  Consommation{locale} to Locale
+}
+
+relationship ManyToOne {
+  Locale{etage} to Etage
+}
+
+relationship ManyToOne {
+  Etage{batiment} to Batiment
+}
+
+relationship ManyToOne {
+  Anomalie{locale} to Locale
+}
+
+relationship ManyToOne {
+  Prediction{locale} to Locale
+}
+
+relationship ManyToOne {
+  LocaleBoitier{locale} to Locale,
+  LocaleBoitier{boitier} to Boitier
+}
+
+relationship ManyToOne {
+  CapteurBoitier{capteur} to Capteur,
+  CapteurBoitier{boitier} to Boitier
+}
+
+// Set service options for all entities except User
+service all with serviceImpl except User
+

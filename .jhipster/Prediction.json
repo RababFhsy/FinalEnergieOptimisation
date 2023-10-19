@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201735",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "prediction",
+  "fields": [
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "consommationPredit",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "precision",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Prediction",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "locale",
+      "relationshipName": "locale",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "energie",
+      "otherEntityRelationshipName": "predictions",
+      "relationshipName": "energie",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

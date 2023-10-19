@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="now()" dbms="mysql"/>
+    <property name="floatType" value="float" dbms="mysql"/>
+    <property name="clobType" value="clob" dbms="mysql"/>
+    <property name="blobType" value="longblob" dbms="mysql"/>
+    <property name="uuidType" value="varchar(36)" dbms="mysql"/>
+    <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
+
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201731_added_entity_Preference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201732_added_entity_Energie.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201733_added_entity_Consommation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201734_added_entity_Anomalie.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201735_added_entity_Prediction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201736_added_entity_Etage.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201737_added_entity_Locale.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201738_added_entity_Batiment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201739_added_entity_Capteur.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201740_added_entity_Boitier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201741_added_entity_LocaleBoitier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201742_added_entity_CapteurBoitier.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20231019201731_added_entity_constraints_Preference.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201733_added_entity_constraints_Consommation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201734_added_entity_constraints_Anomalie.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201735_added_entity_constraints_Prediction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201736_added_entity_constraints_Etage.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201737_added_entity_constraints_Locale.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201741_added_entity_constraints_LocaleBoitier.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231019201742_added_entity_constraints_CapteurBoitier.xml" relativeToChangelogFile="false"/>
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+</databaseChangeLog>

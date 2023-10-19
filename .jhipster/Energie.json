@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201732",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "energie",
+  "fields": [
+    {
+      "fieldName": "nomSystemEnergitique",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Energie",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "consommation",
+      "otherEntityRelationshipName": "energie",
+      "relationshipName": "consommations",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "anomalie",
+      "otherEntityRelationshipName": "energie",
+      "relationshipName": "anomalies",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "prediction",
+      "otherEntityRelationshipName": "energie",
+      "relationshipName": "predictions",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201734",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "anomalie",
+  "fields": [
+    {
+      "fieldName": "zoneNormaleMin",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "zoneNormaleMax",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "dateAnomalie",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "descriptionAnomalie",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Anomalie",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "locale",
+      "relationshipName": "locale",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "energie",
+      "otherEntityRelationshipName": "anomalies",
+      "relationshipName": "energie",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

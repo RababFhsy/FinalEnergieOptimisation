@@ -1,0 +1,30 @@
+{
+  "applications": "*",
+  "changelogDate": "20231019201737",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "locale",
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "typeLocal",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Locale",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "etage",
+      "relationshipName": "etage",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
