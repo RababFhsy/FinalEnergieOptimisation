@@ -56,7 +56,7 @@ export const CapteurUpdate = () => {
 
   return (
     <div className="custom-container" style={{ maxWidth: '1000px', margin: '0 auto', padding: '50px' }}>
-      <h2 style={{ marginBottom: '20px' }}>Create or Edit a Sensor</h2>
+      <h2 style={{ marginBottom: '20px' }}>Create Sensor</h2>
       <div className="row justify-content-center">
         <div className="col-md-8">
           <Form>

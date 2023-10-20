@@ -1,0 +1,27 @@
+// .custom-primary-button {
+//     background-color: #90E0EF !important; /* Use !important to override Bootstrap styles */
+//     border-color: #0077B6 !important; /* Set the border color */
+//     color: #0077B6 !important; /* Set the text color */
+//     border-width: 2px !important; /* Set the border width */
+//     border-style: solid !important; /* Set the border style to solid */
+//     border-radius: 20px !important; /* Add border radius for a rounded shape */
+//   }
+.custom-table {
+    
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.custom-table th, .custom-table td {
+    
+    padding: 8px;
+    text-align: left;
+ 
+}
+
+.custom-table th {
+    background-color: #ffffff;
+    color: #03045E;
+}
+
+  

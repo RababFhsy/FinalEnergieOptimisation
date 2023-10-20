@@ -1,0 +1,107 @@
+.container-right {
+    // position: absolute; /* Position it absolutely */
+    // top: 0; /* Adjust the top position as needed */
+    // right: 0; /* Position it to the right */
+    // width: 300px; /* Set your desired width */
+    background-color: #ffffff; /* Add background color */
+    // padding: 10px; /* Add padding as needed */
+    width: 50%; /* Set the width to 50% */
+    padding: 20px;
+    align-items: center;
+    flex: 1; /* Allow the container to grow and take available space */
+ 
+    
+   
+  }
+  
+  
+  body {
+    font-family: 'lato', sans-serif;
+  }
+  .container {
+    
+    flex: 1; /* Allow the container to grow and take available space */
+    padding: 20px; /* Adjust padding as needed */
+  }
+  
+  h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    text-align: center;
+    small {
+      font-size: 0.5em;
+    }
+  }
+  
+  .responsive-table {
+    li {
+      border-radius: 3px;
+      padding: 25px 30px;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+       
+    flex: 1; /* Allow the container to grow and take available space */
+    padding: 20px; /* Adjust padding as needed */
+    }
+    .table-header {
+      background-color: #0077B6;
+      font-size: 14px;
+     
+      letter-spacing: 0.03em;
+      color: #ffffff;
+    }
+    .table-row {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    }
+    .col-1 {
+        flex-basis: 30%;
+    }
+    .col-2 {
+      flex-basis: 30%;
+    }
+    .col-3 {
+      flex-basis: 25%;
+    }
+    
+    
+    @media all and (max-width: 767px) {
+      
+      .table-row{
+        
+      }
+      li {
+        display: block;
+      }
+      .col {
+        
+        flex-basis: 100%;
+        
+      }
+      .col {
+        display: flex;
+        padding: 10px 0;
+        &:before {
+          color: #6C7A89;
+          padding-right: 10px;
+          content: attr(data-label);
+          flex-basis: 50%;
+          text-align: right;
+        }
+      }
+    }
+  }
+  
+  .page-container {
+    display: flex; /* Use flexbox to create a row layout */
+  }
+  
+  .container-left {
+    flex: 1; /* Allow the container to grow and take available space */
+    padding: 20px; /* Adjust padding as needed */
+  }
+  
+ 
+  
+  
