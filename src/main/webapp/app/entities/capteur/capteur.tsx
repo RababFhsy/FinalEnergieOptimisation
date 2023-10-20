@@ -30,14 +30,14 @@ export const Capteur = () => {
   return (
     <div>
       <h2 id="capteur-heading" data-cy="CapteurHeading">
-        Capteurs
+        Sensors
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
           <Link to="/capteur/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Capteur
+            &nbsp; Create a new Sensor
           </Link>
         </div>
       </h2>
@@ -47,12 +47,13 @@ export const Capteur = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Capteur Reference</th>
+                <th>Sensor Reference</th>
                 <th>Type</th>
-                <th>Photo</th>
-                <th>Valeur Min</th>
-                <th>Valeur Max</th>
-                <th />
+                <th>Image</th>
+                <th>Min Value</th>
+                <th> Max Value</th>
+                <th> Action</th>
+               
               </tr>
             </thead>
             <tbody>
@@ -70,27 +71,27 @@ export const Capteur = () => {
                       <div>
                         {capteur.photoContentType ? (
                           <a onClick={openFile(capteur.photoContentType, capteur.photo)}>
-                            <img src={`data:${capteur.photoContentType};base64,${capteur.photo}`} style={{ maxHeight: '30px' }} />
+                            <img src={`data:${capteur.photoContentType};base64,${capteur.photo}`} style={{ maxHeight: '80px' }} />
                             &nbsp;
                           </a>
                         ) : null}
-                        <span>
+                        {/* <span>
                           {capteur.photoContentType}, {byteSize(capteur.photo)}
-                        </span>
+                        </span> */}
                       </div>
                     ) : null}
                   </td>
                   <td>{capteur.valeurMin}</td>
                   <td>{capteur.valeurMax}</td>
-                  <td className="text-end">
+                  <td >
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/capteur/${capteur.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/capteur/${capteur.id}`} color="info" size="btn-md" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/capteur/${capteur.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`/capteur/${capteur.id}/edit`} color="primary" size="btn-md" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`} color="danger" size="btn-md" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -100,7 +101,7 @@ export const Capteur = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Capteurs found</div>
+          !loading && <div className="alert alert-warning">No Sensors found</div>
         )}
       </div>
     </div>
