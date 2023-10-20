@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { openFile, byteSize, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Col, Image, Modal, Row} from "react-bootstrap";
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -26,6 +27,17 @@ export const Capteur = () => {
 
   const handleSyncList = () => {
     dispatch(getEntities({}));
+  };
+
+  const capteurEntity = useAppSelector((state) => state.capteur.entity);
+  const { id } = useParams<{ id: string }>();
+  const [show, setShow] = useState(false);
+  const [selectedCapteur, setSelectedCapteur] = useState(null);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (capteur) => {
+    setSelectedCapteur(capteur);
+    setShow(true);
   };
 
   return (
@@ -115,58 +127,54 @@ export const Capteur = () => {
                   <td >
                     <div className="btn-group flex-btn-group-container">
                     <Button
-  tag={Link}
-  to={`/capteur/${capteur.id}`}
-  
-  size="btn-md"
-  data-cy="entityDetailsButton"
-  style={{
-    borderColor: '#00B4D8', // Set the border color
-    borderRadius: '20px',
-    borderWidth: '2px', // Set the border width
-    borderStyle: 'solid', // Set the border style to solid
-    backgroundColor: 'transparent', // Make the background transparent
-    color: '#00B4D8', // Set the text color to the desired color
-    marginRight: '10px'
-  }}
->
-  <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-</Button>
+                              onClick={() => handleShow(capteur)}
+                              size="btn-md"
+                              data-cy="entityDetailsButton"
+                              style={{
+                                borderColor: '#00B4D8', // Set the border color
+                                borderRadius: '20px',
+                                borderWidth: '2px', // Set the border width
+                                borderStyle: 'solid', // Set the border style to solid
+                                backgroundColor: 'transparent', // Make the background transparent
+                                color: '#00B4D8', // Set the text color to the desired color
+                                marginRight: '10px'
+                              }}
+                            >
+                      <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                    </Button>
 
 
-<Button
-  tag={Link}
-  to={`/capteur/${capteur.id}/edit`}
- 
-  size="btn-md"
-  data-cy="entityEditButton"
-  style={{
-    borderColor: '#0077B6', // Set the border color
-    borderWidth: '2px', // Set the border width
-    borderRadius: '20px',
-    borderStyle: 'solid', // Set the border style to solid
-    backgroundColor: 'transparent', // Make the background transparent
-    color: '#0077B6', // Set the text color to the desired color
-    marginRight: '10px'
-  }}
->
-  <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-</Button>
+                      <Button
+                        tag={Link}
+                        to={`/capteur/${capteur.id}/edit`}
+                      
+                        size="btn-md"
+                        data-cy="entityEditButton"
+                        style={{
+                          borderColor: '#0077B6', // Set the border color
+                          borderWidth: '2px', // Set the border width
+                          borderRadius: '20px',
+                          borderStyle: 'solid', // Set the border style to solid
+                          backgroundColor: 'transparent', // Make the background transparent
+                          color: '#0077B6', // Set the text color to the desired color
+                          marginRight: '10px'
+                        }}
+                      >
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                      </Button>
 
                       <Button tag={Link} to={`/capteur/${capteur.id}/delete`} 
                       size="btn-md" data-cy="entityDeleteButton"
-                      
-  
-  style={{
-    borderColor: '#03045E', // Set the border color
-    borderWidth: '2px', // Set the border width
-    borderStyle: 'solid', // Set the border style to solid
-    borderRadius: '20px',
-    marginRight: '10px',
-    backgroundColor: 'transparent', // Make the background transparent
-    color: '#03045E', // Set the text color to the desired color
-    
-  }}>
+                          style={{
+                            borderColor: '#03045E', // Set the border color
+                            borderWidth: '2px', // Set the border width
+                            borderStyle: 'solid', // Set the border style to solid
+                            borderRadius: '20px',
+                            marginRight: '10px',
+                            backgroundColor: 'transparent', // Make the background transparent
+                            color: '#03045E', // Set the text color to the desired color
+                            
+                          }}>
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -179,6 +187,40 @@ export const Capteur = () => {
           !loading && <div className="alert alert-warning">No Sensors found</div>
         )}
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sonsor Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            <Col md="12">
+              <dl className="jh-entity-details">
+                <dt>ID</dt>
+                <dd>{selectedCapteur?.id}</dd>
+                <dt>Sonsor Reference</dt>
+                <dd>{selectedCapteur?.capteurReference}</dd>
+                <dt>Sonsor Type</dt>
+                <dd>{selectedCapteur?.type}</dd>
+                <dt>Sonsor Image</dt>
+                <dd>
+                  {selectedCapteur?.photo ? (
+                    <div>
+                      {selectedCapteur.photoContentType ? (
+                        <Image src={`data:${selectedCapteur.photoContentType};base64,${selectedCapteur.photo}`} style={{ maxHeight: '200px' }} />
+                      ) : null}
+
+                    </div>
+                  ) : null}
+                </dd>
+                <dt>Min Value</dt>
+                <dd>{selectedCapteur?.valeurMin}</dd>
+                <dt>Max Value</dt>
+                <dd>{selectedCapteur?.valeurMax}</dd>
+              </dl>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };
