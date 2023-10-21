@@ -4,12 +4,14 @@ import { Button, Table } from 'reactstrap';
 import { openFile, byteSize, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Col, Image, Modal, Row} from "react-bootstrap";
+import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
+
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ICapteur } from 'app/shared/model/capteur.model';
-import { getEntities } from './capteur.reducer';
+import { getEntities, getEntity, updateEntity } from './capteur.reducer';
 import './capteur.scss';
 
 export const Capteur = () => {
@@ -20,6 +22,7 @@ export const Capteur = () => {
 
   const capteurList = useAppSelector(state => state.capteur.entities);
   const loading = useAppSelector(state => state.capteur.loading);
+  
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -32,6 +35,7 @@ export const Capteur = () => {
   const capteurEntity = useAppSelector((state) => state.capteur.entity);
   const { id } = useParams<{ id: string }>();
   const [show, setShow] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [selectedCapteur, setSelectedCapteur] = useState(null);
 
   const handleClose = () => setShow(false);
@@ -39,6 +43,34 @@ export const Capteur = () => {
     setSelectedCapteur(capteur);
     setShow(true);
   };
+
+  const handleCloseUpdate = () => setShowUpdate(false);
+  const handleShowUpdate = (capteur) => {
+    setSelectedCapteur(capteur);
+    dispatch(getEntity(capteur.id)); // Déplacez la logique ici
+    setShowUpdate(true);
+  };
+
+  
+
+  const updating = useAppSelector(state => state.capteur.updating);
+  const updateSuccess = useAppSelector(state => state.capteur.updateSuccess);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
+
+  const saveEntity = values => {
+    const entity = {
+      ...capteurEntity,
+      ...values,
+    };
+  
+    dispatch(updateEntity(entity));
+  };
+    const defaultValues = () => capteurEntity;
 
   return (
     <div>
@@ -145,8 +177,7 @@ export const Capteur = () => {
 
 
                       <Button
-                        tag={Link}
-                        to={`/capteur/${capteur.id}/edit`}
+                        onClick={() => handleShowUpdate(capteur)}
                       
                         size="btn-md"
                         data-cy="entityEditButton"
@@ -220,6 +251,51 @@ export const Capteur = () => {
             </Col>
           </Row>
         </Modal.Body>
+      </Modal>
+
+
+      <Modal show={showUpdate} onHide={handleCloseUpdate}>
+      <Modal.Header closeButton>
+        <Modal.Title>Edit a Sensor</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={(values) => { saveEntity(values); handleCloseUpdate(); }}>
+              <ValidatedField
+                label="Capteur Reference"
+                id="capteur-capteurReference"
+                name="capteurReference"
+                data-cy="capteurReference"
+                type="text"
+              />
+              <ValidatedField label="Type" id="capteur-type" name="type" data-cy="type" type="text" />
+              <ValidatedBlobField label="Photo" id="capteur-photo" name="photo" data-cy="photo" isImage accept="image/*" />
+              <ValidatedField label="Valeur Min" id="capteur-valeurMin" name="valeurMin" data-cy="valeurMin" type="text" />
+              <ValidatedField label="Valeur Max" id="capteur-valeurMax" name="valeurMax" data-cy="valeurMax" type="text" />
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/capteur" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">Back</span>
+              </Button>
+              &nbsp;
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp; Save
+              </Button>
+            </ValidatedForm>
+          )}
+        </Col>
+      </Row>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        </Modal.Footer>
       </Modal>
     </div>
   );
