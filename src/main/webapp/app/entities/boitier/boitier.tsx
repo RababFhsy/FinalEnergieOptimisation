@@ -10,6 +10,10 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities } from './boitier.reducer';
 
+import Swal from 'sweetalert2'
+import { BoitierDetail } from './boitier-detail';
+
+
 export const Boitier = () => {
   const dispatch = useAppDispatch();
 
@@ -19,6 +23,7 @@ export const Boitier = () => {
   const boitierList = useAppSelector(state => state.boitier.entities);
   const loading = useAppSelector(state => state.boitier.loading);
 
+
   useEffect(() => {
     dispatch(getEntities({}));
   }, []);
@@ -26,6 +31,49 @@ export const Boitier = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
+
+  const displayBoitierDetail = (boitier)=>{
+    // eslint-disable-next-line no-console
+    console.log(boitier);
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Boitier',
+      html:
+      `
+      <dl className="jh-entity-details">
+        <dt>
+          <span id="id">ID</span>
+        </dt>
+        <dd>${boitier.id}</dd>
+        <dt>
+          <span id="boitierReference">Boitier Reference</span>
+        </dt>
+        <dd>${boitier.boitierReference}</dd>
+        <dt>
+          <span id="type">Type</span>
+        </dt>
+        <dd>${boitier.type}</dd>
+        <dt>
+          <span id="nbrBranche">Nbr Branche</span>
+        </dt>
+        <dd>${boitier.nbrBranche}</dd>
+      </dl>`,
+      icon: 'info',
+      showCancelButton: true,
+      showCloseButton:false,
+      showConfirmButton:false,
+      cancelButtonText: 'Fermer',
+      reverseButtons: true
+    })
+
+
+  }
 
   return (
     <div>
@@ -66,7 +114,7 @@ export const Boitier = () => {
                   <td>{boitier.nbrBranche}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/boitier/${boitier.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button onClick={()=>displayBoitierDetail(boitier)} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`/boitier/${boitier.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
