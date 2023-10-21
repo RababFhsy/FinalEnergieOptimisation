@@ -60,25 +60,24 @@ export const Boitier = () => {
       title: 'Boitier',
       html:
       `
-      <dl className="jh-entity-details">
-        <dt>
-          <span id="id">ID</span>
-        </dt>
-        <dd>${boitier.id}</dd>
-        <dt>
-          <span id="boitierReference">Boitier Reference</span>
-        </dt>
-        <dd>${boitier.boitierReference}</dd>
-        <dt>
-          <span id="type">Type</span>
-        </dt>
-        <dd>${boitier.type}</dd>
-        <dt>
-          <span id="nbrBranche">Nbr Branche</span>
-        </dt>
-        <dd>${boitier.nbrBranche}</dd>
-      </dl>`,
-      icon: 'info',
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Boitier Reference</th>
+          <th>Type</th>
+          <th>Nbr Branche</th>
+          <th />
+        </tr>
+        <tr>
+          <td>${boitier.id}</td>
+          <td>${boitier.boitierReference}</td>
+          <td>${boitier.type}</td>
+          <td>${boitier.nbrBranche}</td>
+        </tr>
+      </table>
+    </div>
+     `,
+
       showCancelButton: true,
       showCloseButton:false,
       showConfirmButton:false,
