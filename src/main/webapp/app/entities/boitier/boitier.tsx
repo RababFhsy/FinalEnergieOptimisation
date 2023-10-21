@@ -5,16 +5,13 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Col, Image, Modal, Row} from "react-bootstrap";
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
+import Swal from 'sweetalert2'
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities, getEntity, updateEntity } from './boitier.reducer';
-
-import Swal from 'sweetalert2'
-import { BoitierDetail } from './boitier-detail';
-
 
 export const Boitier = () => {
   const dispatch = useAppDispatch();
@@ -24,19 +21,8 @@ export const Boitier = () => {
 
   const boitierList = useAppSelector(state => state.boitier.entities);
   const loading = useAppSelector(state => state.boitier.loading);
-  const boitierEntity = useAppSelector(state => state.boitier.entity);
 
-  const updating = useAppSelector(state => state.boitier.updating);
-  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleSetShow = (boitier) => {
-    setSelectedBoitier(boitier);
-    dispatch(getEntity(boitier.id)); // Déplacez la logique ici
-    setShow(true);
-  };
-
+  const [selectedBoitier, setSelectedBoitier] = useState(null);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -44,6 +30,20 @@ export const Boitier = () => {
 
   const handleSyncList = () => {
     dispatch(getEntities({}));
+  };
+
+
+  const { id } = useParams<'id'>();
+
+  const boitierEntity = useAppSelector(state => state.boitier.entity);
+  const updating = useAppSelector(state => state.boitier.updating);
+  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleSetShow = (boitier) => {
+    setSelectedBoitier(boitier);
+    dispatch(getEntity(boitier.id)); // Déplacez la logique ici
+    setShow(true);
   };
 
   const displayBoitierDetail = (boitier)=>{
@@ -107,6 +107,7 @@ export const Boitier = () => {
 
   const defaultValues = () => boitierEntity;
 
+
   return (
     <div>
       <h2 id="boitier-heading" data-cy="BoitierHeading">
@@ -146,7 +147,7 @@ export const Boitier = () => {
                   <td>{boitier.nbrBranche}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button onClick={()=>displayBoitierDetail(boitier)} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button  onClick={()=>displayBoitierDetail(boitier)}  color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button onClick={() => handleSetShow(boitier)} color="primary" size="sm" data-cy="entityEditButton">
@@ -213,7 +214,3 @@ export const Boitier = () => {
 };
 
 export default Boitier;
-function setSelectedBoitier(boitier: any) {
-  throw new Error('Function not implemented.');
-}
-
