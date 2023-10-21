@@ -24,11 +24,19 @@ export const Boitier = () => {
 
   const boitierList = useAppSelector(state => state.boitier.entities);
   const loading = useAppSelector(state => state.boitier.loading);
+  const boitierEntity = useAppSelector(state => state.boitier.entity);
 
-<<<<<<< HEAD
-=======
-  const [selectedBoitier, setSelectedBoitier] = useState(null);
->>>>>>> e049cd1f48d024d0c76dea981ce807bccd90c2a2
+  const updating = useAppSelector(state => state.boitier.updating);
+  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleSetShow = (boitier) => {
+    setSelectedBoitier(boitier);
+    dispatch(getEntity(boitier.id)); // Déplacez la logique ici
+    setShow(true);
+  };
+
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -38,7 +46,6 @@ export const Boitier = () => {
     dispatch(getEntities({}));
   };
 
-<<<<<<< HEAD
   const displayBoitierDetail = (boitier)=>{
     // eslint-disable-next-line no-console
     console.log(boitier);
@@ -82,21 +89,6 @@ export const Boitier = () => {
 
   }
 
-=======
-
-  const { id } = useParams<'id'>();
-
-  const boitierEntity = useAppSelector(state => state.boitier.entity);
-  const updating = useAppSelector(state => state.boitier.updating);
-  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleSetShow = (boitier) => {
-    setSelectedBoitier(boitier);
-    dispatch(getEntity(boitier.id)); // Déplacez la logique ici
-    setShow(true);
-  };
-
   useEffect(() => {
     if (updateSuccess) {
       handleClose();
@@ -110,13 +102,11 @@ export const Boitier = () => {
     };
 
     dispatch(updateEntity(entity));
-    
+
   };
 
   const defaultValues = () => boitierEntity;
 
-
->>>>>>> e049cd1f48d024d0c76dea981ce807bccd90c2a2
   return (
     <div>
       <h2 id="boitier-heading" data-cy="BoitierHeading">
@@ -180,7 +170,7 @@ export const Boitier = () => {
           <Modal.Title>Edit Boitier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        
+
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
@@ -223,3 +213,7 @@ export const Boitier = () => {
 };
 
 export default Boitier;
+function setSelectedBoitier(boitier: any) {
+  throw new Error('Function not implemented.');
+}
+
