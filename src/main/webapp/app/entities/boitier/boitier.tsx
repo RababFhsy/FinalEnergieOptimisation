@@ -124,16 +124,10 @@ export const Boitier = () => {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sonsor Details</Modal.Title>
+          <Modal.Title>Edit Boitier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="feOptimisationEnergieApp.boitier.home.createOrEditLabel" data-cy="BoitierCreateUpdateHeading">
-            Create or edit a Boitier
-          </h2>
-        </Col>
-      </Row>
+        
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
@@ -148,7 +142,7 @@ export const Boitier = () => {
                 type="text"
               />
               <ValidatedField label="Type" id="boitier-type" name="type" data-cy="type" type="text" />
-              <ValidatedField label="Nbr Branche" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
+              <ValidatedField label="Branchs number" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -165,6 +159,11 @@ export const Boitier = () => {
       </Row>
 
         </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        </Modal.Footer>
         </Modal>
     </div>
   );
