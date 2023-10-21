@@ -31,7 +31,7 @@ const EntitiesMenu = () => {
         Batiment
       </MenuItem>
       <MenuItem icon="asterisk" to="/capteur">
-        Capteur
+        Sensor
       </MenuItem>
       <MenuItem icon="asterisk" to="/boitier">
         Boitier
@@ -40,7 +40,7 @@ const EntitiesMenu = () => {
         Locale Boitier
       </MenuItem>
       <MenuItem icon="asterisk" to="/capteur-boitier">
-        Capteur Boitier
+        Affect Sensor to Boitier
       </MenuItem>
       {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
     </>

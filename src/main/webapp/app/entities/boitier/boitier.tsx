@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Col, Image, Modal, Row} from "react-bootstrap";
+import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBoitier } from 'app/shared/model/boitier.model';
-import { getEntities } from './boitier.reducer';
+import { getEntities, getEntity, updateEntity } from './boitier.reducer';
 
 import Swal from 'sweetalert2'
 import { BoitierDetail } from './boitier-detail';
@@ -23,6 +25,10 @@ export const Boitier = () => {
   const boitierList = useAppSelector(state => state.boitier.entities);
   const loading = useAppSelector(state => state.boitier.loading);
 
+<<<<<<< HEAD
+=======
+  const [selectedBoitier, setSelectedBoitier] = useState(null);
+>>>>>>> e049cd1f48d024d0c76dea981ce807bccd90c2a2
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -32,6 +38,7 @@ export const Boitier = () => {
     dispatch(getEntities({}));
   };
 
+<<<<<<< HEAD
   const displayBoitierDetail = (boitier)=>{
     // eslint-disable-next-line no-console
     console.log(boitier);
@@ -75,6 +82,41 @@ export const Boitier = () => {
 
   }
 
+=======
+
+  const { id } = useParams<'id'>();
+
+  const boitierEntity = useAppSelector(state => state.boitier.entity);
+  const updating = useAppSelector(state => state.boitier.updating);
+  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleSetShow = (boitier) => {
+    setSelectedBoitier(boitier);
+    dispatch(getEntity(boitier.id)); // Déplacez la logique ici
+    setShow(true);
+  };
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
+
+  const saveEntity = values => {
+    const entity = {
+      ...boitierEntity,
+      ...values,
+    };
+
+    dispatch(updateEntity(entity));
+    
+  };
+
+  const defaultValues = () => boitierEntity;
+
+
+>>>>>>> e049cd1f48d024d0c76dea981ce807bccd90c2a2
   return (
     <div>
       <h2 id="boitier-heading" data-cy="BoitierHeading">
@@ -117,7 +159,7 @@ export const Boitier = () => {
                       <Button onClick={()=>displayBoitierDetail(boitier)} color="info" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/boitier/${boitier.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button onClick={() => handleSetShow(boitier)} color="primary" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`/boitier/${boitier.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
@@ -133,6 +175,49 @@ export const Boitier = () => {
           !loading && <div className="alert alert-warning">No Boitiers found</div>
         )}
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Boitier</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
+              <ValidatedField
+                label="Boitier Reference"
+                id="boitier-boitierReference"
+                name="boitierReference"
+                data-cy="boitierReference"
+                type="text"
+              />
+              <ValidatedField label="Type" id="boitier-type" name="type" data-cy="type" type="text" />
+              <ValidatedField label="Branchs number" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/boitier" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">Back</span>
+              </Button>
+              &nbsp;
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp; Save
+              </Button>
+            </ValidatedForm>
+          )}
+        </Col>
+      </Row>
+
+        </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        </Modal.Footer>
+        </Modal>
     </div>
   );
 };

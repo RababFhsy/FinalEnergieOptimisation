@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ICapteurBoitier } from 'app/shared/model/capteur-boitier.model';
 import { getEntities } from './capteur-boitier.reducer';
+import './capteur-boitier.scss';
 
 export const CapteurBoitier = () => {
   const dispatch = useAppDispatch();

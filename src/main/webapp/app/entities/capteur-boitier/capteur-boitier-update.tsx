@@ -4,6 +4,7 @@ import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -76,15 +77,16 @@ export const CapteurBoitierUpdate = () => {
         };
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="feOptimisationEnergieApp.capteurBoitier.home.createOrEditLabel" data-cy="CapteurBoitierCreateUpdateHeading">
-            Create or edit a Capteur Boitier
-          </h2>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
+    <div className="page-container">
+    <div className="container-right" >
+      
+      
+          <h3 id="feOptimisationEnergieApp.capteurBoitier.home.createOrEditLabel" data-cy="CapteurBoitierCreateUpdateHeading">
+          Assign sensor to Boitier
+          </h3>
+       
+     
+      
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -94,12 +96,12 @@ export const CapteurBoitierUpdate = () => {
                 <ValidatedField name="id" required readOnly id="capteur-boitier-id" label="ID" validate={{ required: true }} />
               ) : null}
               <ValidatedField label="Branche" id="capteur-boitier-branche" name="branche" data-cy="branche" type="text" />
-              <ValidatedField id="capteur-boitier-capteur" name="capteur" data-cy="capteur" label="Capteur" type="select">
+              <ValidatedField id="capteur-boitier-capteur" name="capteur" data-cy="capteur" label="Sensor" type="select">
                 <option value="" key="0" />
                 {capteurs
                   ? capteurs.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                      <option value={otherEntity.type} key={otherEntity.type}>
+                        {otherEntity.type}
                       </option>
                     ))
                   : null}
@@ -108,8 +110,8 @@ export const CapteurBoitierUpdate = () => {
                 <option value="" key="0" />
                 {boitiers
                   ? boitiers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                      <option value={otherEntity.type} key={otherEntity.type}>
+                        {otherEntity.type}
                       </option>
                     ))
                   : null}
@@ -127,7 +129,21 @@ export const CapteurBoitierUpdate = () => {
             </ValidatedForm>
           )}
         </Col>
-      </Row>
+       
+     
+    </div>
+    <div className="container-left">
+   <ul className="responsive-table">
+    <li className="table-header">
+      <div className="col col-1" style={{ textAlign: 'center' }}> SensorType</div>
+      <div className="col col-2" style={{ textAlign: 'center' }}>Branche</div>
+      <div className="col col-3" style={{ textAlign: 'center' }}>Action</div>
+      
+    </li>
+    
+    
+  </ul>
+  </div>
     </div>
   );
 };

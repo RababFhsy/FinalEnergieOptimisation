@@ -77,8 +77,13 @@ Navbar styles
 
 .loading-bar {
   height: 3px;
-  background-color: #009cd8;
+  background-color: #d100d8;
   position: absolute;
   top: 0px;
   z-index: 1031;
 }
+.custom-purple {
+  background-color: #03045E; /* Vous pouvez personnaliser la nuance de violet selon vos préférences */
+  /* Autres styles CSS si nécessaire */
+}
+

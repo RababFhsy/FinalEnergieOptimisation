@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { openFile, byteSize, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {Col, Image, Modal, Row} from "react-bootstrap";
+import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
+
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ICapteur } from 'app/shared/model/capteur.model';
-import { getEntities } from './capteur.reducer';
+import { getEntities, getEntity, updateEntity } from './capteur.reducer';
+import './capteur.scss';
 
 export const Capteur = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +22,7 @@ export const Capteur = () => {
 
   const capteurList = useAppSelector(state => state.capteur.entities);
   const loading = useAppSelector(state => state.capteur.loading);
+  
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -27,23 +32,91 @@ export const Capteur = () => {
     dispatch(getEntities({}));
   };
 
+  const capteurEntity = useAppSelector((state) => state.capteur.entity);
+  const { id } = useParams<{ id: string }>();
+  const [show, setShow] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [selectedCapteur, setSelectedCapteur] = useState(null);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (capteur) => {
+    setSelectedCapteur(capteur);
+    setShow(true);
+  };
+
+  const handleCloseUpdate = () => setShowUpdate(false);
+  const handleShowUpdate = (capteur) => {
+    setSelectedCapteur(capteur);
+    dispatch(getEntity(capteur.id)); // Déplacez la logique ici
+    setShowUpdate(true);
+  };
+
+  
+
+  const updating = useAppSelector(state => state.capteur.updating);
+  const updateSuccess = useAppSelector(state => state.capteur.updateSuccess);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
+
+  const saveEntity = values => {
+    const entity = {
+      ...capteurEntity,
+      ...values,
+    };
+  
+    dispatch(updateEntity(entity));
+  };
+    const defaultValues = () => capteurEntity;
+
   return (
     <div>
       <h2 id="capteur-heading" data-cy="CapteurHeading">
         Sensors
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
-          </Button>
-          <Link to="/capteur/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Sensor
-          </Link>
+        <Button
+  className="me-2"
+  
+  onClick={handleSyncList}
+  disabled={loading}
+  style={{
+    borderColor: '#0077B6', // Set the border color
+    borderWidth: '2px', // Set the border width
+    borderStyle: 'solid', // Set the border style to solid
+    backgroundColor: '#90E0EF', // Make the background transparent
+    color: '#0077B6', // Set the text color to the desired color
+    borderRadius: '20px',
+  }}
+>
+  <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
+</Button>
+
+<Link
+  to="/capteur/new"
+  className="btn btn-light jh-create-entity"
+  id="jh-create-entity"
+  data-cy="entityCreateButton"
+  style={{
+    borderColor: '#0077B6', // Set the border color
+    borderWidth: '2px', // Set the border width
+    borderStyle: 'solid', // Set the border style to solid
+    backgroundColor: '#90E0EF', // Make the background transparent
+    color: '#0077B6', // Set the text color to the desired color
+    borderRadius: '20px',
+  }}
+>
+  <FontAwesomeIcon icon="plus" />
+  &nbsp;  new Sensor
+</Link>
+
         </div>
       </h2>
-      <div className="table-responsive">
+      <div className="custom-table" >
         {capteurList && capteurList.length > 0 ? (
-          <Table responsive>
+          <Table   responsive>
             <thead>
               <tr>
                 <th>ID</th>
@@ -52,7 +125,7 @@ export const Capteur = () => {
                 <th>Image</th>
                 <th>Min Value</th>
                 <th> Max Value</th>
-                <th> Action</th>
+                <th style={{ textAlign: 'center' }}>      Action</th>
                
               </tr>
             </thead>
@@ -85,13 +158,54 @@ export const Capteur = () => {
                   <td>{capteur.valeurMax}</td>
                   <td >
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/capteur/${capteur.id}`} color="info" size="btn-md" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                      </Button>
-                      <Button tag={Link} to={`/capteur/${capteur.id}/edit`} color="primary" size="btn-md" data-cy="entityEditButton">
+                    <Button
+                              onClick={() => handleShow(capteur)}
+                              size="btn-md"
+                              data-cy="entityDetailsButton"
+                              style={{
+                                borderColor: '#00B4D8', // Set the border color
+                                borderRadius: '20px',
+                                borderWidth: '2px', // Set the border width
+                                borderStyle: 'solid', // Set the border style to solid
+                                backgroundColor: 'transparent', // Make the background transparent
+                                color: '#00B4D8', // Set the text color to the desired color
+                                marginRight: '10px'
+                              }}
+                            >
+                      <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                    </Button>
+
+
+                      <Button
+                        onClick={() => handleShowUpdate(capteur)}
+                      
+                        size="btn-md"
+                        data-cy="entityEditButton"
+                        style={{
+                          borderColor: '#0077B6', // Set the border color
+                          borderWidth: '2px', // Set the border width
+                          borderRadius: '20px',
+                          borderStyle: 'solid', // Set the border style to solid
+                          backgroundColor: 'transparent', // Make the background transparent
+                          color: '#0077B6', // Set the text color to the desired color
+                          marginRight: '10px'
+                        }}
+                      >
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`} color="danger" size="btn-md" data-cy="entityDeleteButton">
+
+                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`} 
+                      size="btn-md" data-cy="entityDeleteButton"
+                          style={{
+                            borderColor: '#03045E', // Set the border color
+                            borderWidth: '2px', // Set the border width
+                            borderStyle: 'solid', // Set the border style to solid
+                            borderRadius: '20px',
+                            marginRight: '10px',
+                            backgroundColor: 'transparent', // Make the background transparent
+                            color: '#03045E', // Set the text color to the desired color
+                            
+                          }}>
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -104,6 +218,85 @@ export const Capteur = () => {
           !loading && <div className="alert alert-warning">No Sensors found</div>
         )}
       </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sonsor Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            <Col md="12">
+              <dl className="jh-entity-details">
+                <dt>ID</dt>
+                <dd>{selectedCapteur?.id}</dd>
+                <dt>Sonsor Reference</dt>
+                <dd>{selectedCapteur?.capteurReference}</dd>
+                <dt>Sonsor Type</dt>
+                <dd>{selectedCapteur?.type}</dd>
+                <dt>Sonsor Image</dt>
+                <dd>
+                  {selectedCapteur?.photo ? (
+                    <div>
+                      {selectedCapteur.photoContentType ? (
+                        <Image src={`data:${selectedCapteur.photoContentType};base64,${selectedCapteur.photo}`} style={{ maxHeight: '200px' }} />
+                      ) : null}
+
+                    </div>
+                  ) : null}
+                </dd>
+                <dt>Min Value</dt>
+                <dd>{selectedCapteur?.valeurMin}</dd>
+                <dt>Max Value</dt>
+                <dd>{selectedCapteur?.valeurMax}</dd>
+              </dl>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
+
+
+      <Modal show={showUpdate} onHide={handleCloseUpdate}>
+      <Modal.Header closeButton>
+        <Modal.Title>Edit a Sensor</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={(values) => { saveEntity(values); handleCloseUpdate(); }}>
+              <ValidatedField
+                label="Capteur Reference"
+                id="capteur-capteurReference"
+                name="capteurReference"
+                data-cy="capteurReference"
+                type="text"
+              />
+              <ValidatedField label="Type" id="capteur-type" name="type" data-cy="type" type="text" />
+              <ValidatedBlobField label="Photo" id="capteur-photo" name="photo" data-cy="photo" isImage accept="image/*" />
+              <ValidatedField label="Valeur Min" id="capteur-valeurMin" name="valeurMin" data-cy="valeurMin" type="text" />
+              <ValidatedField label="Valeur Max" id="capteur-valeurMax" name="valeurMax" data-cy="valeurMax" type="text" />
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/capteur" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">Back</span>
+              </Button>
+              &nbsp;
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp; Save
+              </Button>
+            </ValidatedForm>
+          )}
+        </Col>
+      </Row>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
