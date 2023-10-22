@@ -50,9 +50,11 @@ export const CapteurBoitier = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Branche</th>
-                <th>CapteurID</th>
-                <th>BoitierID</th>
+                <th>Boitier</th>
+                <th>Branch</th>
+                <th>Sensor</th>
+               
+              
                 <th style={{ textAlign: 'center' }}>      Action</th>
                 <th />
               </tr>
@@ -65,14 +67,20 @@ export const CapteurBoitier = () => {
                       {capteurBoitier.id}
                     
                   </td>
-                  <td>{capteurBoitier.branche}</td>
                   <td>
-  {capteurBoitier.capteur ? capteurBoitier.capteur.id : ''}
+  {capteurBoitier.boitier ? capteurBoitier.boitier.type  : ''}
+</td>
+<td>
+  {capteurBoitier.boitier ? capteurBoitier.boitier.nbrBranche  : ''}
+</td>
+                  
+                  <td>
+  {capteurBoitier.capteur ? capteurBoitier.capteur.type : ''}
 </td>
 
-<td>
-  {capteurBoitier.boitier ? capteurBoitier.boitier.id : ''}
-</td>
+
+
+
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} size="sm" data-cy="entityDetailsButton" className="custom-button-view">

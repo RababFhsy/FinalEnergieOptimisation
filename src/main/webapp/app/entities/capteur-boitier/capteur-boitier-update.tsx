@@ -96,27 +96,44 @@ export const CapteurBoitierUpdate = () => {
               {!isNew ? (
                 <ValidatedField name="id" required readOnly id="capteur-boitier-id" label="ID" validate={{ required: true }} />
               ) : null}
-              <ValidatedField label="Branche" id="capteur-boitier-branche" name="branche" data-cy="branche" type="text" />
-              <ValidatedField id="capteur-boitier-capteur" name="capteur" data-cy="capteur" label="SensorID" type="select">
-                <option value="" key="0" />
-                {capteurs
-                  ? capteurs.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="capteur-boitier-boitier" name="boitier" data-cy="boitier" label="BoitierID" type="select">
+               <ValidatedField id="capteur-boitier-boitier" name="boitier" data-cy="boitier" label="Boitier" type="select">
                 <option value="" key="0" />
                 {boitiers
                   ? boitiers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                      <option value={otherEntity.id} key={otherEntity.type}>
+                        {otherEntity.type}
                       </option>
                     ))
                   : null}
               </ValidatedField>
+              <ValidatedField
+  label="Branch"
+  id="capteur-boitier-branche"
+  name="branche"
+  data-cy="branche"
+  type="select"
+>
+  <option value="A0">A0</option>
+  <option value="A1">A1</option>
+  <option value="A2">A2</option>
+  <option value="A3">A3</option>
+  <option value="A4">A4</option>
+</ValidatedField>
+
+                 
+              <ValidatedField 
+              id="capteur-boitier-capteur"
+               name="capteur" data-cy="capteur" label="Sensor" type="select">
+                <option value="" key="0" />
+                {capteurs
+                  ? capteurs.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.type}>
+                        {otherEntity.type}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+             
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/capteur-boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -136,54 +153,13 @@ export const CapteurBoitierUpdate = () => {
     <div className="container-left">
    <ul className="responsive-table">
     <li className="table-header">
-    <div className="col col-1" style={{ textAlign: 'center' }}> BoitierID</div>
-    <div className="col col-2" style={{ textAlign: 'center' }}>Branche</div>
-    <div className="col col-1" style={{ textAlign: 'center' }}> SensorID</div>
+    <div className="col col-1" style={{ textAlign: 'center' }}> Boitier</div>
+    <div className="col col-2" style={{ textAlign: 'center' }}>Branch</div>
+    <div className="col col-1" style={{ textAlign: 'center' }}> Sensor</div>
     <div className="col col-3" style={{ textAlign: 'center' }}>Action</div>
       
     </li>
-    <tbody>
-              {capteurBoitierList.map((capteurBoitier, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    
-                      {capteurBoitier.id}
-                    
-                  </td>
-                  <td>{capteurBoitier.branche}</td>
-                  <td>
-  {capteurBoitier.capteur ? capteurBoitier.capteur.id : ''}
-</td>
-
-<td>
-  {capteurBoitier.boitier ? capteurBoitier.boitier.id : ''}
-</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/capteur-boitier/${capteurBoitier.id}/edit`}
-                        size="sm"
-                        data-cy="entityEditButton" className="custom-button-edit" >
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`/capteur-boitier/${capteurBoitier.id}/delete`}
-                        size="sm"
-                        data-cy="entityDeleteButton" 
-                        className="custom-button-delete"
-                      >
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+   
     
     
   </ul>

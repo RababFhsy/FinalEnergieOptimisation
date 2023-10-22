@@ -6,6 +6,7 @@ export interface ICapteurBoitier {
   branche?: string | null;
   capteur?: ICapteur | null;
   boitier?: IBoitier | null;
+  nbrBranche?: number | null;
 }
 
 export const defaultValue: Readonly<ICapteurBoitier> = {};
