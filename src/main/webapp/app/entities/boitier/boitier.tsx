@@ -5,8 +5,6 @@ import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Col, Image, Modal, Row} from "react-bootstrap";
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
-import Swal from 'sweetalert2'
-
 import 'app/shared/layout/customStyles/customStyles.scss';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -47,47 +45,6 @@ export const Boitier = () => {
     setShow(true);
   };
 
-  const displayBoitierDetail = (boitier)=>{
-    // eslint-disable-next-line no-console
-    console.log(boitier);
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    })
-
-    swalWithBootstrapButtons.fire({
-      title: 'Boitier',
-      html:
-      `
-      <table>
-        <tr>
-          <th>ID</th>
-          <th>Boitier Reference</th>
-          <th>Type</th>
-          <th>Nbr Branche</th>
-          <th />
-        </tr>
-        <tr>
-          <td>${boitier.id}</td>
-          <td>${boitier.boitierReference}</td>
-          <td>${boitier.type}</td>
-          <td>${boitier.nbrBranche}</td>
-        </tr>
-      </table>
-    </div>
-     `,
-
-      showCancelButton: true,
-      showCloseButton:false,
-      showConfirmButton:false,
-      cancelButtonText: 'Fermer',
-      reverseButtons: true
-    })
-
-
-  }
 
   useEffect(() => {
     if (updateSuccess) {
@@ -147,7 +104,7 @@ export const Boitier = () => {
                   <td>{boitier.nbrBranche}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button  onClick={()=>displayBoitierDetail(boitier)}  className="custom-button-view"  data-cy="entityDetailsButton">
+                      <Button  onClick={()=>handleSetShow(boitier)}  className="custom-button-view"  data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button onClick={() => handleSetShow(boitier)} className="custom-button-edit" data-cy="entityEditButton">

@@ -97,7 +97,6 @@
     "reactstrap": "9.1.4",
     "redux": "4.2.0",
     "redux-thunk": "2.4.1",
-    "sweetalert2": "^11.7.32",
     "tslib": "2.4.0",
     "uuid": "8.3.2"
   },

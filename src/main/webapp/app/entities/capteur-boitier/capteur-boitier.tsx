@@ -96,8 +96,7 @@ export const CapteurBoitier = () => {
                         to={`/capteur-boitier/${capteurBoitier.id}/edit`}
                         color="primary"
                         size="sm"
-                        data-cy="entityEditButton"
-                      >
+                        data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button
