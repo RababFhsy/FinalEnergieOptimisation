@@ -135,7 +135,7 @@ export const CapteurBoitierUpdate = () => {
     <div className="container-left">
    <ul className="responsive-table">
     <li className="table-header">
-      <div className="col col-1" style={{ textAlign: 'center' }}> SensorType</div>
+      <div className="col col-1" style={{ textAlign: 'center' }}> Sensor Type</div>
       <div className="col col-2" style={{ textAlign: 'center' }}>Branche</div>
       <div className="col col-3" style={{ textAlign: 'center' }}>Action</div>
       

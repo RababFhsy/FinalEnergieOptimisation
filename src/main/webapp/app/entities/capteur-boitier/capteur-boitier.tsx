@@ -31,14 +31,31 @@ export const CapteurBoitier = () => {
   return (
     <div>
       <h2 id="capteur-boitier-heading" data-cy="CapteurBoitierHeading">
-        Capteur Boitiers
+        Assign Sensor to Boitier
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button className="me-2"  onClick={handleSyncList} disabled={loading}
+          style={{
+            borderColor: '#0077B6', // Set the border color
+            borderWidth: '2px', // Set the border width
+            borderStyle: 'solid', // Set the border style to solid
+            backgroundColor: '#90E0EF', // Make the background transparent
+            color: '#0077B6', // Set the text color to the desired color
+            borderRadius: '20px',
+          }}
+        >
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/capteur-boitier/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/capteur-boitier/new" className="btn btn-light jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton"
+          style={{
+            borderColor: '#0077B6', // Set the border color
+            borderWidth: '2px', // Set the border width
+            borderStyle: 'solid', // Set the border style to solid
+            backgroundColor: '#90E0EF', // Make the background transparent
+            color: '#0077B6', // Set the text color to the desired color
+            borderRadius: '20px',
+          }}>
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Capteur Boitier
+            &nbsp; new Sensor to Boitier
           </Link>
         </div>
       </h2>
@@ -58,9 +75,9 @@ export const CapteurBoitier = () => {
               {capteurBoitierList.map((capteurBoitier, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} color="link" size="sm">
+                    
                       {capteurBoitier.id}
-                    </Button>
+                    
                   </td>
                   <td>{capteurBoitier.branche}</td>
                   <td>
