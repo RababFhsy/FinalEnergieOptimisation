@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import 'app/shared/layout/customStyles/customStyles.scss';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -88,23 +88,22 @@ export const CapteurBoitier = () => {
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button
                         tag={Link}
                         to={`/capteur-boitier/${capteurBoitier.id}/edit`}
-                        color="primary"
                         size="sm"
-                        data-cy="entityEditButton">
+                        data-cy="entityEditButton" className="custom-button-edit">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button
                         tag={Link}
                         to={`/capteur-boitier/${capteurBoitier.id}/delete`}
-                        color="danger"
                         size="sm"
-                        data-cy="entityDeleteButton"
+                        data-cy="entityDeleteButton" 
+                        className="custom-button-delete"
                       >
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
