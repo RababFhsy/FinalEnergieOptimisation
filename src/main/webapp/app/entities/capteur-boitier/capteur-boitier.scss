@@ -50,13 +50,16 @@
      
       letter-spacing: 0.03em;
       color: #ffffff;
+      width: 600px;
+      
     }
     .table-row {
       background-color: #ffffff;
       box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+      
     }
     .col-1 {
-        flex-basis: 30%;
+        flex-basis: 20%;
     }
     .col-2 {
       flex-basis: 30%;

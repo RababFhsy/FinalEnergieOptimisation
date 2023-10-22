@@ -33,7 +33,7 @@ export const CapteurBoitierUpdate = () => {
   const capteurBoitierList = useAppSelector(state => state.capteurBoitier.entities);
 
   const handleClose = () => {
-    navigate('/capteur-boitier');
+    navigate('/capteur-boitier/new');
   };
 
   useEffect(() => {
