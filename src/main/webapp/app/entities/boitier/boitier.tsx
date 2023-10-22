@@ -75,7 +75,7 @@ export const Boitier = () => {
           </Button>
           <Link to="/boitier/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Boitier
+            &nbsp; New Boitier
           </Link>
         </div>
       </h2>
@@ -85,9 +85,10 @@ export const Boitier = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Boitier Reference</th>
+                <th>Boitier reference</th>
                 <th>Type</th>
-                <th>Nbr Branche</th>
+                <th>Branch number  </th>
+                <th style={{ textAlign: 'center' }}>Action </th>
                 <th />
               </tr>
             </thead>
@@ -95,22 +96,20 @@ export const Boitier = () => {
               {boitierList.map((boitier, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/boitier/${boitier.id}`} color="link" size="sm">
                       {boitier.id}
-                    </Button>
                   </td>
                   <td>{boitier.boitierReference}</td>
                   <td>{boitier.type}</td>
                   <td>{boitier.nbrBranche}</td>
-                  <td className="text-end">
+                  <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
-                      <Button  onClick={()=>handleSetShow(boitier)}  className="custom-button-view"  data-cy="entityDetailsButton">
+                      <Button  onClick={()=>handleSetShow(boitier)} size="sm" className="custom-button-view"  data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button onClick={() => handleSetShow(boitier)} className="custom-button-edit" data-cy="entityEditButton">
+                      <Button onClick={() => handleSetShow(boitier)} size="sm" className="custom-button-edit" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/boitier/${boitier.id}/delete`} className="custom-button-delete" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/boitier/${boitier.id}/delete`} size="sm" className="custom-button-delete" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>

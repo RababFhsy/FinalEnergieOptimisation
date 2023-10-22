@@ -33,29 +33,14 @@ export const CapteurBoitier = () => {
       <h2 id="capteur-boitier-heading" data-cy="CapteurBoitierHeading">
         Assign Sensor to Boitier
         <div className="d-flex justify-content-end">
-          <Button className="me-2"  onClick={handleSyncList} disabled={loading}
-          style={{
-            borderColor: '#0077B6', // Set the border color
-            borderWidth: '2px', // Set the border width
-            borderStyle: 'solid', // Set the border style to solid
-            backgroundColor: '#90E0EF', // Make the background transparent
-            color: '#0077B6', // Set the text color to the desired color
-            borderRadius: '20px',
-          }}
+          <Button   onClick={handleSyncList} disabled={loading}
+          className="me-2 btn-light custom-button-refresh"
         >
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/capteur-boitier/new" className="btn btn-light jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton"
-          style={{
-            borderColor: '#0077B6', // Set the border color
-            borderWidth: '2px', // Set the border width
-            borderStyle: 'solid', // Set the border style to solid
-            backgroundColor: '#90E0EF', // Make the background transparent
-            color: '#0077B6', // Set the text color to the desired color
-            borderRadius: '20px',
-          }}>
+          <Link to="/capteur-boitier/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; new Sensor to Boitier
+            &nbsp; Assign Sensor to Boitier
           </Link>
         </div>
       </h2>
@@ -68,6 +53,7 @@ export const CapteurBoitier = () => {
                 <th>Branche</th>
                 <th>Capteur</th>
                 <th>Boitier</th>
+                <th style={{ textAlign: 'center' }}>      Action</th>
                 <th />
               </tr>
             </thead>
@@ -86,7 +72,7 @@ export const CapteurBoitier = () => {
                   <td>
                     {capteurBoitier.boitier ? <Link to={`/boitier/${capteurBoitier.boitier.id}`}>{capteurBoitier.boitier.id}</Link> : ''}
                   </td>
-                  <td className="text-end">
+                  <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
@@ -95,7 +81,7 @@ export const CapteurBoitier = () => {
                         tag={Link}
                         to={`/capteur-boitier/${capteurBoitier.id}/edit`}
                         size="sm"
-                        data-cy="entityEditButton" className="custom-button-edit">
+                        data-cy="entityEditButton" className="custom-button-edit" >
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button

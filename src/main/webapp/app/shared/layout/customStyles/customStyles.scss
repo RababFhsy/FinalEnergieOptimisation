@@ -5,6 +5,7 @@
     border-radius: 20px !important;
     background-color: transparent ; // Make the background transparent
     color: #03045E ; // Set the text color to the desired color
+    
   }
   .custom-button-edit {
     border-color: #0077B6; // Set the border color
@@ -14,6 +15,7 @@
     background-color: transparent; // Make the background transparent
     color: #0077B6; // Set the text color to the desired color
     margin-right: 10px; // Set the right margin
+    
   }
   .custom-button-view {
     border-color: #00B4D8; // Set the border color
@@ -23,6 +25,7 @@
     background-color: transparent; // Make the background transparent
     color: #00B4D8; // Set the text color to the desired color
     margin-right: 10px; // Set the right margin
+    
   }
   .custom-button-new {
     border-color: #0077B6 ; // Set the border color
@@ -31,6 +34,7 @@
     background-color: #90E0EF ; // Set the background color
     color: #0077B6 ; // Set the text color to the desired color
     border-radius: 20px !important; // Set the border radius
+    size:"sm"
   }
   .custom-button-refresh {
     border-color: #0077B6 ; // Set the border color
@@ -39,9 +43,11 @@
     background-color: #90E0EF ; // Set the background color
     color: #0077B6 ; // Set the text color to the desired color
     border-radius: 20px !important; // Set the border radius
+    size:"sm"
   }
   .custom-button-save-back {
     border-radius: 20px !important; // Set the border radius
+    size:"sm"
   }
   
   

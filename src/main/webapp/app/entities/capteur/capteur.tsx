@@ -84,7 +84,7 @@ export const Capteur = () => {
 <Link
   to="/capteur/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton" >
   <FontAwesomeIcon icon="plus" />
-  &nbsp;  new Sensor
+  &nbsp;  New Sensor
 </Link>
 
         </div>
@@ -108,9 +108,7 @@ export const Capteur = () => {
               {capteurList.map((capteur, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/capteur/${capteur.id}`} color="link" size="sm">
                       {capteur.id}
-                    </Button>
                   </td>
                   <td>{capteur.capteurReference}</td>
                   <td>{capteur.type}</td>
@@ -131,18 +129,18 @@ export const Capteur = () => {
                   </td>
                   <td>{capteur.valeurMin}</td>
                   <td>{capteur.valeurMax}</td>
-                  <td >
+                  <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
-                    <Button onClick={() => handleShow(capteur)} size="btn-md" data-cy="entityDetailsButton" className="custom-button-view" >
+                    <Button onClick={() => handleShow(capteur)} size="sm" data-cy="entityDetailsButton" className="custom-button-view" >
                       <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                     </Button>
 
 
-                      <Button onClick={() => handleShowUpdate(capteur)} size="btn-md" data-cy="entityEditButton" className="custom-button-edit">
+                      <Button onClick={() => handleShowUpdate(capteur)} size="sm" data-cy="entityEditButton" className="custom-button-edit">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
 
-                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`}  size="btn-md" data-cy="entityDeleteButton" className="custom-button-delete">
+                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`}  size="sm" data-cy="entityDeleteButton" className="custom-button-delete">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
