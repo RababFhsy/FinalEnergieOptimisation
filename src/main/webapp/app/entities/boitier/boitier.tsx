@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities, getEntity, updateEntity } from './boitier.reducer';
 
+
+
 export const Boitier = () => {
   const dispatch = useAppDispatch();
 
@@ -20,6 +22,8 @@ export const Boitier = () => {
 
   const boitierList = useAppSelector(state => state.boitier.entities);
   const loading = useAppSelector(state => state.boitier.loading);
+  const updating = useAppSelector(state => state.boitier.updating);
+  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
 
   const [selectedBoitier, setSelectedBoitier] = useState(null);
 
@@ -33,17 +37,21 @@ export const Boitier = () => {
 
 
   const { id } = useParams<'id'>();
-
   const boitierEntity = useAppSelector(state => state.boitier.entity);
-  const updating = useAppSelector(state => state.boitier.updating);
-  const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
   const [show, setShow] = useState(false);
+  const [showview, setShowView] = useState(false);
   const handleClose = () => setShow(false);
+  const handleCloseView = () => setShowView(false);
+  const handleShowView = (boitier) => {
+    setSelectedBoitier(boitier);
+    setShowView(true);
+  };
   const handleSetShow = (boitier) => {
     setSelectedBoitier(boitier);
     dispatch(getEntity(boitier.id)); // Déplacez la logique ici
     setShow(true);
   };
+  
 
 
   useEffect(() => {
@@ -103,7 +111,7 @@ export const Boitier = () => {
                   <td>{boitier.nbrBranche}</td>
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
-                      <Button  onClick={()=>handleSetShow(boitier)} size="sm" className="custom-button-view"  data-cy="entityDetailsButton">
+                      <Button  onClick={()=>handleShowView(boitier)} size="sm" className="custom-button-view"  data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button onClick={() => handleSetShow(boitier)} size="sm" className="custom-button-edit" data-cy="entityEditButton">
@@ -122,6 +130,38 @@ export const Boitier = () => {
           !loading && <div className="alert alert-warning">No Boitiers found</div>
         )}
       </div>
+
+
+      <Modal show={showview} onHide={handleCloseView}>
+        <Modal.Header closeButton>
+          <Modal.Title>Boitier Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            <Col md="12">
+              <dl className="jh-entity-details">
+                <dt>ID</dt>
+                <dd>{selectedBoitier?.id}</dd>
+                <dt>Boitier Reference</dt>
+                <dd>{selectedBoitier?.boitierReference}</dd>
+                <dt>Boitier Type</dt>
+                <dd>{selectedBoitier?.type}</dd>
+                <dt>Branch numbers</dt>
+                <dd>
+                  {selectedBoitier?.nbrBranche}
+                </dd>
+              </dl>
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={handleCloseView}>
+          Close
+        </Button>
+        </Modal.Footer>
+      </Modal>
+
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Boitier</Modal.Title>
