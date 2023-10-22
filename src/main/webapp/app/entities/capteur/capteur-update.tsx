@@ -89,13 +89,13 @@ export const CapteurUpdate = () => {
               <ValidatedBlobField label="Photo" id="capteur-photo" name="photo" data-cy="photo" isImage accept="image/*" />
               <ValidatedField label="Valeur Min" id="capteur-valeurMin" name="valeurMin" data-cy="valeurMin" type="text" />
               <ValidatedField label="Valeur Max" id="capteur-valeurMax" name="valeurMax" data-cy="valeurMax" type="text" />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/capteur" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back"  to="/capteur" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Back</span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" className="custom-button-save-back"  type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp; Save
               </Button>

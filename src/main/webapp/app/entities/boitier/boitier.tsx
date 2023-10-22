@@ -7,6 +7,7 @@ import {Col, Image, Modal, Row} from "react-bootstrap";
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
 import Swal from 'sweetalert2'
 
+import 'app/shared/layout/customStyles/customStyles.scss';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -112,10 +113,10 @@ export const Boitier = () => {
       <h2 id="boitier-heading" data-cy="BoitierHeading">
         Boitiers
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button className="me-2 btn-light custom-button-refresh" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/boitier/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/boitier/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp; Create a new Boitier
           </Link>
@@ -146,13 +147,13 @@ export const Boitier = () => {
                   <td>{boitier.nbrBranche}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button  onClick={()=>displayBoitierDetail(boitier)}  color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button  onClick={()=>displayBoitierDetail(boitier)}  className="custom-button-view"  data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button onClick={() => handleSetShow(boitier)} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button onClick={() => handleSetShow(boitier)} className="custom-button-edit" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/boitier/${boitier.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/boitier/${boitier.id}/delete`} className="custom-button-delete" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>

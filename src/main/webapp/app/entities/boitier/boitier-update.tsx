@@ -87,13 +87,13 @@ export const BoitierUpdate = () => {
               />
               <ValidatedField label="Type" id="boitier-type" name="type" data-cy="type" type="text" />
               <ValidatedField label="Nbr Branche" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/boitier" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back"  to="/boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
-                <span className="d-none d-md-inline">Back</span>
+                <span className="d-none d-md-inline ">Back</span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+              <Button className="custom-button-save-back" color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp; Save
               </Button>

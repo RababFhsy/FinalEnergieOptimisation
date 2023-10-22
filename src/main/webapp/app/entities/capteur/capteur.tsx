@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Col, Image, Modal, Row} from "react-bootstrap";
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
 
-
+import 'app/shared/layout/customStyles/customStyles.scss';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -77,37 +77,12 @@ export const Capteur = () => {
       <h2 id="capteur-heading" data-cy="CapteurHeading">
         Sensors
         <div className="d-flex justify-content-end">
-        <Button
-  className="me-2"
-  
-  onClick={handleSyncList}
-  disabled={loading}
-  style={{
-    borderColor: '#0077B6', // Set the border color
-    borderWidth: '2px', // Set the border width
-    borderStyle: 'solid', // Set the border style to solid
-    backgroundColor: '#90E0EF', // Make the background transparent
-    color: '#0077B6', // Set the text color to the desired color
-    borderRadius: '20px',
-  }}
->
+        <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
   <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
 </Button>
 
 <Link
-  to="/capteur/new"
-  className="btn btn-light jh-create-entity"
-  id="jh-create-entity"
-  data-cy="entityCreateButton"
-  style={{
-    borderColor: '#0077B6', // Set the border color
-    borderWidth: '2px', // Set the border width
-    borderStyle: 'solid', // Set the border style to solid
-    backgroundColor: '#90E0EF', // Make the background transparent
-    color: '#0077B6', // Set the text color to the desired color
-    borderRadius: '20px',
-  }}
->
+  to="/capteur/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton" >
   <FontAwesomeIcon icon="plus" />
   &nbsp;  new Sensor
 </Link>
@@ -158,54 +133,16 @@ export const Capteur = () => {
                   <td>{capteur.valeurMax}</td>
                   <td >
                     <div className="btn-group flex-btn-group-container">
-                    <Button
-                              onClick={() => handleShow(capteur)}
-                              size="btn-md"
-                              data-cy="entityDetailsButton"
-                              style={{
-                                borderColor: '#00B4D8', // Set the border color
-                                borderRadius: '20px',
-                                borderWidth: '2px', // Set the border width
-                                borderStyle: 'solid', // Set the border style to solid
-                                backgroundColor: 'transparent', // Make the background transparent
-                                color: '#00B4D8', // Set the text color to the desired color
-                                marginRight: '10px'
-                              }}
-                            >
+                    <Button onClick={() => handleShow(capteur)} size="btn-md" data-cy="entityDetailsButton" className="custom-button-view" >
                       <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                     </Button>
 
 
-                      <Button
-                        onClick={() => handleShowUpdate(capteur)}
-                      
-                        size="btn-md"
-                        data-cy="entityEditButton"
-                        style={{
-                          borderColor: '#0077B6', // Set the border color
-                          borderWidth: '2px', // Set the border width
-                          borderRadius: '20px',
-                          borderStyle: 'solid', // Set the border style to solid
-                          backgroundColor: 'transparent', // Make the background transparent
-                          color: '#0077B6', // Set the text color to the desired color
-                          marginRight: '10px'
-                        }}
-                      >
+                      <Button onClick={() => handleShowUpdate(capteur)} size="btn-md" data-cy="entityEditButton" className="custom-button-edit">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
 
-                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`} 
-                      size="btn-md" data-cy="entityDeleteButton"
-                          style={{
-                            borderColor: '#03045E', // Set the border color
-                            borderWidth: '2px', // Set the border width
-                            borderStyle: 'solid', // Set the border style to solid
-                            borderRadius: '20px',
-                            marginRight: '10px',
-                            backgroundColor: 'transparent', // Make the background transparent
-                            color: '#03045E', // Set the text color to the desired color
-                            
-                          }}>
+                      <Button tag={Link} to={`/capteur/${capteur.id}/delete`}  size="btn-md" data-cy="entityDeleteButton" className="custom-button-delete">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -251,6 +188,11 @@ export const Capteur = () => {
             </Col>
           </Row>
         </Modal.Body>
+        <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        </Modal.Footer>
       </Modal>
 
 
