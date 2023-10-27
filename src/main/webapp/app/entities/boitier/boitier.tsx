@@ -51,7 +51,7 @@ export const Boitier = () => {
     dispatch(getEntity(boitier.id)); // Déplacez la logique ici
     setShow(true);
   };
-  
+
 
 
   useEffect(() => {

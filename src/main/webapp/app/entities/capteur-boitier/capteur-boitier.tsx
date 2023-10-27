@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'app/shared/layout/customStyles/customStyles.scss';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
+import {Col, Image, Modal, Row} from "react-bootstrap";
 import { ICapteurBoitier } from 'app/shared/model/capteur-boitier.model';
 import { getEntities } from './capteur-boitier.reducer';
 import './capteur-boitier.scss';
@@ -20,6 +20,16 @@ export const CapteurBoitier = () => {
   const capteurBoitierList = useAppSelector(state => state.capteurBoitier.entities);
   const loading = useAppSelector(state => state.capteurBoitier.loading);
 
+
+  const [selectedCapteurBoitier, setSelectedCapteurBoitier] = useState(null);
+  const [show, setShow] = useState(false);
+  const [showview, setShowView] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleCloseView = () => setShowView(false);
+  const handleShowView = (capteurBoitier) => {
+    setSelectedCapteurBoitier(capteurBoitier);
+    setShowView(true);
+  };
   useEffect(() => {
     dispatch(getEntities({}));
   }, []);
@@ -53,8 +63,8 @@ export const CapteurBoitier = () => {
                 <th>Boitier</th>
                 <th>Branch</th>
                 <th>Sensor</th>
-               
-              
+
+
                 <th style={{ textAlign: 'center' }}>      Action</th>
                 <th />
               </tr>
@@ -63,9 +73,9 @@ export const CapteurBoitier = () => {
               {capteurBoitierList.map((capteurBoitier, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    
+
                       {capteurBoitier.id}
-                    
+
                   </td>
                   <td>
   {capteurBoitier.boitier ? capteurBoitier.boitier.type  : ''}
@@ -73,7 +83,7 @@ export const CapteurBoitier = () => {
 <td>
   {capteurBoitier.boitier ? capteurBoitier.boitier.nbrBranche  : ''}
 </td>
-                  
+
                   <td>
   {capteurBoitier.capteur ? capteurBoitier.capteur.type : ''}
 </td>
@@ -83,7 +93,7 @@ export const CapteurBoitier = () => {
 
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/capteur-boitier/${capteurBoitier.id}`} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
+                      <Button onClick={()=>handleShowView(capteurBoitier)} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button
@@ -97,7 +107,7 @@ export const CapteurBoitier = () => {
                         tag={Link}
                         to={`/capteur-boitier/${capteurBoitier.id}/delete`}
                         size="sm"
-                        data-cy="entityDeleteButton" 
+                        data-cy="entityDeleteButton"
                         className="custom-button-delete"
                       >
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
@@ -112,6 +122,37 @@ export const CapteurBoitier = () => {
           !loading && <div className="alert alert-warning">No Capteur Boitiers found</div>
         )}
       </div>
+      <Modal show={showview} onHide={handleCloseView}>
+  <Modal.Header closeButton>
+    <Modal.Title>Boitier Details</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <table className="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Branche</th>
+          <th>CapteurID</th>
+          <th>BoitierID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{selectedCapteurBoitier?.id}</td>
+          <td>{selectedCapteurBoitier?.branche}</td>
+          <td>{selectedCapteurBoitier?.capteur?.id}</td>
+          <td>{selectedCapteurBoitier?.boitier?.id}</td>
+        </tr>
+      </tbody>
+    </table>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="secondary" onClick={handleCloseView}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </div>
   );
 };

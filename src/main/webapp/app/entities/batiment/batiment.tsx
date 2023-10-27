@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { Col, Image, Modal, Row } from 'react-bootstrap';
+import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBatiment } from 'app/shared/model/batiment.model';
-import { getEntities } from './batiment.reducer';
+import { getEntities, getEntity, updateEntity } from './batiment.reducer';
 
 export const Batiment = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,10 @@ export const Batiment = () => {
 
   const batimentList = useAppSelector(state => state.batiment.entities);
   const loading = useAppSelector(state => state.batiment.loading);
+  const updating = useAppSelector(state => state.batiment.updating);
+  const updateSuccess = useAppSelector(state => state.batiment.updateSuccess);
+
+  const [selectedBatiment, setSelectedBatiment] = useState(null);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -26,6 +31,41 @@ export const Batiment = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
+
+  const { id } = useParams<'id'>();
+  const batimentEntity = useAppSelector(state => state.batiment.entity);
+  const [show, setShow] = useState(false);
+  const [showview, setShowView] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleCloseView = () => setShowView(false);
+  const handleShowView = batiment => {
+    setSelectedBatiment(batiment);
+    setShowView(true);
+  };
+  const handleSetShow = batiment => {
+    setSelectedBatiment(batiment);
+    dispatch(getEntity(batiment.id)); // Déplacez la logique ici
+    setShow(true);
+  };
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
+
+  const saveEntity = values => {
+    const entity = {
+      ...batimentEntity,
+      ...values,
+    };
+
+    dispatch(updateEntity(entity));
+
+  };
+
+  const defaultValues = () => batimentEntity;
+
 
   return (
     <div>
@@ -64,10 +104,10 @@ export const Batiment = () => {
                   <td>{batiment.batimentNom}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/batiment/${batiment.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button onClick={() => handleShowView(batiment)} size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/batiment/${batiment.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button onClick={() => handleSetShow(batiment)} size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button tag={Link} to={`/batiment/${batiment.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
@@ -83,6 +123,71 @@ export const Batiment = () => {
           !loading && <div className="alert alert-warning">No Batiments found</div>
         )}
       </div>
+      <Modal show={showview} onHide={handleCloseView}>
+        <Modal.Header closeButton>
+          <Modal.Title>Batiment Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Adresse</th>
+                <th>Nom du Batiment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{selectedBatiment?.id}</td>
+
+                <td>{selectedBatiment?.adresse}</td>
+
+                <td>{selectedBatiment?.batimentNom}</td>
+              </tr>
+            </tbody>
+          </table>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseView}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Batiment</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Row className="justify-content-center">
+            <Col md="8">
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
+
+                  <ValidatedField label="Adresse" id="batiment-adresse" name="adresse" data-cy="adresse" type="text" />
+                  <ValidatedField label="Nom du Batiment" id="batiment-batimentNom" name="batimentNom" data-cy="batimentNom" type="text" />
+                  <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/batiment" replace color="info">
+                    <FontAwesomeIcon icon="arrow-left" />
+                    &nbsp;
+                    <span className="d-none d-md-inline">Back</span>
+                  </Button>
+                  &nbsp;
+                  <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                    <FontAwesomeIcon icon="save" />
+                    &nbsp; Save
+                  </Button>
+                </ValidatedForm>
+              )}
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
