@@ -96,9 +96,7 @@ export const Locale = () => {
               {localeList.map((locale, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                  =
                       {locale.id}
-                  
                   </td>
                   <td>{locale.numero}</td>
                   <td>{locale.typeLocal}</td>

@@ -86,7 +86,7 @@ export const LocaleUpdate = () => {
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="locale-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Numero" id="locale-numero" name="numero" data-cy="numero" type="text" />
-              <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="text" >
+              <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="select" >
                 <option value="A1">Appartement</option>
                 <option value="A2">Office</option>
                 <option value="A3">Cabinet</option>
