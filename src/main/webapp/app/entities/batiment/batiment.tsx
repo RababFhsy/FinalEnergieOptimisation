@@ -70,14 +70,14 @@ export const Batiment = () => {
   return (
     <div>
       <h2 id="batiment-heading" data-cy="BatimentHeading">
-        Batiments
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+        Buildings
+        <div className="d-flex justify-content-end ">
+          <Button className="me-2 btn-light custom-button-refresh" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/batiment/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/batiment/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Batiment
+            &nbsp; Create a new Building
           </Link>
         </div>
       </h2>
@@ -89,6 +89,7 @@ export const Batiment = () => {
                 <th>ID</th>
                 <th>Adresse</th>
                 <th>Batiment Nom</th>
+                <th style={{ textAlign: 'center' }}>      Action</th>
                 <th />
               </tr>
             </thead>
@@ -96,21 +97,19 @@ export const Batiment = () => {
               {batimentList.map((batiment, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/batiment/${batiment.id}`} color="link" size="sm">
                       {batiment.id}
-                    </Button>
                   </td>
                   <td>{batiment.adresse}</td>
                   <td>{batiment.batimentNom}</td>
-                  <td className="text-end">
+                  <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
-                      <Button onClick={() => handleShowView(batiment)} size="sm" data-cy="entityDetailsButton">
+                      <Button onClick={() => handleShowView(batiment)} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button onClick={() => handleSetShow(batiment)} size="sm" data-cy="entityEditButton">
+                      <Button onClick={() => handleSetShow(batiment)} size="sm" data-cy="entityEditButton" className="custom-button-edit">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/batiment/${batiment.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/batiment/${batiment.id}/delete`} size="sm" data-cy="entityDeleteButton" className="custom-button-delete">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>

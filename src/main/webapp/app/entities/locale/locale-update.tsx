@@ -86,7 +86,11 @@ export const LocaleUpdate = () => {
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="locale-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Numero" id="locale-numero" name="numero" data-cy="numero" type="text" />
-              <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="text" />
+              <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="text" >
+                <option value="A1">Appartement</option>
+                <option value="A2">Office</option>
+                <option value="A3">Cabinet</option>
+              </ValidatedField>
               <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Etage" type="select">
                 <option value="" key="0" />
                 {etages
@@ -97,13 +101,13 @@ export const LocaleUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/locale" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back" to="/locale" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Back</span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" className="custom-button-save-back" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp; Save
               </Button>

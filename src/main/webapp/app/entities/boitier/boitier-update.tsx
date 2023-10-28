@@ -67,7 +67,7 @@ export const BoitierUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="feOptimisationEnergieApp.boitier.home.createOrEditLabel" data-cy="BoitierCreateUpdateHeading">
-            Create or edit a Boitier
+            Create a Boitier
           </h2>
         </Col>
       </Row>
@@ -85,7 +85,12 @@ export const BoitierUpdate = () => {
                 data-cy="boitierReference"
                 type="text"
               />
-              <ValidatedField label="Type" id="boitier-type" name="type" data-cy="type" type="text" />
+              <ValidatedField label="Type" id="boitier-type" name="type" data-cy="type" type="text" ><option value="A0">A0</option>
+                <option value="A1">Arduino UNO</option>
+                <option value="A2">Arduino Nano</option>
+                <option value="A3">Arduino Due</option>
+                <option value="A4">Arduino Mega</option>
+                <option value="A4">Arduino Leonardo</option></ValidatedField>
               <ValidatedField label="Nbr Branche" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back"  to="/boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
