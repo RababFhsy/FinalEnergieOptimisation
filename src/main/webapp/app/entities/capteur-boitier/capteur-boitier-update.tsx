@@ -18,7 +18,10 @@ import { getEntity, updateEntity, createEntity, reset } from './capteur-boitier.
 
 export const CapteurBoitierUpdate = () => {
   const dispatch = useAppDispatch();
-
+  const [numberOfBranches, setNumberOfBranches] = useState('');
+  const [usedBranches, setUsedBranches] = useState<{ [key: string]: string[] }>({});
+  const [availableBranches, setAvailableBranches] = useState([]);
+  
   const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
@@ -63,6 +66,13 @@ export const CapteurBoitierUpdate = () => {
 
     if (isNew) {
       dispatch(createEntity(entity));
+      const selectedBoitierId = values.boitier.toString();
+      const updatedUsedBranches = { ...usedBranches };
+      updatedUsedBranches[selectedBoitierId] = [...usedBranches[selectedBoitierId], values.branche];
+      setUsedBranches(updatedUsedBranches);
+
+      const updatedAvailableBranches = availableBranches.filter(branch => branch !== values.branche);
+      setAvailableBranches(updatedAvailableBranches);
     } else {
       dispatch(updateEntity(entity));
     }
@@ -76,18 +86,34 @@ export const CapteurBoitierUpdate = () => {
           capteur: capteurBoitierEntity?.capteur?.id,
           boitier: capteurBoitierEntity?.boitier?.id,
         };
+  const handleBoitierChange = (event) => {
+    const selectedBoitierId = event.target.value;
+    const selectedBoitier = boitiers.find((it) => it.id.toString() === selectedBoitierId);
+    if (selectedBoitier) {
+      const usedBranchesForSelectedBoitier = capteurBoitierList
+        .filter((item) => item.boitier.id === selectedBoitierId)
+        .map((item) => item.branche);
+      const remainingBranches = selectedBoitier.nbrBranche - usedBranchesForSelectedBoitier.length;
+      setNumberOfBranches(remainingBranches.toString());
+      setUsedBranches({ ...usedBranches, [selectedBoitierId]: usedBranchesForSelectedBoitier });
+    }
+  };
+  
+  const generateBranchOptions = () => {
+    const options = [];
+    for (let i = 0; i < parseInt(numberOfBranches); i++) {
+      options.push(<option value={`A${i}`}>{`A${i}`}</option>);
+    }
+    return options;
+  };
+
 
   return (
     <div className="page-container">
     <div className="container-right" >
-      
-      
           <h3 id="feOptimisationEnergieApp.capteurBoitier.home.createOrEditLabel" data-cy="CapteurBoitierCreateUpdateHeading">
           Assign sensor to Boitier
           </h3>
-       
-     
-      
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
@@ -96,7 +122,7 @@ export const CapteurBoitierUpdate = () => {
               {!isNew ? (
                 <ValidatedField name="id" required readOnly id="capteur-boitier-id" label="ID" validate={{ required: true }} />
               ) : null}
-               <ValidatedField id="capteur-boitier-boitier" name="boitier" data-cy="boitier" label="Boitier" type="select">
+               <ValidatedField id="capteur-boitier-boitier" name="boitier" data-cy="boitier" label="Boitier" type="select" onChange={handleBoitierChange}>
                 <option value="" key="0" />
                 {boitiers
                   ? boitiers.map(otherEntity => (
@@ -106,21 +132,17 @@ export const CapteurBoitierUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <ValidatedField id="capteur-boitier-boitier" name="nbrBranch" data-cy="nbrBranch" label="Number of branches" type="text" value={numberOfBranches} disabled>
+              </ValidatedField>
               <ValidatedField
-  label="Branch"
-  id="capteur-boitier-branche"
-  name="branche"
-  data-cy="branche"
-  type="select"
->
-  <option value="A0">A0</option>
-  <option value="A1">A1</option>
-  <option value="A2">A2</option>
-  <option value="A3">A3</option>
-  <option value="A4">A4</option>
-</ValidatedField>
-
-                 
+                label="Branch"
+                id="capteur-boitier-branche"
+                name="branche"
+                data-cy="branche"
+                type="select"
+              >
+                {generateBranchOptions()}
+              </ValidatedField>
               <ValidatedField 
               id="capteur-boitier-capteur"
                name="capteur" data-cy="capteur" label="Sensor" type="select">
@@ -157,11 +179,7 @@ export const CapteurBoitierUpdate = () => {
     <div className="col col-2" style={{ textAlign: 'center' }}>Branch</div>
     <div className="col col-1" style={{ textAlign: 'center' }}> Sensor</div>
     <div className="col col-3" style={{ textAlign: 'center' }}>Action</div>
-      
     </li>
-   
-    
-    
   </ul>
   </div>
     </div>
