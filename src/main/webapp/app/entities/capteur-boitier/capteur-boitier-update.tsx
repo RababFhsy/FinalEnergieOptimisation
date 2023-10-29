@@ -295,10 +295,10 @@ export const CapteurBoitierUpdate = () => {
           <tbody>
             {tableData.map((rowData, index) => (
               <tr key={index}>
-                <td>{mapBoitierType(rowData.boitier)}  </td>
-                <td>{rowData.branche}  </td>
-                <td>{mapCapteurType(rowData.capteur)} </td>
-                <td><button onClick={() => removeRow(index)}>Remove</button></td>
+                <td style={{ textAlign: 'center' }}>{mapBoitierType(rowData.boitier)}  </td>
+                <td style={{ textAlign: 'center' }}>{rowData.branche}  </td>
+                <td style={{ textAlign: 'center' }}>{mapCapteurType(rowData.capteur)} </td>
+                <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
           </tbody>
