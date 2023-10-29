@@ -85,12 +85,13 @@ export const BoitierUpdate = () => {
                 data-cy="boitierReference"
                 type="text"
               />
-              <ValidatedField label="Type" id="boitier-type" name="type" data-cy="type" type="select" ><option value="A0">A0</option>
-                <option value="A1"> Uno</option>
-                <option value="A2">Nano</option>
-                <option value="A3">Due</option>
-                <option value="A4"> Mega</option>
-                <option value="A4"> Leonardo</option></ValidatedField>
+              <ValidatedField label="Type Boitier" id="boitier-type" name="type" data-cy="type" type="select" >
+              <option value=""> </option>
+                <option value="Uno"> Uno</option>
+                <option value="Nano">Nano</option>
+                <option value="Due">Due</option>
+                <option value="Mega"> Mega</option>
+                <option value="Mega"> Leonardo</option></ValidatedField>
               <ValidatedField label="Nbr Branche" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back"  to="/boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
