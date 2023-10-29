@@ -18,7 +18,6 @@ import { getEntity, updateEntity, createEntity, reset } from './capteur-boitier.
 
 export const CapteurBoitierUpdate = () => {
   const dispatch = useAppDispatch();
-  const [numberOfBranches, setNumberOfBranches] = useState(0);
   const [usedBranches, setUsedBranches] = useState<{ [key: string]: string[] }>({});
   const [availableBranches, setAvailableBranches] = useState([]);
   const [remainingBranches, setRemainingBranches] = useState(0);
@@ -140,9 +139,6 @@ export const CapteurBoitierUpdate = () => {
       // Set "remaining" in your state (if needed)
       setRemainingBranches(remaining);
   
-      // Set "numberOfBranches" in your state
-      setNumberOfBranches(remaining);
-  
       // Set "usedBranches" in your state
       setUsedBranches({ ...usedBranches, [selectedBoitierId]: usedBranchesForSelectedBoitier });
   
@@ -162,6 +158,10 @@ export const CapteurBoitierUpdate = () => {
       [name]: value,
     });
   };
+
+  
+  
+  
   
   
   const mapBoitierType = (boitierId) => {
@@ -187,6 +187,12 @@ export const CapteurBoitierUpdate = () => {
     }
   }
   return options;
+  };
+
+  const removeRow = (index) => {
+    const updatedTableData = [...tableData];
+    updatedTableData.splice(index, 1);
+    setTableData(updatedTableData);
   };
 
 
@@ -292,6 +298,7 @@ export const CapteurBoitierUpdate = () => {
                 <td>{mapBoitierType(rowData.boitier)}  </td>
                 <td>{rowData.branche}  </td>
                 <td>{mapCapteurType(rowData.capteur)} </td>
+                <td><button onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
           </tbody>
