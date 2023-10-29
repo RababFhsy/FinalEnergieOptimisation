@@ -196,6 +196,17 @@ export const CapteurBoitierUpdate = () => {
     setTableData(updatedTableData);
   };
 
+  const handleSubmitAllRows = () => {
+    tableData.forEach((row) => {
+      const values = {
+        boitier: row.boitier,
+        branche: row.branche,
+        capteur: row.capteur,
+      };
+      saveEntity(values);
+    });
+    setTableData([]); // Clear the table after submission
+  };
 
   return (
     <div className="page-container">
@@ -281,10 +292,16 @@ export const CapteurBoitierUpdate = () => {
           )}
         </Col>
         <br></br>
-        <Button className="-save-back" color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
-                &nbsp; Save
-              </Button>
+              <Button
+          color="primary"
+          id="submit-all-rows"
+          data-cy="submitAllRowsButton"
+          type="button"
+          onClick={handleSubmitAllRows}
+          disabled={updating || tableData.length === 0} // Disable the button if there are no rows in the table
+        >
+          Submit All 
+        </Button>
        
      
     </div>
