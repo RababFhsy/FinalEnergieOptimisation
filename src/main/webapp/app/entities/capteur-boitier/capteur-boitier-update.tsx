@@ -18,10 +18,14 @@ import { getEntity, updateEntity, createEntity, reset } from './capteur-boitier.
 
 export const CapteurBoitierUpdate = () => {
   const dispatch = useAppDispatch();
-  const [numberOfBranches, setNumberOfBranches] = useState('');
+  const [numberOfBranches, setNumberOfBranches] = useState(0);
   const [usedBranches, setUsedBranches] = useState<{ [key: string]: string[] }>({});
   const [availableBranches, setAvailableBranches] = useState([]);
-  
+  const [remainingBranches, setRemainingBranches] = useState(0);
+  const [tableData, setTableData] = useState([]);
+  const [selectedBoitier, setSelectedBoitier] = useState(null); // State to track selected Boitier
+  const [boitierDisabled, setBoitierDisabled] = useState(false);
+
   const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
@@ -55,6 +59,13 @@ export const CapteurBoitierUpdate = () => {
       handleClose();
     }
   }, [updateSuccess]);
+  const [formData, setFormData] = useState({
+    // Initialize with default values if needed
+    boitier: '',
+    branche: '',
+    capteur: '',
+  });
+
 
   const saveEntity = values => {
     const entity = {
@@ -86,25 +97,96 @@ export const CapteurBoitierUpdate = () => {
           capteur: capteurBoitierEntity?.capteur?.id,
           boitier: capteurBoitierEntity?.boitier?.id,
         };
-  const handleBoitierChange = (event) => {
+  // const handleBoitierChange = (event) => {
+  //   const selectedBoitierId = event.target.value;
+  //   const selectedBoitier = boitiers.find((it) => it.id.toString() === selectedBoitierId);
+  //   if (selectedBoitier) {
+  //     const usedBranchesForSelectedBoitier = capteurBoitierList
+  //       .filter((item) => item.boitier.id === selectedBoitierId)
+  //       .map((item) => item.branche);
+  //     const remaining = selectedBoitier.nbrBranche - usedBranchesForSelectedBoitier.length;
+  //     setRemainingBranches(remaining);
+  //     setNumberOfBranches(remaining);
+  //     setUsedBranches({ ...usedBranches, [selectedBoitierId]: usedBranchesForSelectedBoitier });
+  //     console.log(remaining)
+  //   }
+  //   generateBranchOptions();
+  // };
+  
+  const handleAddRow = () => {
+    if (selectedBoitier) {
+      const newRow = { ...formData, boitier: selectedBoitier };
+      setTableData([...tableData, newRow]);
+      // Reset only "branch" and "sensor"
+      setFormData({
+        ...formData,
+        branche: '',
+        capteur: '',
+      });
+      
+    }
+  };
+
+  const handleInputChange = (event) => {
     const selectedBoitierId = event.target.value;
     const selectedBoitier = boitiers.find((it) => it.id.toString() === selectedBoitierId);
+  
     if (selectedBoitier) {
       const usedBranchesForSelectedBoitier = capteurBoitierList
         .filter((item) => item.boitier.id === selectedBoitierId)
         .map((item) => item.branche);
-      const remainingBranches = selectedBoitier.nbrBranche - usedBranchesForSelectedBoitier.length;
-      setNumberOfBranches(remainingBranches.toString());
+      const remaining = selectedBoitier.nbrBranche - usedBranchesForSelectedBoitier.length;
+  
+      // Set "remaining" in your state (if needed)
+      setRemainingBranches(remaining);
+  
+      // Set "numberOfBranches" in your state
+      setNumberOfBranches(remaining);
+  
+      // Set "usedBranches" in your state
       setUsedBranches({ ...usedBranches, [selectedBoitierId]: usedBranchesForSelectedBoitier });
+  
     }
+  
+    // Call the "generateBranchOptions" function if needed
+    generateBranchOptions();
+  
+    // The following code is for handling form input changes
+    const { name, value } = event.target;
+    if (name === 'boitier') {
+      setSelectedBoitier(value);
+      setBoitierDisabled(true); // Disable "boitier" selection
+    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
   
+  
+  const mapBoitierType = (boitierId) => {
+    const boitier = boitiers.find((entity) => entity.id.toString() === boitierId.toString());
+    return boitier ? boitier.type : '';
+  };
+  
+  const mapCapteurType = (capteurId) => {
+    const capteur = capteurs.find((entity) => entity.id.toString() === capteurId.toString());
+    return capteur ? capteur.type : '';
+  };
+  
+
+  
   const generateBranchOptions = () => {
-    const options = [];
-    for (let i = 0; i < parseInt(numberOfBranches); i++) {
-      options.push(<option value={`A${i}`}>{`A${i}`}</option>);
+  const selectedBoitierId = defaultValues().boitier;
+  const selectedBoitierUsedBranches = usedBranches[selectedBoitierId] || [];
+  const options = [];
+  for (let i = 0; i < remainingBranches; i++) {
+    const branch = `A${i}`;
+    if (!selectedBoitierUsedBranches.includes(branch)) {
+      options.push(<option value={branch}>{branch}</option>);
     }
-    return options;
+  }
+  return options;
   };
 
 
@@ -119,20 +201,28 @@ export const CapteurBoitierUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? (
-                <ValidatedField name="id" required readOnly id="capteur-boitier-id" label="ID" validate={{ required: true }} />
-              ) : null}
-               <ValidatedField id="capteur-boitier-boitier" name="boitier" data-cy="boitier" label="Boitier" type="select" onChange={handleBoitierChange}>
-                <option value="" key="0" />
-                {boitiers
-                  ? boitiers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.type}>
-                        {otherEntity.type}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="capteur-boitier-boitier" name="nbrBranch" data-cy="nbrBranch" label="Number of branches" type="text" value={numberOfBranches} disabled>
+            {!isNew ? (
+              <ValidatedField name="id" required readOnly id="capteur-boitier-id" label="ID" validate={{ required: true }}  onChange={handleInputChange} />
+            ) : null}
+             <ValidatedField id="capteur-boitier-boitier" name="boitier" data-cy="boitier" label="Boitier" type="select"  disabled={boitierDisabled}   onChange={handleInputChange}>
+              <option value="" key="0" />
+              {boitiers
+                ? boitiers.map(otherEntity => (
+                    <option value={otherEntity.id} key={otherEntity.type}>
+                      {otherEntity.type}
+                    </option>
+                  ))
+                : null}
+            </ValidatedField>
+
+              <ValidatedField id="capteur-boitier-remaining-branches"
+                name="remainingBranches"
+                data-cy="remainingBranches"
+                label="Remaining Branches"
+                type="text"
+                onChange={handleInputChange}
+                value={remainingBranches}
+                disabled>
               </ValidatedField>
               <ValidatedField
                 label="Branch"
@@ -140,11 +230,12 @@ export const CapteurBoitierUpdate = () => {
                 name="branche"
                 data-cy="branche"
                 type="select"
+                onChange={handleInputChange}
               >
                 {generateBranchOptions()}
               </ValidatedField>
               <ValidatedField 
-              id="capteur-boitier-capteur"
+              id="capteur-boitier-capteur" onChange={handleInputChange}
                name="capteur" data-cy="capteur" label="Sensor" type="select">
                 <option value="" key="0" />
                 {capteurs
@@ -162,10 +253,23 @@ export const CapteurBoitierUpdate = () => {
                 <span className="d-none d-md-inline">Back</span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
-                &nbsp; Save
-              </Button>
+              <Button
+              color="primary"
+              id="save-entity"
+              data-cy="entityCreateSaveButton"
+              type="button"  // Change the type to 'button' to prevent form submission
+              onClick={() => {
+                handleAddRow(); // Add the row to the table
+                // Submit the form data here if needed
+              }}
+              disabled={updating}
+            >
+              <FontAwesomeIcon icon="save" />
+              &nbsp; Add
+            </Button>
+
+
+
             </ValidatedForm>
           )}
         </Col>
@@ -173,14 +277,26 @@ export const CapteurBoitierUpdate = () => {
      
     </div>
     <div className="container-left">
-   <ul className="responsive-table">
-    <li className="table-header">
-    <div className="col col-1" style={{ textAlign: 'center' }}> Boitier</div>
-    <div className="col col-2" style={{ textAlign: 'center' }}>Branch</div>
-    <div className="col col-1" style={{ textAlign: 'center' }}> Sensor</div>
-    <div className="col col-3" style={{ textAlign: 'center' }}>Action</div>
-    </li>
-  </ul>
+    <table className="responsive-table">
+          <thead className="table-header">
+            <tr>
+              <th className="col col-1" style={{ textAlign: 'center' }}>Boitier</th>
+              <th className="col col-1" style={{ textAlign: 'center' }}>Branche</th>
+              <th className="col col-1" style={{ textAlign: 'center' }}>Sensor</th>
+              <th className="col col-1" style={{ textAlign: 'center' }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((rowData, index) => (
+              <tr key={index}>
+                <td>{mapBoitierType(rowData.boitier)}  </td>
+                <td>{rowData.branche}  </td>
+                <td>{mapCapteurType(rowData.capteur)} </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
   </div>
     </div>
   );
