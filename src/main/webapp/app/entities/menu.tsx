@@ -13,7 +13,7 @@ const EntitiesMenu = () => {
         Energie
       </MenuItem>
       <MenuItem icon="asterisk" to="/consommation">
-        Consommation
+      Consumption
       </MenuItem>
       <MenuItem icon="asterisk" to="/anomalie">
         Anomalie
@@ -22,13 +22,13 @@ const EntitiesMenu = () => {
         Prediction
       </MenuItem>
       <MenuItem icon="asterisk" to="/etage">
-        Etage
+        Floor
       </MenuItem>
       <MenuItem icon="asterisk" to="/locale">
-        Locale
+        Local
       </MenuItem>
       <MenuItem icon="asterisk" to="/batiment">
-        Batiment
+      Building
       </MenuItem>
       <MenuItem icon="asterisk" to="/capteur">
         Sensor
@@ -37,10 +37,10 @@ const EntitiesMenu = () => {
         Boitier
       </MenuItem>
       <MenuItem icon="asterisk" to="/locale-boitier">
-        Locale Boitier
+        Local Boitier
       </MenuItem>
       <MenuItem icon="asterisk" to="/capteur-boitier">
-        Affect Sensor to Boitier
+        Assign Sensor to Boitier
       </MenuItem>
       {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
     </>

@@ -141,6 +141,7 @@ export const CapteurBoitierUpdate = () => {
   
       // Set "usedBranches" in your state
       setUsedBranches({ ...usedBranches, [selectedBoitierId]: usedBranchesForSelectedBoitier });
+      
   
     }
   
@@ -270,8 +271,8 @@ export const CapteurBoitierUpdate = () => {
               }}
               disabled={updating}
             >
-              <FontAwesomeIcon icon="save" />
-              &nbsp; Add
+              
+              <span className="d-none d-md-inline">Add</span>
             </Button>
 
 
@@ -279,6 +280,11 @@ export const CapteurBoitierUpdate = () => {
             </ValidatedForm>
           )}
         </Col>
+        <br></br>
+        <Button className="-save-back" color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp; Save
+              </Button>
        
      
     </div>

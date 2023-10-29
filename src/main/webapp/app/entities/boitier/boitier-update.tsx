@@ -91,7 +91,7 @@ export const BoitierUpdate = () => {
                 <option value="Nano">Nano</option>
                 <option value="Due">Due</option>
                 <option value="Mega"> Mega</option>
-                <option value="Mega"> Leonardo</option></ValidatedField>
+                <option value="Leonardo"> Leonardo</option></ValidatedField>
               <ValidatedField label="Nbr Branche" id="boitier-nbrBranche" name="nbrBranche" data-cy="nbrBranche" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back"  to="/boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
