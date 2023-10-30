@@ -74,7 +74,7 @@ export const EtageUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="feOptimisationEnergieApp.etage.home.createOrEditLabel" data-cy="EtageCreateUpdateHeading">
-            Create or edit a Etage
+            Create Floor
           </h2>
         </Col>
       </Row>
@@ -91,7 +91,7 @@ export const EtageUpdate = () => {
                 {batiments
                   ? batiments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.batimentNom}
                       </option>
                     ))
                   : null}

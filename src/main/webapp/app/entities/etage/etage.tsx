@@ -69,14 +69,14 @@ export const Etage = () => {
   return (
     <div>
       <h2 id="etage-heading" data-cy="EtageHeading">
-        Etages
+        Floors
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
           <Link to="/etage/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Etage
+            &nbsp; new Floor
           </Link>
         </div>
       </h2>
@@ -86,8 +86,8 @@ export const Etage = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Etage Numero</th>
-                <th>Batiment</th>
+                <th>Floor Number</th>
+                <th>Building</th>
                 <th />
               </tr>
             </thead>
@@ -95,21 +95,22 @@ export const Etage = () => {
               {etageList.map((etage, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/etage/${etage.id}`} color="link" size="sm">
+                    
                       {etage.id}
-                    </Button>
+                    
                   </td>
                   <td>{etage.etageNumero}</td>
-                  <td>{etage.batiment ? <Link to={`/batiment/${etage.batiment.id}`}>{etage.batiment.id}</Link> : ''}</td>
+                  <td>{etage.batiment ? etage.batiment.batimentNom : ''}</td>
+
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button onClick={() => handleShowView(etage)} size="sm" data-cy="entityDetailsButton">
+                      <Button onClick={() => handleShowView(etage)} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button onClick={() => handleSetShow(etage)}  size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                      <Button onClick={() => handleSetShow(etage)}  size="sm" data-cy="entityEditButton" className="custom-button-edit">
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline" >Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/etage/${etage.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/etage/${etage.id}/delete`}  size="sm" data-cy="entityDeleteButton"  className="custom-button-delete">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -119,20 +120,20 @@ export const Etage = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Etages found</div>
+          !loading && <div className="alert alert-warning">No Floors found</div>
         )}
       </div>
       <Modal show={showview} onHide={handleCloseView}>
         <Modal.Header closeButton>
-          <Modal.Title>Etage Details</Modal.Title>
+          <Modal.Title>Floor Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <table className="table">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Etage Numero</th>
-                <th>Batiment</th>
+                <th>Floor Number</th>
+                <th>Building</th>
               </tr>
             </thead>
             <tbody>
@@ -141,7 +142,7 @@ export const Etage = () => {
 
                 <td>{selectedEtage?.etageNumero}</td>
 
-                <td>{selectedEtage?.batiment}</td>
+                <td>{selectedEtage?.batimentNom }</td>
               </tr>
             </tbody>
           </table>
@@ -154,7 +155,7 @@ export const Etage = () => {
       </Modal>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Etage</Modal.Title>
+          <Modal.Title>Edit Floor</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row className="justify-content-center">

@@ -74,7 +74,7 @@ export const LocaleUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="feOptimisationEnergieApp.locale.home.createOrEditLabel" data-cy="LocaleCreateUpdateHeading">
-            Create or edit a Locale
+            Create a Local
           </h2>
         </Col>
       </Row>
@@ -87,16 +87,17 @@ export const LocaleUpdate = () => {
               {!isNew ? <ValidatedField name="id" required readOnly id="locale-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Numero" id="locale-numero" name="numero" data-cy="numero" type="text" />
               <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="select" >
-                <option value="A1">Appartement</option>
-                <option value="A2">Office</option>
-                <option value="A3">Cabinet</option>
+              <option value=""></option>
+                <option value="Appartement">Appartement</option>
+                <option value="Office">Office</option>
+                <option value="Cabinet">Cabinet</option>
               </ValidatedField>
-              <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Etage" type="select">
+              <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Floor Number" type="select">
                 <option value="" key="0" />
                 {etages
                   ? etages.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.etageNumero}
                       </option>
                     ))
                   : null}

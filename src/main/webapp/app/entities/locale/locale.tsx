@@ -75,7 +75,7 @@ export const Locale = () => {
           </Button>
           <Link to="/locale/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Local
+            &nbsp;  new Local
           </Link>
         </div>
       </h2>
@@ -86,8 +86,8 @@ export const Locale = () => {
               <tr>
                 <th>ID</th>
                 <th>Numero</th>
-                <th>Type Local</th>
-                <th>Etage</th>
+                <th>  Local Type</th>
+                <th>Floor</th>
                 <th style={{ textAlign: 'center' }}>      Action</th>
                 <th />
               </tr>
@@ -100,7 +100,8 @@ export const Locale = () => {
                   </td>
                   <td>{locale.numero}</td>
                   <td>{locale.typeLocal}</td>
-                  <td>{locale.etage ? <Link to={`/etage/${locale.etage.id}`}>{locale.etage.id}</Link> : ''}</td>
+                  <td>{locale.etage ? locale.etage.id : ''}</td>
+
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
                       <Button onClick={() => handleShowView(locale)} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
@@ -124,7 +125,7 @@ export const Locale = () => {
       </div>
       <Modal show={showview} onHide={handleCloseView}>
         <Modal.Header closeButton>
-          <Modal.Title> Locale Details</Modal.Title>
+          <Modal.Title> Local Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <table className="table">
@@ -132,8 +133,8 @@ export const Locale = () => {
               <tr>
                 <th>ID</th>
                 <th>Numero</th>
-                <th>Type Local</th>
-                <th>Etage</th>
+                <th> Local Type</th>
+                <th>Floor</th>
 
               </tr>
             </thead>
@@ -145,7 +146,7 @@ export const Locale = () => {
 
                 <td>{selectedLocale?.typeLocal}</td>
 
-                <td>{selectedLocale?.etage}</td>
+                <td>{selectedLocale?.etage.id}</td>
 
               </tr>
             </tbody>
@@ -159,7 +160,7 @@ export const Locale = () => {
       </Modal>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Locale</Modal.Title>
+          <Modal.Title>Edit Local</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row className="justify-content-center">
@@ -171,7 +172,7 @@ export const Locale = () => {
 
                   <ValidatedField label="Numero" id="locale-numero" name="numero" data-cy="numero" type="text" />
                   <ValidatedField label="Type Local" id="locale-typeLocale" name="typeLocal" data-cy="typeLocale" type="text" />
-                  <ValidatedField label="Etage" id="locale-etage" name="etage" data-cy="etage" type="text" />
+                  <ValidatedField label="Floor" id="locale-etage" name="etage" data-cy="etage" type="text" />
 
                   <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/locale" replace color="info">
                     <FontAwesomeIcon icon="arrow-left" />

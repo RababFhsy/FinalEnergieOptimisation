@@ -67,7 +67,7 @@ export const BatimentUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="feOptimisationEnergieApp.batiment.home.createOrEditLabel" data-cy="BatimentCreateUpdateHeading">
-            Create or edit a Batiment
+            Create building
           </h2>
         </Col>
       </Row>
@@ -78,8 +78,8 @@ export const BatimentUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="batiment-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Adresse" id="batiment-adresse" name="adresse" data-cy="adresse" type="text" />
-              <ValidatedField label="Batiment Nom" id="batiment-batimentNom" name="batimentNom" data-cy="batimentNom" type="text" />
+              <ValidatedField label="Adress" id="batiment-adresse" name="adresse" data-cy="adresse" type="text" />
+              <ValidatedField label="Building Name" id="batiment-batimentNom" name="batimentNom" data-cy="batimentNom" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/batiment" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
