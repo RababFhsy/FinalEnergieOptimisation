@@ -131,17 +131,19 @@ export const CapteurBoitier = () => {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Branche</th>
-          <th>CapteurID</th>
-          <th>BoitierID</th>
+          <th>Boitier</th>
+          <th>Branch</th>
+          <th>Sensor</th>
+
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>{selectedCapteurBoitier?.id}</td>
+          <td>{selectedCapteurBoitier?.boitier?.type}</td>
           <td>{selectedCapteurBoitier?.branche}</td>
-          <td>{selectedCapteurBoitier?.capteur?.id}</td>
-          <td>{selectedCapteurBoitier?.boitier?.id}</td>
+          <td>{selectedCapteurBoitier?.capteur?.type}</td>
+
         </tr>
       </tbody>
     </table>

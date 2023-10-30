@@ -111,7 +111,7 @@ export const CapteurBoitierUpdate = () => {
   //   }
   //   generateBranchOptions();
   // };
-  
+
   const handleAddRow = () => {
     if (selectedBoitier) {
       const newRow = { ...formData, boitier: selectedBoitier };
@@ -122,32 +122,32 @@ export const CapteurBoitierUpdate = () => {
         branche: '',
         capteur: '',
       });
-      
+
     }
   };
 
   const handleInputChange = (event) => {
     const selectedBoitierId = event.target.value;
     const selectedBoitier = boitiers.find((it) => it.id.toString() === selectedBoitierId);
-  
+
     if (selectedBoitier) {
       const usedBranchesForSelectedBoitier = capteurBoitierList
         .filter((item) => item.boitier.id === selectedBoitierId)
         .map((item) => item.branche);
       const remaining = selectedBoitier.nbrBranche - usedBranchesForSelectedBoitier.length;
-  
+
       // Set "remaining" in your state (if needed)
       setRemainingBranches(remaining);
-  
+
       // Set "usedBranches" in your state
       setUsedBranches({ ...usedBranches, [selectedBoitierId]: usedBranchesForSelectedBoitier });
-      
-  
+
+
     }
-  
+
     // Call the "generateBranchOptions" function if needed
     generateBranchOptions();
-  
+
     // The following code is for handling form input changes
     const { name, value } = event.target;
     if (name === 'boitier') {
@@ -160,23 +160,23 @@ export const CapteurBoitierUpdate = () => {
     });
   };
 
-  
-  
-  
-  
-  
+
+
+
+
+
   const mapBoitierType = (boitierId) => {
     const boitier = boitiers.find((entity) => entity.id.toString() === boitierId.toString());
     return boitier ? boitier.type : '';
   };
-  
+
   const mapCapteurType = (capteurId) => {
     const capteur = capteurs.find((entity) => entity.id.toString() === capteurId.toString());
     return capteur ? capteur.type : '';
   };
-  
 
-  
+
+
   const generateBranchOptions = () => {
   const selectedBoitierId = defaultValues().boitier;
   const selectedBoitierUsedBranches = usedBranches[selectedBoitierId] || [];
@@ -252,7 +252,7 @@ export const CapteurBoitierUpdate = () => {
               >
                 {generateBranchOptions()}
               </ValidatedField>
-              <ValidatedField 
+              <ValidatedField
               id="capteur-boitier-capteur" onChange={handleInputChange}
                name="capteur" data-cy="capteur" label="Sensor" type="select">
                 <option value="" key="0" />
@@ -264,7 +264,7 @@ export const CapteurBoitierUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-             
+
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/capteur-boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -282,7 +282,7 @@ export const CapteurBoitierUpdate = () => {
               }}
               disabled={updating}
             >
-              
+
               <span className="d-none d-md-inline">Add</span>
             </Button>
 
@@ -300,10 +300,10 @@ export const CapteurBoitierUpdate = () => {
           onClick={handleSubmitAllRows}
           disabled={updating || tableData.length === 0} // Disable the button if there are no rows in the table
         >
-          Submit All 
+          Submit All
         </Button>
-       
-     
+
+
     </div>
     <div className="container-left">
     <table className="responsive-table">
