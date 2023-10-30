@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
 import { Row, Col, Alert, Button } from 'reactstrap';
-import { toast } from 'react-toastify';
-
+import { toast } from 'react-toastify';\
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { handleRegister, reset } from './register.reducer';
+import 'app/shared/layout/customStyles/loginForm.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const RegisterPage = () => {
   const [password, setPassword] = useState('');
@@ -33,21 +34,20 @@ export const RegisterPage = () => {
   }, [successMessage]);
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <h1 id="register-title" data-cy="registerTitle">
-            Registration
-          </h1>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col md="8">
+  <section className="login">
+  <div className="login_box">
+  <div className="left">
+  <div className="contact">
+          
+          
           <ValidatedForm id="register-form" onSubmit={handleValidSubmit}>
+          <h2 id="register-title" className="login-title" data-cy="registerTitle">
+            Registration
+          </h2>
+          <div className="form-group">
             <ValidatedField
               name="username"
-              label="Username"
-              placeholder="Your username"
+              placeholder="Username"
               validate={{
                 required: { value: true, message: 'Your username is required.' },
                 pattern: {
@@ -59,10 +59,11 @@ export const RegisterPage = () => {
               }}
               data-cy="username"
             />
+            </div>
+            <div className="form-group">
             <ValidatedField
               name="email"
-              label="Email"
-              placeholder="Your email"
+              placeholder="Email"
               type="email"
               validate={{
                 required: { value: true, message: 'Your email is required.' },
@@ -72,9 +73,10 @@ export const RegisterPage = () => {
               }}
               data-cy="email"
             />
+            </div>
+            <div className="form-group">
             <ValidatedField
               name="firstPassword"
-              label="New password"
               placeholder="New password"
               type="password"
               onChange={updatePassword}
@@ -85,10 +87,11 @@ export const RegisterPage = () => {
               }}
               data-cy="firstPassword"
             />
+            </div>
             <PasswordStrengthBar password={password} />
+            <div className="form-group">
             <ValidatedField
               name="secondPassword"
-              label="New password confirmation"
               placeholder="Confirm the new password"
               type="password"
               validate={{
@@ -99,23 +102,26 @@ export const RegisterPage = () => {
               }}
               data-cy="secondPassword"
             />
-            <Button id="register-submit" color="primary" type="submit" data-cy="submit">
-              Register
-            </Button>
+            </div>
+            <button type="submit" data-cy="submit" className="submit">
+        Register
+      </button>
+     
           </ValidatedForm>
-          <p>&nbsp;</p>
-          <Alert color="warning">
-            <span>If you want to</span>
-            <a className="alert-link">sign in</a>
-            <span>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User (login=&quot;user&quot; and
-              password=&quot;user&quot;).
-            </span>
-          </Alert>
-        </Col>
-      </Row>
+          
+          </div>
+		</div>
+    <div className="right">
+				<div className="right-text">
+        <h2>Energy Optimisation</h2>
+					<h5>in smart buildings</h5>
+				</div>
+				<div className="right-inductor">
+          <img src="" alt=""/></div>
+			</div>
     </div>
+	</section>
+    
   );
 };
 

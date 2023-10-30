@@ -10,13 +10,13 @@ const EntitiesMenu = () => {
         Preference
       </MenuItem>
       <MenuItem icon="asterisk" to="/energie">
-        Energie
+        Energy
       </MenuItem>
       <MenuItem icon="asterisk" to="/consommation">
       Consumption
       </MenuItem>
       <MenuItem icon="asterisk" to="/anomalie">
-        Anomalie
+        Anomaly
       </MenuItem>
       <MenuItem icon="asterisk" to="/prediction">
         Prediction
@@ -37,7 +37,7 @@ const EntitiesMenu = () => {
         Boitier
       </MenuItem>
       <MenuItem icon="asterisk" to="/locale-boitier">
-        Local Boitier
+        Assign Boitier to Local 
       </MenuItem>
       <MenuItem icon="asterisk" to="/capteur-boitier">
         Assign Sensor to Boitier

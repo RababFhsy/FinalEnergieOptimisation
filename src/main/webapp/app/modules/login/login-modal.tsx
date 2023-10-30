@@ -3,6 +3,8 @@ import { ValidatedField } from 'react-jhipster';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Row, Col, Form } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import 'app/shared/layout/customStyles/loginForm.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface ILoginModalProps {
   showModal: boolean;
@@ -29,68 +31,71 @@ const LoginModal = (props: ILoginModalProps) => {
   };
 
   return (
-    <Modal isOpen={props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
-      <Form onSubmit={handleLoginSubmit}>
-        <ModalHeader id="login-title" data-cy="loginTitle" toggle={handleClose}>
-          Sign in
-        </ModalHeader>
-        <ModalBody>
-          <Row>
-            <Col md="12">
-              {loginError ? (
-                <Alert color="danger" data-cy="loginError">
-                  <strong>Failed to sign in!</strong> Please check your credentials and try again.
-                </Alert>
-              ) : null}
-            </Col>
-            <Col md="12">
-              <ValidatedField
-                name="username"
-                label="Username"
-                placeholder="Your username"
-                required
-                autoFocus
-                data-cy="username"
-                validate={{ required: 'Username cannot be empty!' }}
-                register={register}
-                error={errors.username}
-                isTouched={touchedFields.username}
-              />
-              <ValidatedField
-                name="password"
-                type="password"
-                label="Password"
-                placeholder="Your password"
-                required
-                data-cy="password"
-                validate={{ required: 'Password cannot be empty!' }}
-                register={register}
-                error={errors.password}
-                isTouched={touchedFields.password}
-              />
-              <ValidatedField name="rememberMe" type="checkbox" check label="Remember me" value={true} register={register} />
-            </Col>
-          </Row>
-          <div className="mt-1">&nbsp;</div>
-          <Alert color="warning">
-            <Link to="/account/reset/request" data-cy="forgetYourPasswordSelector">
-              Did you forget your password?
-            </Link>
-          </Alert>
-          <Alert color="warning">
-            <span>You don&apos;t have an account yet?</span> <Link to="/account/register">Register a new account</Link>
-          </Alert>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={handleClose} tabIndex={1}>
-            Cancel
-          </Button>{' '}
-          <Button color="primary" type="submit" data-cy="submit">
-            Sign in
-          </Button>
-        </ModalFooter>
-      </Form>
-    </Modal>
+  <section className="login">
+  <div className="login_box">
+  <div className="left">
+  <div className="contact">
+  <form onSubmit={handleLoginSubmit}>
+    <h2 className="login-title">Sign in</h2>
+    <div className="form-group">
+      
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Username"
+        required
+        autoComplete="off"
+        data-cy="username"
+        {...register('username', { required: 'Username cannot be empty!' })}
+      />
+      {errors.username && (
+        <div className="error-message">{errors.username.message}</div>
+      )}
+    </div>
+    <div className="form-group">
+      
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Password"
+        required
+        autoComplete="off"
+        data-cy="password"
+        {...register('password', { required: 'Password cannot be empty!' })}
+      />
+      {errors.password && (
+        <div className="error-message">{errors.password.message}</div>
+      )}
+    </div>
+    
+    <div className="form-group">
+     
+    <div className="button-container">
+      <button type="submit" data-cy="submit" className="submit">
+        SignIn
+      </button>
+      <Link to="/account/register">
+        <button className="submit">Register</button>
+      </Link>
+    </div>
+    </div>
+  </form>
+  </div>
+			</div>
+			<div className="right">
+				<div className="right-text">
+        <h2>Energy Optimisation</h2>
+					<h5>in smart buildings</h5>
+				</div>
+				<div className="right-inductor">
+          <img src="" alt=""/></div>
+			</div>
+		</div>
+	</section>
+
+
   );
 };
 
