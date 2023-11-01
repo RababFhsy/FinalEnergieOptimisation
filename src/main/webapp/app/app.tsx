@@ -32,11 +32,12 @@ export const App = () => {
   const ribbonEnv = useAppSelector(state => state.applicationProfile.ribbonEnv);
   const isInProduction = useAppSelector(state => state.applicationProfile.inProduction);
   const isOpenAPIEnabled = useAppSelector(state => state.applicationProfile.isOpenAPIEnabled);
-
+ 
   const paddingTop = '60px';
+  
   return (
     <BrowserRouter basename={baseHref}>
-      <div className="app-container" >
+      <div className="app-container" style={{ paddingTop }}>
         <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
         <ErrorBoundary>
           <Header
@@ -48,12 +49,12 @@ export const App = () => {
           />
         </ErrorBoundary>
         <div className="container-fluid view-container" id="app-view-container">
-          {/* <Card className="jh-card"> */}
+          <Card className="jh-card">
             <ErrorBoundary>
               <AppRoutes />
             </ErrorBoundary>
-          {/* </Card> */}
-          {/* <Footer /> */}
+          </Card>
+          <Footer />
         </div>
       </div>
     </BrowserRouter>
