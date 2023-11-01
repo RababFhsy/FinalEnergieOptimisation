@@ -1,0 +1,17 @@
+// home.scss
+.home-container {
+    background-image: url('https://g2x8d6w8.rocketcdn.me/wp-content/uploads/2021/06/smart-building.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh; /* Assurez-vous que la hauteur du conteneur couvre toute la hauteur de l'écran */
+    width: 100%; /* Assurez-vous que la largeur du conteneur couvre toute la largeur de l'écran */
+    display: flex;
+    justify-content: center;
+    align-items: center;}
+
+  .custom-alert-container {
+    padding: 450px;
+    line-height: 1.5; // Vous pouvez ajuster ce nombre en fonction de l'espacement souhaité entre les lignes
+  }
+  
