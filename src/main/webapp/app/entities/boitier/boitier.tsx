@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
+import 'app/shared/layout/customStyles/customStyles.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Col, Image, Modal, Row} from "react-bootstrap";
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
-import 'app/shared/layout/customStyles/customStyles.scss';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities, getEntity, updateEntity } from './boitier.reducer';
+import { getEntities as getBoitiersDetail } from 'app/entities/capteur-boitier/capteur-boitier.reducer';
 
 
 
@@ -26,6 +27,10 @@ export const Boitier = () => {
   const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
 
   const [selectedBoitier, setSelectedBoitier] = useState(null);
+  const capteurBoitierList = useAppSelector(state => state.capteurBoitier.entities);
+  const capteurs = useAppSelector(state => state.capteur.entities);
+  const boitiers = useAppSelector(state => state.boitier.entities);
+  const capteurBoitierEntity = useAppSelector(state => state.capteurBoitier.entity);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -33,6 +38,12 @@ export const Boitier = () => {
 
   const handleSyncList = () => {
     dispatch(getEntities({}));
+  };
+  useEffect(() => {
+    dispatch(getBoitiersDetail({}));
+  }, []);
+  const handleSyncListBoitiersDetail = () => {
+    dispatch(getBoitiersDetail({}));
   };
 
 
@@ -51,6 +62,7 @@ export const Boitier = () => {
     dispatch(getEntity(boitier.id)); // Déplacez la logique ici
     setShow(true);
   };
+  console.log(capteurBoitierList);
 
 
 
@@ -71,6 +83,10 @@ export const Boitier = () => {
   };
 
   const defaultValues = () => boitierEntity;
+  console.log("capteurBoitierList: " + JSON.stringify(capteurBoitierList, null, 2));
+  
+
+  
 
 
   return (
@@ -132,30 +148,61 @@ export const Boitier = () => {
       </div>
 
 
+
       <Modal show={showview} onHide={handleCloseView}>
         <Modal.Header closeButton>
           <Modal.Title>Boitier Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Row>
-            <Col md="12">
-              <dl className="jh-entity-details">
-                <dt>ID</dt>
-                <dd>{selectedBoitier?.id}</dd>
-                <dt>Boitier Reference</dt>
-                <dd>{selectedBoitier?.boitierReference}</dd>
-                <dt>Boitier Type</dt>
-                <dd>{selectedBoitier?.type}</dd>
-                <dt>Branch numbers</dt>
-                <dd>
-                  {selectedBoitier?.nbrBranche}
-                </dd>
-              </dl>
-            </Col>
-          </Row>
+        <table className="table">
+  <thead >
+    <tr>
+      
+      <th className="header-table">Sensor Type</th>
+      <th className="header-table">Sensor Reference</th>
+      <th  className="header-table">Branch</th>
+      <th className="header-table">Image</th>
+     
+    </tr>
+  </thead>
+
+ 
+  <tbody>
+  {capteurBoitierList.map((capteurBoitier, i) => {
+    // Check if a matching boitier was found
+    if (selectedBoitier && capteurBoitier.boitier.id === selectedBoitier.id) {
+      return (
+        <tr key={`entity-${i}`} data-cy="entityTable">
+          
+          <td>{capteurBoitier.capteur?.type || ''}</td>
+          <td>{capteurBoitier.capteur?.capteurReference || ''}</td>
+          <td>{capteurBoitier.branche || ''}</td>
+          <td>
+  {capteurBoitier.capteur?.photo ? (
+    <img
+      src={`data:${capteurBoitier.capteur.photoContentType};base64,${capteurBoitier.capteur.photo}`}
+      alt="Sensor Photo"
+      style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust the values as needed
+    />
+  ) : null}
+</td>
+
+        </tr>
+      );
+    }
+    return null; // Return null for non-matching entries
+  })}
+</tbody>
+
+
+
+</table>
+
+          
+          
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseView}>
+        <Button color="primary" onClick={handleCloseView}>
           Close
         </Button>
         </Modal.Footer>
@@ -200,7 +247,7 @@ export const Boitier = () => {
 
         </Modal.Body>
         <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button  color="primary" onClick={handleClose}>
           Close
         </Button>
         </Modal.Footer>

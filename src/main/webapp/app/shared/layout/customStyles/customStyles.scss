@@ -7,6 +7,16 @@
     color: #03045E ; // Set the text color to the desired color
     
   }
+
+  .custom-header {
+    background-color: #a59d9d;
+    color: #000000;
+    font-weight: bold;
+    text-align: center; /* Center-align text in header cells */
+    padding: 10px; /* Add padding to the header cells */
+    border-bottom: 2px solid #ffffff; /* Add a bottom border to the header row */
+  }
+  
   .custom-button-edit {
     border-color: #0077B6; // Set the border color
     border-width: 2px; // Set the border width
