@@ -18,6 +18,7 @@ export const CapteurBoitier = () => {
   const navigate = useNavigate();
 
   const capteurBoitierList = useAppSelector(state => state.capteurBoitier.entities);
+  console.log(capteurBoitierList)
   const loading = useAppSelector(state => state.capteurBoitier.loading);
 
 
@@ -44,8 +45,7 @@ export const CapteurBoitier = () => {
         Assign Sensor to Boitier
         <div className="d-flex justify-content-end">
           <Button   onClick={handleSyncList} disabled={loading}
-          className="me-2 btn-light custom-button-refresh"
-        >
+          className="me-2 btn-light custom-button-refresh">
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
           <Link to="/capteur-boitier/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
