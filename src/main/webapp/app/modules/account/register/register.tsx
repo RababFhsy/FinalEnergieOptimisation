@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { ValidatedField, ValidatedForm, isEmail } from 'react-jhipster';
 import { Row, Col, Alert, Button } from 'reactstrap';
 import { toast } from 'react-toastify';
+
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { handleRegister, reset } from './register.reducer';
-import 'app/shared/layout/customStyles/loginForm.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const RegisterPage = () => {
   const [password, setPassword] = useState('');
@@ -34,20 +33,21 @@ export const RegisterPage = () => {
   }, [successMessage]);
 
   return (
-  <section className="login">
-  <div className="login_box">
-  <div className="left">
-  <div className="contact">
-          
-          
-          <ValidatedForm id="register-form" onSubmit={handleValidSubmit}>
-          <h2 id="register-title" className="login-title" data-cy="registerTitle">
+    <div>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h1 id="register-title" data-cy="registerTitle">
             Registration
-          </h2>
-          <div className="form-group">
+          </h1>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <ValidatedForm id="register-form" onSubmit={handleValidSubmit}>
             <ValidatedField
               name="username"
-              placeholder="Username"
+              label="Username"
+              placeholder="Your username"
               validate={{
                 required: { value: true, message: 'Your username is required.' },
                 pattern: {
@@ -59,11 +59,10 @@ export const RegisterPage = () => {
               }}
               data-cy="username"
             />
-            </div>
-            <div className="form-group">
             <ValidatedField
               name="email"
-              placeholder="Email"
+              label="Email"
+              placeholder="Your email"
               type="email"
               validate={{
                 required: { value: true, message: 'Your email is required.' },
@@ -73,10 +72,9 @@ export const RegisterPage = () => {
               }}
               data-cy="email"
             />
-            </div>
-            <div className="form-group">
             <ValidatedField
               name="firstPassword"
+              label="New password"
               placeholder="New password"
               type="password"
               onChange={updatePassword}
@@ -87,11 +85,10 @@ export const RegisterPage = () => {
               }}
               data-cy="firstPassword"
             />
-            </div>
             <PasswordStrengthBar password={password} />
-            <div className="form-group">
             <ValidatedField
               name="secondPassword"
+              label="New password confirmation"
               placeholder="Confirm the new password"
               type="password"
               validate={{
@@ -102,26 +99,17 @@ export const RegisterPage = () => {
               }}
               data-cy="secondPassword"
             />
-            </div>
-            <button type="submit" data-cy="submit" className="submit">
-        Register
-      </button>
-     
+            <Button id="register-submit" color="primary" type="submit" data-cy="submit">
+              Register
+            </Button>
           </ValidatedForm>
-          
-          </div>
-		</div>
-    <div className="right">
-				<div className="right-text">
-        <h2>Energy Optimisation</h2>
-					<h5>in smart buildings</h5>
-				</div>
-				<div className="right-inductor">
-          <img src="" alt=""/></div>
-			</div>
+          <p>&nbsp;</p>
+         
+        </Col>
+      </Row>
+      
+      
     </div>
-	</section>
-    
   );
 };
 
