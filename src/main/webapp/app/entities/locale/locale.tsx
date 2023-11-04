@@ -10,12 +10,15 @@ import { Col, Image, Modal, Row } from 'react-bootstrap';
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
 import { ILocale } from 'app/shared/model/locale.model';
 import { getEntities, getEntity, updateEntity } from './locale.reducer';
+import { getEntities as getBoitiersLocalDetail } from 'app/entities/locale-boitier/locale-boitier.reducer';
 
 export const Locale = () => {
   const dispatch = useAppDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
+  const localeBoitierList = useAppSelector(state => state.localeBoitier.entities);
+  const localeBoitierEntity = useAppSelector(state => state.localeBoitier.loading);
 
   const localeList = useAppSelector(state => state.locale.entities);
   const loading = useAppSelector(state => state.locale.loading);
@@ -30,6 +33,12 @@ export const Locale = () => {
 
   const handleSyncList = () => {
     dispatch(getEntities({}));
+  };
+  useEffect(() => {
+    dispatch(getBoitiersLocalDetail({}));
+  }, []);
+  const handleSyncListBoitiersLocalDetail = () => {
+    dispatch(getBoitiersLocalDetail({}));
   };
   const { id } = useParams<'id'>();
   const localeEntity = useAppSelector(state => state.locale.entity);
@@ -64,6 +73,7 @@ export const Locale = () => {
   };
 
   const defaultValues = () => localeEntity;
+  console.log("LocalBoitierList: " + JSON.stringify(localeBoitierList null, 2));
 
   return (
     <div>
@@ -125,35 +135,66 @@ export const Locale = () => {
       </div>
       <Modal show={showview} onHide={handleCloseView}>
         <Modal.Header closeButton>
-          <Modal.Title> Local Details</Modal.Title>
+          <Modal.Title> Boitier Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Numero</th>
-                <th> Local Type</th>
-                <th>Floor</th>
+                <th>Boitier Reference</th>
+                <th>Boitier Type</th>
+                <th> Start Date</th>
+                <th>End Date</th>
 
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>{selectedLocale?.id}</td>
+  {localeBoitierList.map((localeBoitier, i) => {
+    // Check if a matching boitier was found
+    if (selectedLocale && localeBoitier.locale?.id === selectedLocale.id) {
+    
+      return (
+        <tr key={`entity-${i}`} data-cy="entityTable">
+            {/* <td>{localeBoitier.locale?.id}</td> */}
+          <td>{localeBoitier.boitier?.boitierReference || ''}</td>
+          <td>{localeBoitier.boitier?.type || ''}</td>
+          <td>{localeBoitier.dateDebut|| ''}</td>
+          <td>{localeBoitier.dateFin|| ''}</td>
+     
 
-                <td>{selectedLocale?.numero}</td>
+        </tr>
+      );
+    }
+    
+    
+    return null; // Return null for non-matching entries
+  })}
+</tbody>
+            {/* <tbody>
+  {capteurBoitierList.map((capteurBoitier, i) => {
+    // Check if a matching boitier was found
+    if (selectedBoitier && capteurBoitier.boitier.id === selectedBoitier.id) {
+      return (
+        <tr key={`entity-${i}`} data-cy="entityTable">
+          
+          <td>{capteurBoitier.capteur?.type || ''}</td>
+          <td>{capteurBoitier.capteur?.capteurReference || ''}</td>
+          <td>{capteurBoitier.branche || ''}</td>
+          
 
-                <td>{selectedLocale?.typeLocal}</td>
+        </tr>
+      );
+    }
+    return null; // Return null for non-matching entries
+  })}
+</tbody> */}
 
-                <td>{selectedLocale?.etage.id}</td>
 
-              </tr>
-            </tbody>
+            
           </table>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseView}>
+          <Button color="primary" onClick={handleCloseView}>
             Close
           </Button>
         </Modal.Footer>
@@ -190,7 +231,7 @@ export const Locale = () => {
           </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button color="primary" onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>

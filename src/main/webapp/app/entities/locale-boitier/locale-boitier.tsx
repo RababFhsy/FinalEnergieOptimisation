@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ILocaleBoitier } from 'app/shared/model/locale-boitier.model';
 import { getEntities } from './locale-boitier.reducer';
 
+
 export const LocaleBoitier = () => {
   const dispatch = useAppDispatch();
 
@@ -26,6 +27,7 @@ export const LocaleBoitier = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
+  
 
   return (
     <div>
