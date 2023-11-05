@@ -259,7 +259,7 @@ export const LocaleBoitierUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="locale-boitier-locale" name="etage" data-cy="etage" label="etage" type="select" disabled={etageDisabled} onChange={handleInputChange}>
+              <ValidatedField id="locale-boitier-locale" name="etage" data-cy="etage" label="Floor" type="select" disabled={etageDisabled} onChange={handleInputChange}>
                 <option value="" key="0" />
                 {filteredEtages
                   ? filteredEtages.map(otherEntity => (
@@ -269,7 +269,7 @@ export const LocaleBoitierUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="locale-boitier-locale" name="locale" data-cy="locale" label="Locale" type="select" disabled={localeDisabled} onChange={handleInputChange}>
+              <ValidatedField id="locale-boitier-locale" name="locale" data-cy="locale" label="Local" type="select" disabled={localeDisabled} onChange={handleInputChange}>
               <option value="" key="0" />
               {filteredLocales
                 ? filteredLocales.map((otherEntity) => (
@@ -279,7 +279,7 @@ export const LocaleBoitierUpdate = () => {
                   ))
                 : null}
               </ValidatedField>
-              <ValidatedField id="locale-boitier-boitier" name="boitier" data-cy="boitier" label="Boitier" type="select" onChange={handleInputChange} value={formData.boitier}>
+              <ValidatedField id="locale-boitier-boitier" name="boitier" data-cy="boitier" label="Box" type="select" onChange={handleInputChange} value={formData.boitier}>
                 <option value="" key="0" />
                 {boitiers
                   ? boitiers.map(otherEntity => (
@@ -290,9 +290,9 @@ export const LocaleBoitierUpdate = () => {
                   : null}
               </ValidatedField>
               {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-              <ValidatedField label="Date Debut" id="locale-boitier-dateDebut" name="dateDebut" data-cy="dateDebut" type="date" value={currentDate} // Set the value to the current date
+              <ValidatedField label="First date" id="locale-boitier-dateDebut" name="dateDebut" data-cy="dateDebut" type="date" value={currentDate} // Set the value to the current date
                 onChange={handleInputChange}  disabled />
-              <ValidatedField label="Date Fin" id="locale-boitier-dateFin" name="dateFin" data-cy="dateFin" type="date" onChange={handleInputChange} value={formData.dateFin}/>
+              <ValidatedField label="Last date" id="locale-boitier-dateFin" name="dateFin" data-cy="dateFin" type="date" onChange={handleInputChange} value={formData.dateFin}/>
               
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/locale-boitier" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -301,17 +301,20 @@ export const LocaleBoitierUpdate = () => {
               </Button>
               &nbsp;
               <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" 
-              disabled={updating} onClick={handleAddRow}>
+              disabled={updating} onClick={handleAddRow}
+              style={{ marginRight: '10px' }}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp; Add
               </Button>
-            <Button
+              <Button
               color="primary"
               id="submit-all-rows"
               data-cy="submitAllRowsButton"
+              replace
               type="button"
               onClick={handleSubmitAllRows}
               disabled={updating || tableData.length === 0} // Disable the button if there are no rows in the table
+              
             >
               Submit All
             </Button>
@@ -327,8 +330,8 @@ export const LocaleBoitierUpdate = () => {
               <th className="col col-1" style={{ textAlign: 'center' }}>Building</th>
               <th className="col col-1" style={{ textAlign: 'center' }}>Local</th>
               <th className="col col-1" style={{ textAlign: 'center' }}>Box</th>
-              <th className="col col-1" style={{ textAlign: 'center' }}>First Date</th>
-              <th className="col col-1" style={{ textAlign: 'center' }}>Last Date</th>
+              <th className="col col-1" style={{ textAlign: 'center' }}>First date</th>
+              <th className="col col-1" style={{ textAlign: 'center' }}>Last date</th>
               <th className="col col-1" style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
