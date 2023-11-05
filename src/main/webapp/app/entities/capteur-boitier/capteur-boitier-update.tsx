@@ -129,12 +129,12 @@ export const CapteurBoitierUpdate = () => {
 
   const mapBoitierType = (boitierId) => {
     const boitier = boitiers.find((entity) => entity.id.toString() === boitierId.toString());
-    return boitier ? boitier.type : '';
+    return boitier ? boitier.boitierReference : '';
   };
 
   const mapCapteurType = (capteurId) => {
     const capteur = capteurs.find((entity) => entity.id.toString() === capteurId.toString());
-    return capteur ? capteur.type : '';
+    return capteur ? capteur.capteurReference : '';
   };
 
 
@@ -249,7 +249,7 @@ export const CapteurBoitierUpdate = () => {
               {boitiers
                 ? boitiers.map(otherEntity => (
                     <option value={otherEntity.id} key={otherEntity.type}>
-                      {otherEntity.type}
+                      {otherEntity.boitierReference}
                     </option>
                   ))
                 : null}
@@ -284,7 +284,7 @@ export const CapteurBoitierUpdate = () => {
                 {capteurs
                   ? capteurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.type}>
-                        {otherEntity.type}
+                        {otherEntity.capteurReference}
                       </option>
                     ))
                   : null}

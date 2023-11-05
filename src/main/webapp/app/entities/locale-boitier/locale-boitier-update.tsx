@@ -124,6 +124,10 @@ export const LocaleBoitierUpdate = () => {
     });
   };
   
+  const mapBoitierRef = (boitierId) => {
+    const boitier = boitiers.find((entity) => entity.id.toString() === boitierId.toString());
+    return boitier ? boitier.type : '';
+  };
   
   
   
@@ -216,7 +220,7 @@ export const LocaleBoitierUpdate = () => {
                 {boitiers
                   ? boitiers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.boitierReference}
                       </option>
                     ))
                   : null}
@@ -270,7 +274,7 @@ export const LocaleBoitierUpdate = () => {
           {tableData.map((rowData, index) => (
               <tr key={index}>
                 <td style={{ textAlign: 'center' }}>{rowData.locale}</td>
-                <td style={{ textAlign: 'center' }}>{rowData.boitier}</td>
+                <td style={{ textAlign: 'center' }}>{mapBoitierRef(rowData.boitier)}</td>
                 <td style={{ textAlign: 'center' }}>
                  <TextFormat type="date" value={currentDate} format={APP_LOCAL_DATE_FORMAT} /> 
                 </td>

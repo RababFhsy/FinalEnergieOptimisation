@@ -117,7 +117,7 @@ export const Capteur = () => {
                       <div>
                         {capteur.photoContentType ? (
                           <a onClick={openFile(capteur.photoContentType, capteur.photo)}>
-                            <img src={`data:${capteur.photoContentType};base64,${capteur.photo}`} style={{ maxHeight: '80px' }} />
+                            <img src={`data:${capteur.photoContentType};base64,${capteur.photo}`}  />
                             &nbsp;
                           </a>
                         ) : null}
