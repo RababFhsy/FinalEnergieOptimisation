@@ -55,7 +55,9 @@ export const LocaleUpdate = () => {
     };
 
     if (isNew) {
-      dispatch(createEntity(entity));
+      dispatch(createEntity(entity)).then(response => {
+        console.log(' Local créé :', response);
+      });
     } else {
       dispatch(updateEntity(entity));
     }
