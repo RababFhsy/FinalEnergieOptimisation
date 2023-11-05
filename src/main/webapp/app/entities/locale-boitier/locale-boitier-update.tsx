@@ -50,7 +50,7 @@ export const LocaleBoitierUpdate = () => {
   const [filteredEtages, setFilteredEtages] = useState([]);
   
   const handleClose = () => {
-    navigate('/locale-boitier');
+    navigate('/locale');
   };
 
   useEffect(() => {
