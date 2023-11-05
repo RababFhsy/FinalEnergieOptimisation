@@ -142,6 +142,12 @@ public class PreferenceResource {
         return preferenceService.findAll();
     }
 
+    @GetMapping("/preferences/user")
+    public List<Preference> getPreferencesByUser(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+        log.debug("REST request to get all Preferences By User");
+        return preferenceRepository.findByUserIsCurrentUser();
+    }
+
     /**
      * {@code GET  /preferences/:id} : get the "id" preference.
      *

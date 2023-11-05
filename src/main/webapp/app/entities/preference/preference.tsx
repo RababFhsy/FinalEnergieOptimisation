@@ -8,7 +8,7 @@ import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IPreference } from 'app/shared/model/preference.model';
-import { getEntities } from './preference.reducer';
+import { getEntities, getEntitiesByUser } from './preference.reducer';
 
 export const Preference = () => {
   const dispatch = useAppDispatch();
@@ -17,14 +17,19 @@ export const Preference = () => {
   const navigate = useNavigate();
 
   const preferenceList = useAppSelector(state => state.preference.entities);
+  const preferenceListByUser = useAppSelector(state => state.preference. entitiesByUser);
+
   const loading = useAppSelector(state => state.preference.loading);
 
   useEffect(() => {
     dispatch(getEntities({}));
+    dispatch(getEntitiesByUser({}))
   }, []);
 
   const handleSyncList = () => {
     dispatch(getEntities({}));
+    dispatch(getEntitiesByUser({}))
+
   };
 
   return (
@@ -66,8 +71,8 @@ export const Preference = () => {
                   <td>{preference.tempMinValue}</td>
                   <td>{preference.tempMaxValue}</td>
                   <td>{preference.plageHoraire}</td>
-                  <td>{preference.user ? preference.user.login : ''}</td>
-                  <td>{preference.energie ? <Link to={`/energie/${preference.energie.id}`}>{preference.energie.id}</Link> : ''}</td>
+                  <td>{preference.user ? preference.user.firstName + ' ' + preference.user.lastName : ''}</td>
+                  <td>{preference.energie ? preference.energie.nomSystemEnergitique : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/preference/${preference.id}`} color="info" size="sm" data-cy="entityDetailsButton">

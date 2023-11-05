@@ -109,7 +109,7 @@ export const PreferenceUpdate = () => {
                 {energies
                   ? energies.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nomSystemEnergitique}
                       </option>
                     ))
                   : null}

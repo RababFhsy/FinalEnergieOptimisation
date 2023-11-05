@@ -18,6 +18,7 @@ export const CapteurBoitier = () => {
   const navigate = useNavigate();
 
   const capteurBoitierList = useAppSelector(state => state.capteurBoitier.entities);
+  // eslint-disable-next-line no-console
   console.log(capteurBoitierList)
   const loading = useAppSelector(state => state.capteurBoitier.loading);
 

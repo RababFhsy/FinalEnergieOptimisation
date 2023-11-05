@@ -127,24 +127,20 @@ export const Batiment = () => {
           <Modal.Title>Batiment Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Adresse</th>
-                <th>Nom du Batiment</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{selectedBatiment?.id}</td>
+        <Row>
+            <Col md="12">
+              <dl className="jh-entity-details">
+                <dt>ID</dt>
+                <dd>{selectedBatiment?.id}</dd>
+                <dt>Adress</dt>
+                <dd>{selectedBatiment?.adresse}</dd>
+                <dt>Building Name</dt>
+                <dd>{selectedBatiment?.batimentNom}</dd>
 
-                <td>{selectedBatiment?.adresse}</td>
+              </dl>
+            </Col>
+          </Row>
 
-                <td>{selectedBatiment?.batimentNom}</td>
-              </tr>
-            </tbody>
-          </table>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseView}>

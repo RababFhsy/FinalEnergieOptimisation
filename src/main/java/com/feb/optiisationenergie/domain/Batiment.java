@@ -24,6 +24,8 @@ public class Batiment implements Serializable {
     @Column(name = "batiment_nom")
     private String batimentNom;
 
+    public Batiment(){}
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {

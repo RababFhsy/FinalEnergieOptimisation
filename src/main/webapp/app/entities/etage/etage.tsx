@@ -7,6 +7,7 @@ import { Col, Image, Modal, Row } from 'react-bootstrap';
 import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { getEntities as getBatiments } from 'app/entities/batiment/batiment.reducer';
 
 import { IEtage } from 'app/shared/model/etage.model';
 import { getEntities, getEntity, updateEntity } from './etage.reducer';
@@ -17,13 +18,15 @@ export const Etage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+
+
   const etageList = useAppSelector(state => state.etage.entities);
   const loading = useAppSelector(state => state.etage.loading);
   const updating = useAppSelector(state => state.etage.updating);
   const updateSuccess = useAppSelector(state => state.etage.updateSuccess);
 
   const [selectedEtage, setSelectedEtage] = useState(null);
-
+  const batiments = useAppSelector(state => state.batiment.entities);
   useEffect(() => {
     dispatch(getEntities({}));
   }, []);
@@ -33,6 +36,7 @@ export const Etage = () => {
   };
 
   const { id } = useParams<'id'>();
+
   const etageEntity = useAppSelector(state => state.etage.entity);
   const [show, setShow] = useState(false);
   const [showview, setShowView] = useState(false);
@@ -52,16 +56,20 @@ export const Etage = () => {
     if (updateSuccess) {
       handleClose();
     }
+    dispatch(getBatiments({}));
   }, [updateSuccess]);
+
+
 
   const saveEntity = values => {
     const entity = {
       ...etageEntity,
       ...values,
+      batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
+
     };
 
     dispatch(updateEntity(entity));
-
   };
 
   const defaultValues = () => etageEntity;
@@ -94,11 +102,7 @@ export const Etage = () => {
             <tbody>
               {etageList.map((etage, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
-                    
-                      {etage.id}
-                    
-                  </td>
+                  <td>{etage.id}</td>
                   <td>{etage.etageNumero}</td>
                   <td>{etage.batiment ? etage.batiment.batimentNom : ''}</td>
 
@@ -107,10 +111,16 @@ export const Etage = () => {
                       <Button onClick={() => handleShowView(etage)} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button onClick={() => handleSetShow(etage)}  size="sm" data-cy="entityEditButton" className="custom-button-edit">
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline" >Edit</span>
+                      <Button onClick={() => handleSetShow(etage)} size="sm" data-cy="entityEditButton" className="custom-button-edit">
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/etage/${etage.id}/delete`}  size="sm" data-cy="entityDeleteButton"  className="custom-button-delete">
+                      <Button
+                        tag={Link}
+                        to={`/etage/${etage.id}/delete`}
+                        size="sm"
+                        data-cy="entityDeleteButton"
+                        className="custom-button-delete"
+                      >
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
@@ -128,24 +138,18 @@ export const Etage = () => {
           <Modal.Title>Floor Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Floor Number</th>
-                <th>Building</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{selectedEtage?.id}</td>
-
-                <td>{selectedEtage?.etageNumero}</td>
-
-                <td>{selectedEtage?.batimentNom }</td>
-              </tr>
-            </tbody>
-          </table>
+          <Row>
+            <Col md="12">
+              <dl className="jh-entity-details">
+                <dt>ID</dt>
+                <dd>{selectedEtage?.id}</dd>
+                <dt>Floor Number</dt>
+                <dd>{selectedEtage?.etageNumero}</dd>
+                <dt>Building</dt>
+                <dd>{selectedEtage?.batiment.batimentNom}</dd>
+              </dl>
+            </Col>
+          </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseView}>
@@ -165,8 +169,17 @@ export const Etage = () => {
               ) : (
                 <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
 
-                  <ValidatedField label="Etage Numero" id="etage-etageNumero" name="etageNumero" data-cy="etageNumero" type="text" />
-                  <ValidatedField label="Batiment" id="etage-batiment" name="batiment" data-cy="batiment" type="text" />
+                  <ValidatedField label="Floor Number" id="etage-etageNumero" name="etageNumero" data-cy="etageNumero" type="text" />
+                  <ValidatedField id="etage-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
+                    <option value="" key="0" />
+                    {batiments
+                      ? batiments.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.batimentNom}
+                          </option>
+                        ))
+                      : null}
+                  </ValidatedField>
                   <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/etage" replace color="info">
                     <FontAwesomeIcon icon="arrow-left" />
                     &nbsp;

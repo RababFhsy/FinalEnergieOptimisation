@@ -2,7 +2,7 @@ import React from 'react';
 
 import MenuItem from 'app/shared/layout/menus/menu-item';
 
-const EntitiesMenu = () => {
+const EntitiesMenu = ({isAdmin}) => {
   return (
     <>
       {/* prettier-ignore */}
@@ -21,27 +21,31 @@ const EntitiesMenu = () => {
       <MenuItem icon="asterisk" to="/prediction">
         Prediction
       </MenuItem>
-      <MenuItem icon="asterisk" to="/etage">
+
+
+      {isAdmin &&  <MenuItem icon="asterisk" to="/etage">
         Floor
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/locale">
+      </MenuItem> }
+      {isAdmin && <MenuItem icon="asterisk" to="/locale">
         Local
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/batiment">
+      </MenuItem>}
+      {isAdmin && <MenuItem icon="asterisk" to="/batiment">
       Building
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/capteur">
+      </MenuItem> }
+      {isAdmin && <MenuItem icon="asterisk" to="/capteur">
         Sensor
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/boitier">
+      </MenuItem> }
+      {isAdmin && <MenuItem icon="asterisk" to="/boitier">
         Boitier
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/locale-boitier">
-        Assign Boitier to Local 
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/capteur-boitier/new">
+      </MenuItem> }
+      {isAdmin && <MenuItem icon="asterisk" to="/locale-boitier">
+        Assign Boitier to Local
+      </MenuItem> }
+      {isAdmin && <MenuItem icon="asterisk" to="/capteur-boitier/new">
         Assign Sensor to Boitier
-      </MenuItem>
+      </MenuItem> }
+
+
       {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
     </>
   );

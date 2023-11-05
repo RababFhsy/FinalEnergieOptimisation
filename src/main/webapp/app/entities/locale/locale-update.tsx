@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IEtage } from 'app/shared/model/etage.model';
 import { getEntities as getEtages } from 'app/entities/etage/etage.reducer';
+
 import { ILocale } from 'app/shared/model/locale.model';
 import { getEntity, updateEntity, createEntity, reset } from './locale.reducer';
 

@@ -41,6 +41,14 @@ public interface PreferenceService {
      */
     List<Preference> findAll();
 
+     /**
+     * Get all the preferences.
+     *
+     * @return the list of entities.
+     */
+    // List<Preference> findByUserIsCurrentUser();
+;
+
     /**
      * Get all the preferences with eager load of many-to-many relationships.
      *

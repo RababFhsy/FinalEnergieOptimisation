@@ -41,9 +41,9 @@ export const PreferenceDetail = () => {
           </dt>
           <dd>{preferenceEntity.plageHoraire}</dd>
           <dt>User</dt>
-          <dd>{preferenceEntity.user ? preferenceEntity.user.login : ''}</dd>
+          <dd>{preferenceEntity.user ? preferenceEntity.user.firstName + ' ' + preferenceEntity.user.lastName  : ''}</dd>
           <dt>Energie</dt>
-          <dd>{preferenceEntity.energie ? preferenceEntity.energie.id : ''}</dd>
+          <dd>{preferenceEntity.energie ? preferenceEntity.energie.nomSystemEnergitique : ''}</dd>
         </dl>
         <Button tag={Link} to="/preference" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
