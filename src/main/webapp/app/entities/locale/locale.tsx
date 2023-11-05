@@ -79,7 +79,7 @@ export const Locale = () => {
   };
 
   const defaultValues = () => localeEntity;
-  /*console.log("LocalBoitierList: " + JSON.stringify(localeBoitierList null, 2));*/
+  // console.log("LocalBoitierList: " + JSON.stringify(localeBoitierList null, 2));
 
   return (
     <div>
@@ -192,24 +192,7 @@ export const Locale = () => {
     return null; // Return null for non-matching entries
   })}
 </tbody>
-            {/* <tbody>
-  {capteurBoitierList.map((capteurBoitier, i) => {
-    // Check if a matching boitier was found
-    if (selectedBoitier && capteurBoitier.boitier.id === selectedBoitier.id) {
-      return (
-        <tr key={`entity-${i}`} data-cy="entityTable">
-
-          <td>{capteurBoitier.capteur?.type || ''}</td>
-          <td>{capteurBoitier.capteur?.capteurReference || ''}</td>
-          <td>{capteurBoitier.branche || ''}</td>
-
-
-        </tr>
-      );
-    }
-    return null; // Return null for non-matching entries
-  })}
-</tbody> */}
+            
 
 
 

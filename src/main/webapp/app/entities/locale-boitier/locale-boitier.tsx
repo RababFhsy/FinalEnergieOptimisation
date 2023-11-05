@@ -34,12 +34,12 @@ export const LocaleBoitier = () => {
       <h2 id="locale-boitier-heading" data-cy="LocaleBoitierHeading">
         Locale Boitiers
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button className="me-2 btn-light custom-button-refresh" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/locale-boitier/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/locale-boitier/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Locale Boitier
+            &nbsp; new Locale Boitier
           </Link>
         </div>
       </h2>
@@ -51,8 +51,8 @@ export const LocaleBoitier = () => {
                 <th>ID</th>
                 <th>Date Debut</th>
                 <th>Date Fin</th>
-                <th>Locale</th>
-                <th>Boitier</th>
+                <th>Locale Number</th>
+                <th>Boitier Reference</th>
                 <th />
               </tr>
             </thead>
@@ -60,9 +60,9 @@ export const LocaleBoitier = () => {
               {localeBoitierList.map((localeBoitier, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/locale-boitier/${localeBoitier.id}`} color="link" size="sm">
+                   
                       {localeBoitier.id}
-                    </Button>
+                    
                   </td>
                   <td>
                     {localeBoitier.dateDebut ? (
@@ -72,30 +72,32 @@ export const LocaleBoitier = () => {
                   <td>
                     {localeBoitier.dateFin ? <TextFormat type="date" value={localeBoitier.dateFin} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{localeBoitier.locale ? <Link to={`/locale/${localeBoitier.locale.id}`}>{localeBoitier.locale.id}</Link> : ''}</td>
+                  <td>{localeBoitier.locale ? localeBoitier.locale.numero : ''}</td>
                   <td>
-                    {localeBoitier.boitier ? <Link to={`/boitier/${localeBoitier.boitier.id}`}>{localeBoitier.boitier.id}</Link> : ''}
+                  <td>{localeBoitier.locale ? localeBoitier.boitier?.boitierReference: ''}</td>
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/locale-boitier/${localeBoitier.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/locale-boitier/${localeBoitier.id}`} size="sm" data-cy="entityDetailsButton"  className="custom-button-view">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button
                         tag={Link}
                         to={`/locale-boitier/${localeBoitier.id}/edit`}
-                        color="primary"
+                      
                         size="sm"
                         data-cy="entityEditButton"
+                        className="custom-button-view"
                       >
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
                       <Button
                         tag={Link}
                         to={`/locale-boitier/${localeBoitier.id}/delete`}
-                        color="danger"
+                        
                         size="sm"
                         data-cy="entityDeleteButton"
+                        className="custom-button-delete"
                       >
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
