@@ -39,7 +39,7 @@ export const CapteurBoitierUpdate = () => {
   const updateSuccess = useAppSelector(state => state.capteurBoitier.updateSuccess);
   const [errorMessage, setErrorMessage] = useState('');
   const handleClose = () => {
-    navigate('/capteur-boitier/new');
+    navigate('/boitier');
   };
 
   useEffect(() => {

@@ -38,7 +38,7 @@ const EntitiesMenu = ({isAdmin}) => {
       {isAdmin && <MenuItem icon="asterisk" to="/boitier">
         Boitier
       </MenuItem> }
-      {isAdmin && <MenuItem icon="asterisk" to="/locale-boitier">
+      {isAdmin && <MenuItem icon="asterisk" to="/locale-boitier/new">
         Assign Boitier to Local
       </MenuItem> }
       {isAdmin && <MenuItem icon="asterisk" to="/capteur-boitier/new">
