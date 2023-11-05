@@ -17,7 +17,7 @@ export const Preference = () => {
   const navigate = useNavigate();
 
   const preferenceList = useAppSelector(state => state.preference.entities);
-  const preferenceListByUser = useAppSelector(state => state.preference. entitiesByUser);
+  const preferenceListByUser = useAppSelector(state => state.preference.entitiesByUser);
 
   const loading = useAppSelector(state => state.preference.loading);
 
@@ -37,12 +37,12 @@ export const Preference = () => {
       <h2 id="preference-heading" data-cy="PreferenceHeading">
         Preferences
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/preference/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          <Link to="/preference/new" className="btn btn-light jh-create-entity custom-button-new"  id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Preference
+            &nbsp;  new Preference
           </Link>
         </div>
       </h2>
@@ -64,24 +64,22 @@ export const Preference = () => {
               {preferenceList.map((preference, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
-                    <Button tag={Link} to={`/preference/${preference.id}`} color="link" size="sm">
-                      {preference.id}
-                    </Button>
+                  {preference.id}
                   </td>
                   <td>{preference.tempMinValue}</td>
                   <td>{preference.tempMaxValue}</td>
                   <td>{preference.plageHoraire}</td>
-                  <td>{preference.user ? preference.user.firstName + ' ' + preference.user.lastName : ''}</td>
+                  <td>{preference.user ? preference.user.login : ''}</td>
                   <td>{preference.energie ? preference.energie.nomSystemEnergitique : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/preference/${preference.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/preference/${preference.id}`}  className="custom-button-view"size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/preference/${preference.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`/preference/${preference.id}/edit`}  className="custom-button-edit" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/preference/${preference.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/preference/${preference.id}/delete`}  className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
