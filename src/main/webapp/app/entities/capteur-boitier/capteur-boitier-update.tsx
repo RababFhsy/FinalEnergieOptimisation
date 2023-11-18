@@ -39,9 +39,11 @@ export const CapteurBoitierUpdate = () => {
   const updating = useAppSelector(state => state.capteurBoitier.updating);
   const updateSuccess = useAppSelector(state => state.capteurBoitier.updateSuccess);
   const [errorMessage, setErrorMessage] = useState('');
+  const [capteurBoitierHistory, setcapteurBoitierHistory] = useState([]);
   const handleClose = () => {
     navigate('/boitier');
   };
+  
 
   useEffect(() => {
     if (isNew) {
@@ -143,11 +145,11 @@ export const CapteurBoitierUpdate = () => {
   
   
   
-  console.log("finnnnnnnnnnnnk" + JSON.stringify(capteurBoitierList));
-   console.log("finnnnnnnnnnnnkID" + JSON.stringify(selectedBoitier));
+  
 
 
-  const handleInputChange = (event) => {
+
+  const handleInputChange = async (event) => {
     const selectedBoitierId = event.target.value;
     const selectedBoitier = boitiers.find((it) => it.id.toString() === selectedBoitierId);
       // The following code is for handling form input changes
@@ -155,11 +157,17 @@ export const CapteurBoitierUpdate = () => {
       if (name === 'boitier') {
         setSelectedBoitier(value);
         setBoitierDisabled(true); // Disable "boitier" selection
+        const selectedBoitierId = parseInt(value);
       }
       setFormData({
         ...formData,
         [name]: value,
       });
+     // Fetch localBoitierList based on the selected locale
+    const capteurBoitierHistory = capteurBoitierList.filter(item => item.boitier.id === selectedBoitierId);
+    setcapteurBoitierHistory(capteurBoitierHistory);
+    console.log(capteurBoitierHistory); 
+
 
       if (selectedBoitier) {
         const usedBranchesForSelectedBoitier = capteurBoitierList
@@ -183,6 +191,8 @@ export const CapteurBoitierUpdate = () => {
       setGeneratedOptions(options)   
     }
   };
+  console.log("finnnnnnnnnnnnkID" + JSON.stringify(capteurBoitierList));
+  console.log("finnnnnnnnnnnnkID" + JSON.stringify(capteurBoitierHistory));
   
   
   const removeRow = (index) => {
@@ -329,8 +339,8 @@ export const CapteurBoitierUpdate = () => {
               <th className="col col-1" style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
-          {/* <tbody>
-            {capteurBoitierList.map((rowData, index) => (
+          <tbody>
+            {capteurBoitierHistory.map((rowData, index) => (
               <tr key={index}>
                 <td style={{ textAlign: 'center' }}>{(rowData.boitier?.type)}  </td>
                 <td style={{ textAlign: 'center' }}>{rowData.branche}  </td>
@@ -338,27 +348,8 @@ export const CapteurBoitierUpdate = () => {
                 <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
-          </tbody> */}
-          <tbody>
-        {capteurBoitierList.map((rowData, index) => {
-          // Check for null or undefined explicitly in boitier.id
-          if (selectedBoitier && rowData.boitier?.id !== null && rowData.boitier?.id !== undefined && rowData.boitier?.id === selectedBoitier.id) {
-            return (
-              <tr key={index}>
-                <td style={{ textAlign: 'center' }}>{rowData.boitier?.type}</td>
-                <td style={{ textAlign: 'center' }}>{rowData.branche}</td>
-                <td style={{ textAlign: 'center' }}>{rowData.capteur?.type}</td>
-                <td style={{ textAlign: 'center' }}>
-                  <button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>
-                    Remove
-                  </button>
-                </td>
-              </tr>
-            );
-          }
-          return null;
-        })}
-      </tbody>
+          </tbody>
+          
         </table>
 
   </div>

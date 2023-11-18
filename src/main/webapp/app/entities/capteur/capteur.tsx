@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ICapteur } from 'app/shared/model/capteur.model';
 import { getEntities, getEntity, updateEntity } from './capteur.reducer';
 import './capteur.scss';
+import {  Pagination } from 'react-bootstrap';
 
 export const Capteur = () => {
   const dispatch = useAppDispatch();
@@ -55,6 +56,16 @@ export const Capteur = () => {
 
   const updating = useAppSelector(state => state.capteur.updating);
   const updateSuccess = useAppSelector(state => state.capteur.updateSuccess);
+  const itemsPerPage = 5; // Adjust this based on your preference
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = capteurList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(capteurList.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     if (updateSuccess) {
@@ -105,7 +116,7 @@ export const Capteur = () => {
               </tr>
             </thead>
             <tbody>
-              {capteurList.map((capteur, i) => (
+              {currentItems.map((capteur, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                       {capteur.id}
@@ -152,6 +163,17 @@ export const Capteur = () => {
         ) : (
           !loading && <div className="alert alert-warning">No Sensors found</div>
         )}
+        <Pagination>
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === currentPage}
+            onClick={() => paginate(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+      </Pagination>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
