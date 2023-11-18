@@ -37,6 +37,7 @@ export const LocaleBoitierUpdate = () => {
   const loading = useAppSelector(state => state.localeBoitier.loading);
   const updating = useAppSelector(state => state.localeBoitier.updating);
   const updateSuccess = useAppSelector(state => state.localeBoitier.updateSuccess);
+
   const [selectedLocale, setSelectedLocale] = useState(null);
   const [selectedBatiment, setSelectedBatiment] = useState(null);
   const [selectedEtage, setSelectedEtage] = useState(null);
@@ -48,6 +49,9 @@ export const LocaleBoitierUpdate = () => {
   const [tableData, setTableData] = useState([]);
   const [filteredLocales, setFilteredLocales] = useState([]);
   const [filteredEtages, setFilteredEtages] = useState([]);
+  const [localeBoitierHistory, setLocaleBoitierHistory] = useState([]);
+
+
   
   const handleClose = () => {
     navigate('/locale');
@@ -107,8 +111,13 @@ export const LocaleBoitierUpdate = () => {
     }
     }
   };
+
+  const handleSyncList = () => {
+    dispatch(getEntities({}));
+  };
   
-  const handleInputChange = (e) => {
+  
+  const handleInputChange = async (e) =>{
     const { name, value } = e.target;
     if(name === 'batiment'){
       const selectedBatimentId = parseInt(value);
@@ -137,7 +146,14 @@ export const LocaleBoitierUpdate = () => {
       setEtageDisabled(true);
     } else if (name === 'locale') {
       setSelectedLocale(value);
+      const selectedLocalId = parseInt(value);
       setLocaleDisabled(true); // Disable the selection of "locale"
+     
+      // Fetch localBoitierList based on the selected locale
+      const localeBoitierHistory = localeBoitierList.filter(item => item.locale.id === selectedLocalId);
+      setLocaleBoitierHistory(localeBoitierHistory);
+      console.log(localeBoitierHistory);
+
     } else if (name === 'boitier') {
       const currentDate = new Date();
       const selectedBoitierId = value;
@@ -274,7 +290,7 @@ export const LocaleBoitierUpdate = () => {
               {filteredLocales
                 ? filteredLocales.map((otherEntity) => (
                     <option value={otherEntity.id} key={otherEntity.id}>
-                      {otherEntity.id}
+                      {otherEntity.numero}
                     </option>
                   ))
                 : null}
@@ -340,7 +356,7 @@ export const LocaleBoitierUpdate = () => {
               <tr key={index}>
                 <td style={{ textAlign: 'center' }}>{rowData.batiment}</td>
                 <td style={{ textAlign: 'center' }}>{rowData.locale}</td>
-                <td style={{ textAlign: 'center' }}>{mapBoitierRef(rowData.boitier)}</td>
+                <td style={{ textAlign: 'center' }}>{rowData.boitier}</td>
                 <td style={{ textAlign: 'center' }}>
                  <TextFormat type="date" value={currentDate} format={APP_LOCAL_DATE_FORMAT} /> 
                 </td>
@@ -350,6 +366,28 @@ export const LocaleBoitierUpdate = () => {
                 <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
+            {localeBoitierHistory.map((localeBoitier, i) => (
+            <tr key={`history-${i}`}>
+              {/* Render historical data columns */}
+              <td style={{ textAlign: 'center' }}>{localeBoitier.batiment}</td>
+              <td style={{ textAlign: 'center' }}>{localeBoitier.locale.numero}</td>
+              <td style={{ textAlign: 'center' }}>{localeBoitier.boitier.boitierReference}</td>
+              <td style={{ textAlign: 'center' }}>
+                <TextFormat type="date" value={localeBoitier.dateDebut} format={APP_LOCAL_DATE_FORMAT} />
+              </td>
+              <td style={{ textAlign: 'center' }}>
+                {localeBoitier.dateFin ? (
+                  <TextFormat type="date" value={localeBoitier.dateFin} format={APP_LOCAL_DATE_FORMAT} />
+                ) : null}
+              </td>
+              <td style={{ textAlign: 'center' }}>
+                <button className="btn btn-danger btn-sm" onClick={() => removeRow(i)}>
+                  Remove
+                </button>
+              </td>
+            </tr>
+          ))}
+
           </tbody>
         </table>
 
