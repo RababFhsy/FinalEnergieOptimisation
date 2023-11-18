@@ -12,7 +12,7 @@ import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities as getBoitiers } from 'app/entities/boitier/boitier.reducer';
 import { ICapteurBoitier } from 'app/shared/model/capteur-boitier.model';
 import { getEntity, updateEntity, createEntity, reset , getEntities } from './capteur-boitier.reducer';
-
+import { deleteEntity } from './capteur-boitier.reducer';
 
 export const CapteurBoitierUpdate = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +24,7 @@ export const CapteurBoitierUpdate = () => {
   const [selectedBoitier, setSelectedBoitier] = useState(null); // State to track selected Boitier
   const [boitierDisabled, setBoitierDisabled] = useState(false);
   const [generatedOptions, setGeneratedOptions] = useState([]);
+  const [CapteurBoitierHistory, setCapteurBoitierHistory] = useState([]);
 
   const navigate = useNavigate();
 
@@ -39,11 +40,9 @@ export const CapteurBoitierUpdate = () => {
   const updating = useAppSelector(state => state.capteurBoitier.updating);
   const updateSuccess = useAppSelector(state => state.capteurBoitier.updateSuccess);
   const [errorMessage, setErrorMessage] = useState('');
-  const [capteurBoitierHistory, setcapteurBoitierHistory] = useState([]);
   const handleClose = () => {
     navigate('/boitier');
   };
-  
 
   useEffect(() => {
     if (isNew) {
@@ -70,6 +69,7 @@ export const CapteurBoitierUpdate = () => {
     dispatch(getEntities({}));
   };
 
+  
   const [formData, setFormData] = useState({
     // Initialize with default values if needed
     boitier: '',
@@ -142,32 +142,43 @@ export const CapteurBoitierUpdate = () => {
 
 
 
+  // const generateBranchOptions = () => {
+  //   const selectedBoitierId = defaultValues().boitier;
+  //   const selectedBoitierUsedBranches = usedBranches[selectedBoitierId] || [];
+  //   const options = [];
+  //   for (let i = 0; i < remainingBranches; i++) {
+  //     const branch = `A${i}`;
+  //     console.log("Branch:", branch);
+  //     console.log("Selected Boitier Used Branches:", selectedBoitierUsedBranches);
+  //     if (!selectedBoitierUsedBranches.includes(branch) || !tableData.some(data => data.branche === branch)) {
+  //       options.push(<option value={branch} key={branch}>{branch}</option>);
+  //     }
+  //   }
+  //   return options;
+  // };
+  
   
   
   
   
 
-
-
-  const handleInputChange = async (event) => {
+  const handleInputChange = (event) => {
     const selectedBoitierId = event.target.value;
     const selectedBoitier = boitiers.find((it) => it.id.toString() === selectedBoitierId);
       // The following code is for handling form input changes
       const { name, value } = event.target;
       if (name === 'boitier') {
         setSelectedBoitier(value);
+        const selectedBoitierxId = parseInt(value);
         setBoitierDisabled(true); // Disable "boitier" selection
-        const selectedBoitierId = parseInt(value);
+        const CapteurBoitierHistory = capteurBoitierList.filter(item => item.boitier.id === selectedBoitierxId);
+        setCapteurBoitierHistory(CapteurBoitierHistory);
+        console.log(CapteurBoitierHistory);
       }
       setFormData({
         ...formData,
         [name]: value,
       });
-     // Fetch localBoitierList based on the selected locale
-    const capteurBoitierHistory = capteurBoitierList.filter(item => item.boitier.id === selectedBoitierId);
-    setcapteurBoitierHistory(capteurBoitierHistory);
-    console.log(capteurBoitierHistory); 
-
 
       if (selectedBoitier) {
         const usedBranchesForSelectedBoitier = capteurBoitierList
@@ -191,10 +202,14 @@ export const CapteurBoitierUpdate = () => {
       setGeneratedOptions(options)   
     }
   };
-  console.log("finnnnnnnnnnnnkID" + JSON.stringify(capteurBoitierList));
-  console.log("finnnnnnnnnnnnkID" + JSON.stringify(capteurBoitierHistory));
   
   
+  const removeRowHistory = (index) => {
+    const updatedHistoryData = [...CapteurBoitierHistory];
+    updatedHistoryData.splice(index, 1);
+    setCapteurBoitierHistory(updatedHistoryData);
+  };
+
   const removeRow = (index) => {
     const updatedTableData = [...tableData];
     updatedTableData.splice(index, 1);
@@ -340,16 +355,26 @@ export const CapteurBoitierUpdate = () => {
             </tr>
           </thead>
           <tbody>
-            {capteurBoitierHistory.map((rowData, index) => (
+            {tableData.map((rowData, index) => (
               <tr key={index}>
-                <td style={{ textAlign: 'center' }}>{(rowData.boitier?.type)}  </td>
+                <td style={{ textAlign: 'center' }}>{mapBoitierType(rowData.boitier)}  </td>
                 <td style={{ textAlign: 'center' }}>{rowData.branche}  </td>
-                <td style={{ textAlign: 'center' }}>{(rowData.capteur?.type)} </td>
+                <td style={{ textAlign: 'center' }}>{mapCapteurType(rowData.capteur)} </td>
                 <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
+            {CapteurBoitierHistory.map((historyData, index) => (
+              <tr key={index}>
+                <td style={{ textAlign: 'center' }}>{historyData.boitier.id}  </td>
+                <td style={{ textAlign: 'center' }}>{historyData.branche}  </td>
+                <td style={{ textAlign: 'center' }}>{historyData.capteur.id} </td>
+                <td style={{ textAlign: 'center' }}>
+                  <Button tag={Link}  size="sm" className="btn btn-danger btn-sm" data-cy="entityDeleteButton" onClick={() => deleteEntity(historyData.id)}>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                      </Button></td>
+              </tr>
+            ))}
           </tbody>
-          
         </table>
 
   </div>

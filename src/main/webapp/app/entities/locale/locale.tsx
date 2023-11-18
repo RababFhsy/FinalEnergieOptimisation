@@ -31,7 +31,7 @@ export const Locale = () => {
 
   const [selectedLocale, setSelectedLocale] = useState(null);
   const etages = useAppSelector(state => state.etage.entities);
-
+  
   useEffect(() => {
     dispatch(getEntities({}));
   }, []);
@@ -51,6 +51,9 @@ export const Locale = () => {
   const [showview, setShowView] = useState(false);
   const handleClose = () => setShow(false);
   const handleCloseView = () => setShowView(false);
+  const [globalFilter, setGlobalFilter] = useState('');
+
+
   const handleShowView = locale => {
     setSelectedLocale(locale);
     setShowView(true);
@@ -61,6 +64,8 @@ export const Locale = () => {
     setShow(true);
   };
 
+  
+  
   useEffect(() => {
     if (updateSuccess) {
       handleClose();
@@ -77,6 +82,16 @@ export const Locale = () => {
 
     dispatch(updateEntity(entity));
   };
+
+  const filteredLocaleList = localeList.filter((locale) => {
+    const numeroString = locale.numero ? locale.numero.toString() : '';
+    return (
+      numeroString.numero.includes(globalFilter) ||
+      locale.typeLocal.toLowerCase().includes(globalFilter.toLowerCase()) ||
+      (locale.etage && locale.etage.etageNumero.includes(globalFilter))
+    );
+  });
+
 
   const defaultValues = () => localeEntity;
   // console.log("LocalBoitierList: " + JSON.stringify(localeBoitierList null, 2));
@@ -99,9 +114,17 @@ export const Locale = () => {
             &nbsp; new Local
           </Link>
         </div>
+        <input
+          type="text"
+          value={globalFilter}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Filter the table..."
+        />
+
+
       </h2>
       <div className="table-responsive">
-        {localeList && localeList.length > 0 ? (
+      {filteredLocaleList && filteredLocaleList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -118,7 +141,7 @@ export const Locale = () => {
               </tr>
             </thead>
             <tbody>
-              {localeList.map((locale, i) => (
+            {filteredLocaleList.map((locale, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>{locale.id}</td>
                   <td>{locale.numero}</td>
@@ -171,6 +194,7 @@ export const Locale = () => {
               </tr>
             </thead>
             <tbody>
+              
   {localeBoitierList.map((localeBoitier, i) => {
     // Check if a matching boitier was found
     if (selectedLocale && localeBoitier.locale?.id === selectedLocale.id) {
