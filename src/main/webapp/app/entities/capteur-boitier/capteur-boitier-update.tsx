@@ -369,7 +369,7 @@ export const CapteurBoitierUpdate = () => {
                 <td style={{ textAlign: 'center' }}>{historyData.branche}  </td>
                 <td style={{ textAlign: 'center' }}>{historyData.capteur.id} </td>
                 <td style={{ textAlign: 'center' }}>
-                  <Button tag={Link}  size="sm" className="btn btn-danger btn-sm" data-cy="entityDeleteButton" onClick={() => deleteEntity(historyData.id)}>
+                  <Button tag={Link} to={`/capteur-boitier/${historyData.id}/delete`} size="sm" className="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button></td>
               </tr>
