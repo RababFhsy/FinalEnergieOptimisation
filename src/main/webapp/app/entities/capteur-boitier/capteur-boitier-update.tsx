@@ -13,6 +13,7 @@ import { getEntities as getBoitiers } from 'app/entities/boitier/boitier.reducer
 import { ICapteurBoitier } from 'app/shared/model/capteur-boitier.model';
 import { getEntity, updateEntity, createEntity, reset , getEntities } from './capteur-boitier.reducer';
 
+
 export const CapteurBoitierUpdate = () => {
   const dispatch = useAppDispatch();
   
@@ -139,25 +140,12 @@ export const CapteurBoitierUpdate = () => {
 
 
 
-  // const generateBranchOptions = () => {
-  //   const selectedBoitierId = defaultValues().boitier;
-  //   const selectedBoitierUsedBranches = usedBranches[selectedBoitierId] || [];
-  //   const options = [];
-  //   for (let i = 0; i < remainingBranches; i++) {
-  //     const branch = `A${i}`;
-  //     console.log("Branch:", branch);
-  //     console.log("Selected Boitier Used Branches:", selectedBoitierUsedBranches);
-  //     if (!selectedBoitierUsedBranches.includes(branch) || !tableData.some(data => data.branche === branch)) {
-  //       options.push(<option value={branch} key={branch}>{branch}</option>);
-  //     }
-  //   }
-  //   return options;
-  // };
   
   
   
-  
-  
+  console.log("finnnnnnnnnnnnk" + JSON.stringify(capteurBoitierList));
+   console.log("finnnnnnnnnnnnkID" + JSON.stringify(selectedBoitier));
+
 
   const handleInputChange = (event) => {
     const selectedBoitierId = event.target.value;
@@ -341,16 +329,36 @@ export const CapteurBoitierUpdate = () => {
               <th className="col col-1" style={{ textAlign: 'center' }}>Action</th>
             </tr>
           </thead>
-          <tbody>
-            {tableData.map((rowData, index) => (
+          {/* <tbody>
+            {capteurBoitierList.map((rowData, index) => (
               <tr key={index}>
-                <td style={{ textAlign: 'center' }}>{mapBoitierType(rowData.boitier)}  </td>
+                <td style={{ textAlign: 'center' }}>{(rowData.boitier?.type)}  </td>
                 <td style={{ textAlign: 'center' }}>{rowData.branche}  </td>
-                <td style={{ textAlign: 'center' }}>{mapCapteurType(rowData.capteur)} </td>
+                <td style={{ textAlign: 'center' }}>{(rowData.capteur?.type)} </td>
                 <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
-          </tbody>
+          </tbody> */}
+          <tbody>
+        {capteurBoitierList.map((rowData, index) => {
+          // Check for null or undefined explicitly in boitier.id
+          if (selectedBoitier && rowData.boitier?.id !== null && rowData.boitier?.id !== undefined && rowData.boitier?.id === selectedBoitier.id) {
+            return (
+              <tr key={index}>
+                <td style={{ textAlign: 'center' }}>{rowData.boitier?.type}</td>
+                <td style={{ textAlign: 'center' }}>{rowData.branche}</td>
+                <td style={{ textAlign: 'center' }}>{rowData.capteur?.type}</td>
+                <td style={{ textAlign: 'center' }}>
+                  <button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            );
+          }
+          return null;
+        })}
+      </tbody>
         </table>
 
   </div>

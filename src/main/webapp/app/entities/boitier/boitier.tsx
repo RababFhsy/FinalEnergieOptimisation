@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities, getEntity, updateEntity } from './boitier.reducer';
 import { getEntities as getBoitiersDetail } from 'app/entities/capteur-boitier/capteur-boitier.reducer';
+import {  Pagination } from 'react-bootstrap';
+
 
 
 
@@ -31,6 +33,16 @@ export const Boitier = () => {
   const capteurs = useAppSelector(state => state.capteur.entities);
   const boitiers = useAppSelector(state => state.boitier.entities);
   const capteurBoitierEntity = useAppSelector(state => state.capteurBoitier.entity);
+  const itemsPerPage = 5; // Adjust this based on your preference
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = boitierList.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(boitierList.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -117,7 +129,7 @@ export const Boitier = () => {
               </tr>
             </thead>
             <tbody>
-              {boitierList.map((boitier, i) => (
+              {currentItems.map((boitier, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                       {boitier.id}
@@ -142,9 +154,21 @@ export const Boitier = () => {
               ))}
             </tbody>
           </Table>
+          
         ) : (
           !loading && <div className="alert alert-warning">No Boitiers found</div>
         )}
+        <Pagination>
+        {Array.from({ length: totalPages }).map((_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === currentPage}
+            onClick={() => paginate(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+      </Pagination>
       </div>
 
 
