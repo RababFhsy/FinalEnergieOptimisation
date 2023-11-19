@@ -12,7 +12,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities, getEntity, updateEntity } from './boitier.reducer';
 import { getEntities as getBoitiersDetail } from 'app/entities/capteur-boitier/capteur-boitier.reducer';
-import {  Pagination } from 'react-bootstrap';
+import {  Pagination ,Form, FormControl} from 'react-bootstrap';
+
 
 
 
@@ -33,16 +34,29 @@ export const Boitier = () => {
   const capteurs = useAppSelector(state => state.capteur.entities);
   const boitiers = useAppSelector(state => state.boitier.entities);
   const capteurBoitierEntity = useAppSelector(state => state.capteurBoitier.entity);
-  const itemsPerPage = 5; // Adjust this based on your preference
+  
+  
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = boitierList.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(boitierList.length / itemsPerPage);
+  const filteredBoitierList = boitierList
+    .filter((boitier) =>
+      boitier.boitierReference.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -57,6 +71,9 @@ export const Boitier = () => {
   const handleSyncListBoitiersDetail = () => {
     dispatch(getBoitiersDetail({}));
   };
+ 
+
+ 
 
 
   const { id } = useParams<'id'>();
@@ -75,8 +92,7 @@ export const Boitier = () => {
     setShow(true);
   };
   console.log(capteurBoitierList);
-
-
+ 
 
   useEffect(() => {
     if (updateSuccess) {
@@ -116,7 +132,17 @@ export const Boitier = () => {
         </div>
       </h2>
       <div className="table-responsive">
-        {boitierList && boitierList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Boitiers..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredBoitierList && filteredBoitierList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -129,7 +155,7 @@ export const Boitier = () => {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((boitier, i) => (
+              {filteredBoitierList.map((boitier, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                       {boitier.id}
@@ -159,16 +185,18 @@ export const Boitier = () => {
           !loading && <div className="alert alert-warning">No Boitiers found</div>
         )}
         <Pagination>
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <Pagination.Item
-            key={index + 1}
-            active={index + 1 === currentPage}
-            onClick={() => paginate(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-      </Pagination>
+          {Array.from({ length: Math.ceil(boitierList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
 
 
