@@ -1,6 +1,5 @@
 package com.feb.optiisationenergie.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -25,10 +24,9 @@ public class Locale implements Serializable {
     @Column(name = "type_local")
     private String typeLocal;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "batiment" }, allowSetters = true)
-    private Etage etage;
 
+    @ManyToOne
+    private Batiment batiment;
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -70,16 +68,17 @@ public class Locale implements Serializable {
         this.typeLocal = typeLocal;
     }
 
-    public Etage getEtage() {
-        return this.etage;
+
+    public Batiment getBatiment() {
+        return this.batiment;
     }
 
-    public void setEtage(Etage etage) {
-        this.etage = etage;
+    public void setBatiment(Batiment batiment) {
+        this.batiment = batiment;
     }
 
-    public Locale etage(Etage etage) {
-        this.setEtage(etage);
+    public Locale batiment(Batiment batiment) {
+        this.setBatiment(batiment);
         return this;
     }
 

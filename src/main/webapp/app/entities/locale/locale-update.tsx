@@ -22,7 +22,7 @@ export const LocaleUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const etages = useAppSelector(state => state.etage.entities);
+  const batiments = useAppSelector(state =>state.batiment.entities)
   const localeEntity = useAppSelector(state => state.locale.entity);
   const loading = useAppSelector(state => state.locale.loading);
   const updating = useAppSelector(state => state.locale.updating);
@@ -52,11 +52,13 @@ export const LocaleUpdate = () => {
     const entity = {
       ...localeEntity,
       ...values,
-      etage: etages.find(it => it.id.toString() === values.etage.toString()),
+      batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
+
     };
 
     if (isNew) {
       dispatch(createEntity(entity)).then(response => {
+        // eslint-disable-next-line no-console
         console.log(' Local créé :', response);
       });
     } else {
@@ -69,7 +71,9 @@ export const LocaleUpdate = () => {
       ? {}
       : {
           ...localeEntity,
-          etage: localeEntity?.etage?.id,
+
+          batiment: localeEntity?.batiment?.id,
+
         };
 
   return (
@@ -95,12 +99,13 @@ export const LocaleUpdate = () => {
                 <option value="Office">Office</option>
                 <option value="Cabinet">Cabinet</option>
               </ValidatedField>
-              <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Floor Number" type="select">
+
+              <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
                 <option value="" key="0" />
-                {etages
-                  ? etages.map(otherEntity => (
+                {batiments
+                  ? batiments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.etageNumero}
+                        {otherEntity.batimentNom}
                       </option>
                     ))
                   : null}

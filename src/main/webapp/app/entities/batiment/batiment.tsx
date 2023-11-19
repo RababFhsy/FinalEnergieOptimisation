@@ -118,8 +118,10 @@ export const Batiment = () => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Adresse</th>
-                <th>Batiment Nom</th>
+                <th>Adress</th>
+                <th>Building Name</th>
+                <th>Number of floors</th>
+
                 <th style={{ textAlign: 'center' }}>      Action</th>
                 <th />
               </tr>
@@ -132,6 +134,8 @@ export const Batiment = () => {
                   </td>
                   <td>{batiment.adresse}</td>
                   <td>{batiment.batimentNom}</td>
+                  <td>{batiment.nbrEtage}</td>
+
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
                       <Button onClick={() => handleShowView(batiment)} size="sm" data-cy="entityDetailsButton" className="custom-button-view">
@@ -180,6 +184,9 @@ export const Batiment = () => {
                 <dd>{selectedBatiment?.adresse}</dd>
                 <dt>Building Name</dt>
                 <dd>{selectedBatiment?.batimentNom}</dd>
+                <dt>Number of floors</dt>
+                <dd>{selectedBatiment?.nbrEtage}</dd>
+
 
               </dl>
             </Col>
@@ -204,8 +211,10 @@ export const Batiment = () => {
               ) : (
                 <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
 
-                  <ValidatedField label="Adresse" id="batiment-adresse" name="adresse" data-cy="adresse" type="text" />
-                  <ValidatedField label="Nom du Batiment" id="batiment-batimentNom" name="batimentNom" data-cy="batimentNom" type="text" />
+                  <ValidatedField label="Adress" id="batiment-adresse" name="adresse" data-cy="adresse" type="text" />
+                  <ValidatedField label="Building name" id="batiment-batimentNom" name="batimentNom" data-cy="batimentNom" type="text" />
+                  <ValidatedField label="Number of floors" id="batiment-nbrEtage" name="nbrEtage" data-cy="nbrEtage" type="text" />
+
                   <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/batiment" replace color="info">
                     <FontAwesomeIcon icon="arrow-left" />
                     &nbsp;

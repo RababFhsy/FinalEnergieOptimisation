@@ -36,6 +36,10 @@ export const BatimentDetail = () => {
             <span id="batimentNom">Batiment Nom</span>
           </dt>
           <dd>{batimentEntity.batimentNom}</dd>
+          <dt>
+            <span id="nbrEtage">Number of floors</span>
+          </dt>
+          <dd>{batimentEntity.nbrEtage}</dd>
         </dl>
         <Button tag={Link} to="/batiment" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

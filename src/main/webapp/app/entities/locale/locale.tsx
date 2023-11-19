@@ -16,7 +16,6 @@ import { getEntities as getBoitiersLocalDetail } from 'app/entities/locale-boiti
 import { getEntities as getEtages } from 'app/entities/etage/etage.reducer';
 import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
-
 export const Locale = () => {
   const dispatch = useAppDispatch();
 
@@ -31,7 +30,7 @@ export const Locale = () => {
   const updateSuccess = useAppSelector(state => state.locale.updateSuccess);
 
   const [selectedLocale, setSelectedLocale] = useState(null);
-  const etages = useAppSelector(state => state.etage.entities);
+  const batiments = useAppSelector(state => state.batiment.entities);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -93,7 +92,7 @@ export const Locale = () => {
     const entity = {
       ...localeEntity,
       ...values,
-      etage: etages.find(it => it.id.toString() === values.etage.toString()),
+      batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
     };
 
     dispatch(updateEntity(entity));
@@ -139,10 +138,7 @@ export const Locale = () => {
                 <th>ID</th>
                 <th>Numero</th>
                 <th> Local Type</th>
-                <th>Floor</th>
-
-
-
+                <th>Building</th>
 
                 <th style={{ textAlign: 'center' }}> Action</th>
                 <th />
@@ -154,9 +150,7 @@ export const Locale = () => {
                   <td>{locale.id}</td>
                   <td>{locale.numero}</td>
                   <td>{locale.typeLocal}</td>
-                  <td>{locale.etage ? locale.etage.etageNumero : ''}</td>
-
-
+                  <td>{locale.batiment ? locale.batiment.batimentNom : ''}</td>
 
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
@@ -203,7 +197,6 @@ export const Locale = () => {
           <Modal.Title> Boitier Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <table className="table">
             <thead>
               <tr>
@@ -211,39 +204,27 @@ export const Locale = () => {
                 <th>Boitier Type</th>
                 <th> Start Date</th>
                 <th>End Date</th>
-
               </tr>
             </thead>
             <tbody>
-  {localeBoitierList.map((localeBoitier, i) => {
-    // Check if a matching boitier was found
-    if (selectedLocale && localeBoitier.locale?.id === selectedLocale.id) {
+              {localeBoitierList.map((localeBoitier, i) => {
+                // Check if a matching boitier was found
+                if (selectedLocale && localeBoitier.locale?.id === selectedLocale.id) {
+                  return (
+                    <tr key={`entity-${i}`} data-cy="entityTable">
+                      {/* <td>{localeBoitier.locale?.id}</td> */}
+                      <td>{localeBoitier.boitier?.boitierReference || ''}</td>
+                      <td>{localeBoitier.boitier?.type || ''}</td>
+                      <td>{localeBoitier.dateDebut || ''}</td>
+                      <td>{localeBoitier.dateFin || ''}</td>
+                    </tr>
+                  );
+                }
 
-      return (
-        <tr key={`entity-${i}`} data-cy="entityTable">
-            {/* <td>{localeBoitier.locale?.id}</td> */}
-          <td>{localeBoitier.boitier?.boitierReference || ''}</td>
-          <td>{localeBoitier.boitier?.type || ''}</td>
-          <td>{localeBoitier.dateDebut|| ''}</td>
-          <td>{localeBoitier.dateFin|| ''}</td>
-
-
-        </tr>
-      );
-    }
-
-
-    return null; // Return null for non-matching entries
-  })}
-</tbody>
-            
-
-
-
+                return null; // Return null for non-matching entries
+              })}
+            </tbody>
           </table>
-
-
-
         </Modal.Body>
         <Modal.Footer>
           <Button color="primary" onClick={handleCloseView}>
@@ -269,12 +250,12 @@ export const Locale = () => {
                     <option value="Office">Office</option>
                     <option value="Cabinet">Cabinet</option>
                   </ValidatedField>
-                  <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Floor Number" type="select">
+                  <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
                     <option value="" key="0" />
-                    {etages
-                      ? etages.map(otherEntity => (
+                    {batiments
+                      ? batiments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.etageNumero}
+                            {otherEntity.batimentNom}
                           </option>
                         ))
                       : null}
