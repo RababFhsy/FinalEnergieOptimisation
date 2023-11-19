@@ -41,7 +41,7 @@ export const CapteurBoitierUpdate = () => {
   const updateSuccess = useAppSelector(state => state.capteurBoitier.updateSuccess);
   const [errorMessage, setErrorMessage] = useState('');
   const handleClose = () => {
-    navigate('/boitier');
+    navigate('/');
   };
 
   useEffect(() => {
@@ -85,6 +85,7 @@ export const CapteurBoitierUpdate = () => {
       capteur: capteurs.find(it => it.id.toString() === values.capteur.toString()),
       boitier: boitiers.find(it => it.id.toString() === values.boitier.toString()),
     };
+   
 
 
     if (isNew) {
@@ -140,22 +141,7 @@ export const CapteurBoitierUpdate = () => {
     return capteur ? capteur.capteurReference : '';
   };
 
-
-
-  // const generateBranchOptions = () => {
-  //   const selectedBoitierId = defaultValues().boitier;
-  //   const selectedBoitierUsedBranches = usedBranches[selectedBoitierId] || [];
-  //   const options = [];
-  //   for (let i = 0; i < remainingBranches; i++) {
-  //     const branch = `A${i}`;
-  //     console.log("Branch:", branch);
-  //     console.log("Selected Boitier Used Branches:", selectedBoitierUsedBranches);
-  //     if (!selectedBoitierUsedBranches.includes(branch) || !tableData.some(data => data.branche === branch)) {
-  //       options.push(<option value={branch} key={branch}>{branch}</option>);
-  //     }
-  //   }
-  //   return options;
-  // };
+;
   
   
   
@@ -239,6 +225,23 @@ export const CapteurBoitierUpdate = () => {
     setTableData([]); // Clear the table after submission
     resetForm(); // Reset the form fields
   };
+ 
+  console.log("nchoof", JSON.stringify(CapteurBoitierHistory));
+  // const handleDeleteClick = async () => {
+  //   try {
+  //     // Construct the deletion URL dynamically
+  //     const deletionUrl = `/capteur-boitier/${historyData.id}/delete`;
+
+  //     // Perform deletion logic using the constructed URL
+  //     const result = await dispatch(deleteEntity(deletionUrl));
+
+  //     // Handle success, e.g., show a notification or update state
+  //   } catch (error) {
+  //     // Handle errors, e.g., display an error message
+  //     console.error('Error deleting:', error);
+  //   }
+  // };
+
 
   
   
@@ -340,6 +343,7 @@ export const CapteurBoitierUpdate = () => {
           )}
         </Col>
         
+        
              
 
 
@@ -365,13 +369,14 @@ export const CapteurBoitierUpdate = () => {
             ))}
             {CapteurBoitierHistory.map((historyData, index) => (
               <tr key={index}>
-                <td style={{ textAlign: 'center' }}>{historyData.boitier.id}  </td>
+                <td style={{ textAlign: 'center' }}>{historyData.boitier.boitierReference}  </td>
                 <td style={{ textAlign: 'center' }}>{historyData.branche}  </td>
-                <td style={{ textAlign: 'center' }}>{historyData.capteur.id} </td>
+                <td style={{ textAlign: 'center' }}>{historyData.capteur.type} </td>
                 <td style={{ textAlign: 'center' }}>
-                  <Button tag={Link} to={`/capteur-boitier/${historyData.id}/delete`} size="sm" className="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <Button tag={Link} to={`/capteur-boitier/${historyData.id}/delete`} size="sm" className="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                      </Button></td>
+                      </Button>
+</td>
               </tr>
             ))}
           </tbody>
