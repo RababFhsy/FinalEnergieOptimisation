@@ -14,6 +14,7 @@ import { getEntities, getEntity, updateEntity } from './locale.reducer';
 import { getEntities as getBoitiersLocalDetail } from 'app/entities/locale-boitier/locale-boitier.reducer';
 
 import { getEntities as getEtages } from 'app/entities/etage/etage.reducer';
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 
 export const Locale = () => {
@@ -51,6 +52,26 @@ export const Locale = () => {
   const [showview, setShowView] = useState(false);
   const handleClose = () => setShow(false);
   const handleCloseView = () => setShowView(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredLocaleList = localeList
+    .filter((locale) =>
+    locale.typeLocal.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   const handleShowView = locale => {
     setSelectedLocale(locale);
     setShowView(true);
@@ -101,7 +122,17 @@ export const Locale = () => {
         </div>
       </h2>
       <div className="table-responsive">
-        {localeList && localeList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Local..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredLocaleList && filteredLocaleList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -118,7 +149,7 @@ export const Locale = () => {
               </tr>
             </thead>
             <tbody>
-              {localeList.map((locale, i) => (
+              {filteredLocaleList.map((locale, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>{locale.id}</td>
                   <td>{locale.numero}</td>
@@ -153,6 +184,19 @@ export const Locale = () => {
         ) : (
           !loading && <div className="alert alert-warning">No Locales found</div>
         )}
+        <Pagination>
+          {Array.from({ length: Math.ceil(localeList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
       <Modal show={showview} onHide={handleCloseView}>
         <Modal.Header closeButton>
