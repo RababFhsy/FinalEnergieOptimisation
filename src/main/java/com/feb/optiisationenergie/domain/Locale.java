@@ -24,6 +24,9 @@ public class Locale implements Serializable {
     @Column(name = "type_local")
     private String typeLocal;
 
+    @Column(name = "num_etage")
+    private Integer numeroEtage;
+
 
     @ManyToOne
     private Batiment batiment;
@@ -53,6 +56,18 @@ public class Locale implements Serializable {
 
     public void setNumero(Integer numero) {
         this.numero = numero;
+    }
+    public Integer getNumeroEtage() {
+        return this.numeroEtage;
+    }
+
+    public Locale numeroEtage(Integer numeroEtage) {
+        this.setNumeroEtage(numeroEtage);
+        return this;
+    }
+
+    public void setNumeroEtage(Integer numeroEtage) {
+        this.numeroEtage = numeroEtage;
     }
 
     public String getTypeLocal() {
@@ -107,7 +122,8 @@ public class Locale implements Serializable {
         return "Locale{" +
             "id=" + getId() +
             ", numero=" + getNumero() +
-            ", typeLocal='" + getTypeLocal() + "'" +
+            ", typeLocal='" + getTypeLocal() +
+            ", numroEtage =" + getNumeroEtage() + "'" +
             "}";
     }
 }

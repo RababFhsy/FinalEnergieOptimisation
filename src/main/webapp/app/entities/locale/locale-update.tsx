@@ -40,7 +40,7 @@ export const LocaleUpdate = () => {
     }
 
     dispatch(getEtages({}));
-  }, []);
+  },  [isNew, id, dispatch]);
 
   useEffect(() => {
     if (updateSuccess) {
@@ -76,6 +76,16 @@ export const LocaleUpdate = () => {
 
         };
 
+const etagesDisponibles = [];
+for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0; i++) {
+  etagesDisponibles.push({
+    value: i,
+    label: i === 0 ? 'Ground floor' : `Floor ${i}`,
+  });
+}
+
+
+
   return (
     <div>
       <Row className="justify-content-center">
@@ -92,8 +102,8 @@ export const LocaleUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="locale-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Numero" id="locale-numero" name="numero" data-cy="numero" type="text" />
-              <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="select" >
+              <ValidatedField label="Number" id="locale-numero" name="numero" data-cy="numero" type="text" />
+              <ValidatedField label="Local Type" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="select" >
               <option value=""></option>
                 <option value="Appartement">Appartement</option>
                 <option value="Office">Office</option>
@@ -101,7 +111,7 @@ export const LocaleUpdate = () => {
               </ValidatedField>
 
               <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
-                <option value="" key="0" />
+                <option value=""/>
                 {batiments
                   ? batiments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
@@ -110,6 +120,17 @@ export const LocaleUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+
+              <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
+              <option value="" />
+              {etagesDisponibles.map( floor => (
+                <option value={floor.value} key={floor.value}>
+                  {floor.label}
+                </option>
+              ))}
+
+              </ValidatedField>
+
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back" to="/locale" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

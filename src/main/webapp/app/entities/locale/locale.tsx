@@ -139,6 +139,8 @@ export const Locale = () => {
                 <th>Numero</th>
                 <th> Local Type</th>
                 <th>Building</th>
+                <th>Floor Number</th>
+
 
                 <th style={{ textAlign: 'center' }}> Action</th>
                 <th />
@@ -151,6 +153,8 @@ export const Locale = () => {
                   <td>{locale.numero}</td>
                   <td>{locale.typeLocal}</td>
                   <td>{locale.batiment ? locale.batiment.batimentNom : ''}</td>
+                  <td>{locale.numeroEtage}</td>
+
 
                   <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
@@ -251,7 +255,7 @@ export const Locale = () => {
                     <option value="Cabinet">Cabinet</option>
                   </ValidatedField>
                   <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
-                    <option value="" key="0" />
+                    <option value=""  />
                     {batiments
                       ? batiments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -260,6 +264,8 @@ export const Locale = () => {
                         ))
                       : null}
                   </ValidatedField>
+              <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="text" />
+
                   <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/locale" replace color="info">
                     <FontAwesomeIcon icon="arrow-left" />
                     &nbsp;
