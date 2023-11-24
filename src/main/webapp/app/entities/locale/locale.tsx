@@ -264,8 +264,16 @@ export const Locale = () => {
                         ))
                       : null}
                   </ValidatedField>
-              <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="text" />
+                  <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
+              <option value=""></option>
+              <option value= "0">Ground Floor</option>
 
+                <option value= "1">1</option>
+                <option value= "2">2</option>
+                <option value= "3">3</option>
+                <option value="4">4</option>
+
+              </ValidatedField>
                   <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/locale" replace color="info">
                     <FontAwesomeIcon icon="arrow-left" />
                     &nbsp;

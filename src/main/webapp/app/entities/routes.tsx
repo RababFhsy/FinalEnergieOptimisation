@@ -86,11 +86,33 @@ export default ({ role }) => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="energie/*"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
+              <Energie />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="anomalie/*"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
+              <Anomalie />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="prediction/*"
+          element={
+            <PrivateRoute hasAnyAuthorities={[AUTHORITIES.ADMIN]}>
+              <Prediction />
+            </PrivateRoute>
+          }
+        />
         <Route path="preference/*" element={<Preference />} />
-        <Route path="energie/*" element={<Energie />} />
         <Route path="consommation/*" element={<Consommation />} />
-        <Route path="anomalie/*" element={<Anomalie />} />
-        <Route path="prediction/*" element={<Prediction />} />
+
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

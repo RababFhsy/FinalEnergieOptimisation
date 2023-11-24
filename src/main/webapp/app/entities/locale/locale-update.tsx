@@ -122,12 +122,13 @@ for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0;
               </ValidatedField>
 
               <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
-              <option value="" />
-              {etagesDisponibles.map( floor => (
-                <option value={floor.value} key={floor.value}>
-                  {floor.label}
-                </option>
-              ))}
+              <option value=""></option>
+              <option value= "0">Ground Floor</option>
+
+                <option value= "1">1</option>
+                <option value= "2">2</option>
+                <option value= "3">3</option>
+                <option value="4">4</option>
 
               </ValidatedField>
 
