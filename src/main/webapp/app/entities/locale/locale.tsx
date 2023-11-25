@@ -32,6 +32,7 @@ export const Locale = () => {
   const [selectedLocale, setSelectedLocale] = useState(null);
   const batiments = useAppSelector(state => state.batiment.entities);
 
+
   useEffect(() => {
     dispatch(getEntities({}));
   }, []);
@@ -93,6 +94,7 @@ export const Locale = () => {
       ...localeEntity,
       ...values,
       batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
+
     };
 
     dispatch(updateEntity(entity));
@@ -142,6 +144,7 @@ export const Locale = () => {
                 <th>Floor Number</th>
 
 
+
                 <th style={{ textAlign: 'center' }}> Action</th>
                 <th />
               </tr>
@@ -154,6 +157,7 @@ export const Locale = () => {
                   <td>{locale.typeLocal}</td>
                   <td>{locale.batiment ? locale.batiment.batimentNom : ''}</td>
                   <td>{locale.numeroEtage}</td>
+
 
 
                   <td style={{ textAlign: 'center' }}>
@@ -264,6 +268,7 @@ export const Locale = () => {
                         ))
                       : null}
                   </ValidatedField>
+
                   <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
               <option value=""></option>
               <option value= "0">Ground Floor</option>

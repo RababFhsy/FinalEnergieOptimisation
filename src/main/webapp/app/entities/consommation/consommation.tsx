@@ -49,8 +49,11 @@ export const Consommation = () => {
                 <th>ID</th>
                 <th>Energie Consommation</th>
                 <th>Date Consommation</th>
-                <th>Locale</th>
-                <th>Energie</th>
+                <th>Local</th>
+                <th>Building</th>
+                <th>Energy</th>
+                <th>User</th>
+
                 <th />
               </tr>
             </thead>
@@ -68,8 +71,12 @@ export const Consommation = () => {
                       <TextFormat type="date" value={consommation.dateConsommation} format={APP_LOCAL_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{consommation.locale ? <Link to={`/locale/${consommation.locale.id}`}>{consommation.locale.id}</Link> : ''}</td>
-                  <td>{consommation.energie ? <Link to={`/energie/${consommation.energie.id}`}>{consommation.energie.id}</Link> : ''}</td>
+                  <td>{consommation.locale ? consommation.locale.numero : ''}</td>
+                  <td>{consommation.locale && consommation.locale.batiment ? consommation.locale.batiment.batimentNom : ''}</td>
+
+                  <td>{consommation.energie ? consommation.energie.nomSystemEnergitique : ''}</td>
+                  <td>{consommation.user ? consommation.user.login : ''}</td>
+
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/consommation/${consommation.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -43,6 +43,7 @@ export const LocaleDetail = () => {
             <span id="numeroEtage">Floor Number</span>
           </dt>
           <dd>{localeEntity.numeroEtage}</dd>
+
         </dl>
         <Button tag={Link} to="/locale" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -34,6 +34,9 @@ public class Consommation implements Serializable {
     @JsonIgnoreProperties(value = { "consommations", "anomalies", "predictions" }, allowSetters = true)
     private Energie energie;
 
+    @ManyToOne
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -98,6 +101,19 @@ public class Consommation implements Serializable {
 
     public Consommation energie(Energie energie) {
         this.setEnergie(energie);
+        return this;
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Consommation user(User user) {
+        this.setUser(user);
         return this;
     }
 

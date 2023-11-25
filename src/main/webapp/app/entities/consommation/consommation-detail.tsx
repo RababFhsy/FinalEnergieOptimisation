@@ -44,6 +44,8 @@ export const ConsommationDetail = () => {
           <dd>{consommationEntity.locale ? consommationEntity.locale.id : ''}</dd>
           <dt>Energie</dt>
           <dd>{consommationEntity.energie ? consommationEntity.energie.id : ''}</dd>
+          <dt>User</dt>
+          <dd>{consommationEntity.user ? consommationEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/consommation" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

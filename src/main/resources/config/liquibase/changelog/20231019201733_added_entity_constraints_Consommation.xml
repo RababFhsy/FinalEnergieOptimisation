@@ -19,5 +19,10 @@
                                  constraintName="fk_consommation__energie_id"
                                  referencedColumnNames="id"
                                  referencedTableName="energie"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="consommation"
+                                 constraintName="fk_consommation__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
     </changeSet>
 </databaseChangeLog>

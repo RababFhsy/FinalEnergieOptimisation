@@ -97,6 +97,8 @@ public class Locale implements Serializable {
         return this;
     }
 
+
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

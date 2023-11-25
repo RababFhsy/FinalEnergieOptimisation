@@ -22,7 +22,7 @@ export const LocaleUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const batiments = useAppSelector(state =>state.batiment.entities)
+  const batiments = useAppSelector(state =>state.batiment.entities);
   const localeEntity = useAppSelector(state => state.locale.entity);
   const loading = useAppSelector(state => state.locale.loading);
   const updating = useAppSelector(state => state.locale.updating);
@@ -54,6 +54,8 @@ export const LocaleUpdate = () => {
       ...values,
       batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
 
+
+
     };
 
     if (isNew) {
@@ -73,6 +75,7 @@ export const LocaleUpdate = () => {
           ...localeEntity,
 
           batiment: localeEntity?.batiment?.id,
+
 
         };
 
@@ -120,6 +123,7 @@ for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0;
                     ))
                   : null}
               </ValidatedField>
+
 
               <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
               <option value=""></option>

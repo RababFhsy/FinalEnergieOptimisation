@@ -13,5 +13,6 @@
                                  constraintName="fk_etage__batiment_id"
                                  referencedColumnNames="id"
                                  referencedTableName="batiment"/>
+
     </changeSet>
 </databaseChangeLog>
