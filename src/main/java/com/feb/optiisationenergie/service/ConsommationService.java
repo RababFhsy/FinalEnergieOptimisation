@@ -45,6 +45,8 @@ public interface ConsommationService {
      * @param id the id of the entity.
      * @return the entity.
      */
+
+
     Optional<Consommation> findOne(Long id);
 
     /**
