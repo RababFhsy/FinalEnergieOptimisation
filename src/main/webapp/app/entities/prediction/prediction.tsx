@@ -26,19 +26,20 @@ export const Prediction = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
+  console.log('predictionList', JSON.stringify(predictionList));
 
   return (
     <div>
       <h2 id="prediction-heading" data-cy="PredictionHeading">
         Predictions
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/prediction/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+          {/* <Link to="/prediction/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Prediction
-          </Link>
+            &nbsp;  new Prediction
+          </Link> */}
         </div>
       </h2>
       <div className="table-responsive">
@@ -46,24 +47,25 @@ export const Prediction = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Date Debut</th>
-                <th>Date Fin</th>
-                <th>Consommation Predit</th>
+                
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Predicted Consumption</th>
                 <th>Precision</th>
-                <th>Locale</th>
-                <th>Energie</th>
+                <th>Local Number</th>
+                <th>Building</th>
+                <th>Energy System</th>
                 <th />
               </tr>
             </thead>
             <tbody>
               {predictionList.map((prediction, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/* <td>
                     <Button tag={Link} to={`/prediction/${prediction.id}`} color="link" size="sm">
                       {prediction.id}
                     </Button>
-                  </td>
+                  </td> */}
                   <td>
                     {prediction.dateDebut ? <TextFormat type="date" value={prediction.dateDebut} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
@@ -72,17 +74,18 @@ export const Prediction = () => {
                   </td>
                   <td>{prediction.consommationPredit}</td>
                   <td>{prediction.precision}</td>
-                  <td>{prediction.locale ? <Link to={`/locale/${prediction.locale.id}`}>{prediction.locale.id}</Link> : ''}</td>
-                  <td>{prediction.energie ? <Link to={`/energie/${prediction.energie.id}`}>{prediction.energie.id}</Link> : ''}</td>
+                  <td>{prediction.locale ? prediction.locale.numero : ''}</td>
+                  <td>{prediction.locale ? prediction.locale.batiment.batimentNom: ''}</td>
+                  <td>{prediction.energie ? prediction.energie.nomSystemEnergitique : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/prediction/${prediction.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      <Button tag={Link} to={`/prediction/${prediction.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
-                      <Button tag={Link} to={`/prediction/${prediction.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      <Button tag={Link} to={`/prediction/${prediction.id}/edit`} className="custom-button-edit" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                       </Button>
-                      <Button tag={Link} to={`/prediction/${prediction.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      <Button tag={Link} to={`/prediction/${prediction.id}/delete`} className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
