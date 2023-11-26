@@ -29,15 +29,21 @@ export const LocaleDetail = () => {
           </dt>
           <dd>{localeEntity.id}</dd>
           <dt>
-            <span id="numero">Numero</span>
+            <span id="numero">Number</span>
           </dt>
           <dd>{localeEntity.numero}</dd>
           <dt>
             <span id="typeLocal">Type Local</span>
           </dt>
           <dd>{localeEntity.typeLocal}</dd>
-          <dt>Etage</dt>
-          <dd>{localeEntity.etage ? localeEntity.etage.id : ''}</dd>
+
+          <dt>Building</dt>
+          <dd>{localeEntity.batiment ? localeEntity.batiment.id : ''}</dd>
+          <dt>
+            <span id="numeroEtage">Floor Number</span>
+          </dt>
+          <dd>{localeEntity.numeroEtage}</dd>
+
         </dl>
         <Button tag={Link} to="/locale" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

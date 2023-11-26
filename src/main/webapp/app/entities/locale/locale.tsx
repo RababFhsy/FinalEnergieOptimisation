@@ -14,7 +14,7 @@ import { getEntities, getEntity, updateEntity } from './locale.reducer';
 import { getEntities as getBoitiersLocalDetail } from 'app/entities/locale-boitier/locale-boitier.reducer';
 
 import { getEntities as getEtages } from 'app/entities/etage/etage.reducer';
-
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 export const Locale = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +30,8 @@ export const Locale = () => {
   const updateSuccess = useAppSelector(state => state.locale.updateSuccess);
 
   const [selectedLocale, setSelectedLocale] = useState(null);
-  const etages = useAppSelector(state => state.etage.entities);
+  const batiments = useAppSelector(state => state.batiment.entities);
+
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -51,6 +52,26 @@ export const Locale = () => {
   const [showview, setShowView] = useState(false);
   const handleClose = () => setShow(false);
   const handleCloseView = () => setShowView(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredLocaleList = localeList
+    .filter((locale) =>
+    locale.typeLocal.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   const handleShowView = locale => {
     setSelectedLocale(locale);
     setShowView(true);
@@ -72,7 +93,8 @@ export const Locale = () => {
     const entity = {
       ...localeEntity,
       ...values,
-      etage: etages.find(it => it.id.toString() === values.etage.toString()),
+      batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
+
     };
 
     dispatch(updateEntity(entity));
@@ -101,15 +123,25 @@ export const Locale = () => {
         </div>
       </h2>
       <div className="table-responsive">
-        {localeList && localeList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Local..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredLocaleList && filteredLocaleList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Numero</th>
                 <th> Local Type</th>
-                <th>Floor</th>
-
+                <th>Building</th>
+                <th>Floor Number</th>
 
 
 
@@ -118,12 +150,13 @@ export const Locale = () => {
               </tr>
             </thead>
             <tbody>
-              {localeList.map((locale, i) => (
+              {filteredLocaleList.map((locale, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>{locale.id}</td>
                   <td>{locale.numero}</td>
                   <td>{locale.typeLocal}</td>
-                  <td>{locale.etage ? locale.etage.etageNumero : ''}</td>
+                  <td>{locale.batiment ? locale.batiment.batimentNom : ''}</td>
+                  <td>{locale.numeroEtage}</td>
 
 
 
@@ -153,13 +186,25 @@ export const Locale = () => {
         ) : (
           !loading && <div className="alert alert-warning">No Locales found</div>
         )}
+        <Pagination>
+          {Array.from({ length: Math.ceil(localeList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
       <Modal show={showview} onHide={handleCloseView}>
         <Modal.Header closeButton>
           <Modal.Title> Boitier Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-
           <table className="table">
             <thead>
               <tr>
@@ -167,39 +212,27 @@ export const Locale = () => {
                 <th>Boitier Type</th>
                 <th> Start Date</th>
                 <th>End Date</th>
-
               </tr>
             </thead>
             <tbody>
-  {localeBoitierList.map((localeBoitier, i) => {
-    // Check if a matching boitier was found
-    if (selectedLocale && localeBoitier.locale?.id === selectedLocale.id) {
+              {localeBoitierList.map((localeBoitier, i) => {
+                // Check if a matching boitier was found
+                if (selectedLocale && localeBoitier.locale?.id === selectedLocale.id) {
+                  return (
+                    <tr key={`entity-${i}`} data-cy="entityTable">
+                      {/* <td>{localeBoitier.locale?.id}</td> */}
+                      <td>{localeBoitier.boitier?.boitierReference || ''}</td>
+                      <td>{localeBoitier.boitier?.type || ''}</td>
+                      <td>{localeBoitier.dateDebut || ''}</td>
+                      <td>{localeBoitier.dateFin || ''}</td>
+                    </tr>
+                  );
+                }
 
-      return (
-        <tr key={`entity-${i}`} data-cy="entityTable">
-            {/* <td>{localeBoitier.locale?.id}</td> */}
-          <td>{localeBoitier.boitier?.boitierReference || ''}</td>
-          <td>{localeBoitier.boitier?.type || ''}</td>
-          <td>{localeBoitier.dateDebut|| ''}</td>
-          <td>{localeBoitier.dateFin|| ''}</td>
-
-
-        </tr>
-      );
-    }
-
-
-    return null; // Return null for non-matching entries
-  })}
-</tbody>
-            
-
-
-
+                return null; // Return null for non-matching entries
+              })}
+            </tbody>
           </table>
-
-
-
         </Modal.Body>
         <Modal.Footer>
           <Button color="primary" onClick={handleCloseView}>
@@ -225,16 +258,27 @@ export const Locale = () => {
                     <option value="Office">Office</option>
                     <option value="Cabinet">Cabinet</option>
                   </ValidatedField>
-                  <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Floor Number" type="select">
-                    <option value="" key="0" />
-                    {etages
-                      ? etages.map(otherEntity => (
+                  <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
+                    <option value=""  />
+                    {batiments
+                      ? batiments.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.etageNumero}
+                            {otherEntity.batimentNom}
                           </option>
                         ))
                       : null}
                   </ValidatedField>
+
+                  <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
+              <option value=""></option>
+              <option value= "0">Ground Floor</option>
+
+                <option value= "1">1</option>
+                <option value= "2">2</option>
+                <option value= "3">3</option>
+                <option value="4">4</option>
+
+              </ValidatedField>
                   <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/locale" replace color="info">
                     <FontAwesomeIcon icon="arrow-left" />
                     &nbsp;

@@ -1,6 +1,5 @@
 package com.feb.optiisationenergie.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 
@@ -25,10 +24,12 @@ public class Locale implements Serializable {
     @Column(name = "type_local")
     private String typeLocal;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "batiment" }, allowSetters = true)
-    private Etage etage;
+    @Column(name = "num_etage")
+    private Integer numeroEtage;
 
+
+    @ManyToOne
+    private Batiment batiment;
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -56,6 +57,18 @@ public class Locale implements Serializable {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
+    public Integer getNumeroEtage() {
+        return this.numeroEtage;
+    }
+
+    public Locale numeroEtage(Integer numeroEtage) {
+        this.setNumeroEtage(numeroEtage);
+        return this;
+    }
+
+    public void setNumeroEtage(Integer numeroEtage) {
+        this.numeroEtage = numeroEtage;
+    }
 
     public String getTypeLocal() {
         return this.typeLocal;
@@ -70,18 +83,21 @@ public class Locale implements Serializable {
         this.typeLocal = typeLocal;
     }
 
-    public Etage getEtage() {
-        return this.etage;
+
+    public Batiment getBatiment() {
+        return this.batiment;
     }
 
-    public void setEtage(Etage etage) {
-        this.etage = etage;
+    public void setBatiment(Batiment batiment) {
+        this.batiment = batiment;
     }
 
-    public Locale etage(Etage etage) {
-        this.setEtage(etage);
+    public Locale batiment(Batiment batiment) {
+        this.setBatiment(batiment);
         return this;
     }
+
+
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -108,7 +124,8 @@ public class Locale implements Serializable {
         return "Locale{" +
             "id=" + getId() +
             ", numero=" + getNumero() +
-            ", typeLocal='" + getTypeLocal() + "'" +
+            ", typeLocal='" + getTypeLocal() +
+            ", numroEtage =" + getNumeroEtage() + "'" +
             "}";
     }
 }

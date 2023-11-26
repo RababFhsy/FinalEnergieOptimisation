@@ -24,6 +24,8 @@ public class Batiment implements Serializable {
     @Column(name = "batiment_nom")
     private String batimentNom;
 
+    @Column(name = "nbr_etage")
+    private Integer nbrEtage;
     public Batiment(){}
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -67,6 +69,19 @@ public class Batiment implements Serializable {
         this.batimentNom = batimentNom;
     }
 
+    public Integer getNbrEtage() {
+        return this.nbrEtage;
+    }
+
+    public Batiment nbrEtage(Integer nbrEtage) {
+        this.setNbrEtage(nbrEtage);
+        return this;
+    }
+
+    public void setNbrEtage(Integer nbrEtage) {
+        this.nbrEtage = nbrEtage;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -93,6 +108,7 @@ public class Batiment implements Serializable {
             "id=" + getId() +
             ", adresse='" + getAdresse() + "'" +
             ", batimentNom='" + getBatimentNom() + "'" +
+            ", nbeEtage='" + getNbrEtage() + "'" +
             "}";
     }
 }

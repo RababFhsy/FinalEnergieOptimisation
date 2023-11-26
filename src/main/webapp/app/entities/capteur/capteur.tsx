@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ICapteur } from 'app/shared/model/capteur.model';
 import { getEntities, getEntity, updateEntity } from './capteur.reducer';
 import './capteur.scss';
-import {  Pagination } from 'react-bootstrap';
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 export const Capteur = () => {
   const dispatch = useAppDispatch();
@@ -56,17 +56,27 @@ export const Capteur = () => {
 
   const updating = useAppSelector(state => state.capteur.updating);
   const updateSuccess = useAppSelector(state => state.capteur.updateSuccess);
-  const itemsPerPage = 5; // Adjust this based on your preference
+ 
+  const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = capteurList.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(capteurList.length / itemsPerPage);
+  const filteredCapteurList = capteurList
+    .filter((capteur) =>
+     capteur.capteurReference.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   useEffect(() => {
     if (updateSuccess) {
       handleClose();
@@ -101,7 +111,17 @@ export const Capteur = () => {
         </div>
       </h2>
       <div className="custom-table" >
-        {capteurList && capteurList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Sensors..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredCapteurList && filteredCapteurList.length > 0 ? (
           <Table   responsive>
             <thead>
               <tr>
@@ -116,7 +136,7 @@ export const Capteur = () => {
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((capteur, i) => (
+              {filteredCapteurList.map((capteur, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                       {capteur.id}
@@ -164,16 +184,18 @@ export const Capteur = () => {
           !loading && <div className="alert alert-warning">No Sensors found</div>
         )}
         <Pagination>
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <Pagination.Item
-            key={index + 1}
-            active={index + 1 === currentPage}
-            onClick={() => paginate(index + 1)}
-          >
-            {index + 1}
-          </Pagination.Item>
-        ))}
-      </Pagination>
+          {Array.from({ length: Math.ceil(capteurList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

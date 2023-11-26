@@ -22,7 +22,7 @@ export const LocaleUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const etages = useAppSelector(state => state.etage.entities);
+  const batiments = useAppSelector(state =>state.batiment.entities);
   const localeEntity = useAppSelector(state => state.locale.entity);
   const loading = useAppSelector(state => state.locale.loading);
   const updating = useAppSelector(state => state.locale.updating);
@@ -40,7 +40,7 @@ export const LocaleUpdate = () => {
     }
 
     dispatch(getEtages({}));
-  }, []);
+  },  [isNew, id, dispatch]);
 
   useEffect(() => {
     if (updateSuccess) {
@@ -52,11 +52,15 @@ export const LocaleUpdate = () => {
     const entity = {
       ...localeEntity,
       ...values,
-      etage: etages.find(it => it.id.toString() === values.etage.toString()),
+      batiment: batiments.find(it => it.id.toString() === values.batiment.toString()),
+
+
+
     };
 
     if (isNew) {
       dispatch(createEntity(entity)).then(response => {
+        // eslint-disable-next-line no-console
         console.log(' Local créé :', response);
       });
     } else {
@@ -69,8 +73,21 @@ export const LocaleUpdate = () => {
       ? {}
       : {
           ...localeEntity,
-          etage: localeEntity?.etage?.id,
+
+          batiment: localeEntity?.batiment?.id,
+
+
         };
+
+const etagesDisponibles = [];
+for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0; i++) {
+  etagesDisponibles.push({
+    value: i,
+    label: i === 0 ? 'Ground floor' : `Floor ${i}`,
+  });
+}
+
+
 
   return (
     <div>
@@ -88,23 +105,37 @@ export const LocaleUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="locale-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Numero" id="locale-numero" name="numero" data-cy="numero" type="text" />
-              <ValidatedField label="Type Local" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="select" >
+              <ValidatedField label="Number" id="locale-numero" name="numero" data-cy="numero" type="text" />
+              <ValidatedField label="Local Type" id="locale-typeLocal" name="typeLocal" data-cy="typeLocal" type="select" >
               <option value=""></option>
                 <option value="Appartement">Appartement</option>
                 <option value="Office">Office</option>
                 <option value="Cabinet">Cabinet</option>
               </ValidatedField>
-              <ValidatedField id="locale-etage" name="etage" data-cy="etage" label="Floor Number" type="select">
-                <option value="" key="0" />
-                {etages
-                  ? etages.map(otherEntity => (
+
+              <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
+                <option value=""/>
+                {batiments
+                  ? batiments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.etageNumero}
+                        {otherEntity.batimentNom}
                       </option>
                     ))
                   : null}
               </ValidatedField>
+
+
+              <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
+              <option value=""></option>
+              <option value= "0">Ground Floor</option>
+
+                <option value= "1">1</option>
+                <option value= "2">2</option>
+                <option value= "3">3</option>
+                <option value="4">4</option>
+
+              </ValidatedField>
+
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back" to="/locale" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

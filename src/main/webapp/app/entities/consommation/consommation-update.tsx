@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Row, Col } from 'reactstrap';
+import { ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ILocale } from 'app/shared/model/locale.model';
 import { getEntities as getLocales } from 'app/entities/locale/locale.reducer';
-import { IEnergie } from 'app/shared/model/energie.model';
 import { getEntities as getEnergies } from 'app/entities/energie/energie.reducer';
-import { IConsommation } from 'app/shared/model/consommation.model';
 import { getEntity, updateEntity, createEntity, reset } from './consommation.reducer';
 
 export const ConsommationUpdate = () => {
@@ -23,6 +20,7 @@ export const ConsommationUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const users = useAppSelector(state => state.userManagement.entities);
   const locales = useAppSelector(state => state.locale.entities);
   const energies = useAppSelector(state => state.energie.entities);
   const consommationEntity = useAppSelector(state => state.consommation.entity);
@@ -57,6 +55,7 @@ export const ConsommationUpdate = () => {
       ...values,
       locale: locales.find(it => it.id.toString() === values.locale.toString()),
       energie: energies.find(it => it.id.toString() === values.energie.toString()),
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -66,21 +65,19 @@ export const ConsommationUpdate = () => {
     }
   };
 
-  const defaultValues = () =>
-    isNew
-      ? {}
-      : {
-          ...consommationEntity,
-          locale: consommationEntity?.locale?.id,
-          energie: consommationEntity?.energie?.id,
-        };
+  const defaultValues = () => ({
+    ...(isNew ? {} : consommationEntity),
+    locale: consommationEntity?.locale?.id,
+    energie: consommationEntity?.energie?.id,
+    user: consommationEntity?.user?.id,
+  });
 
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="feOptimisationEnergieApp.consommation.home.createOrEditLabel" data-cy="ConsommationCreateUpdateHeading">
-            Create or edit a Consommation
+            {isNew ? 'Create' : 'Edit'} a Consommation
           </h2>
         </Col>
       </Row>
@@ -120,7 +117,17 @@ export const ConsommationUpdate = () => {
                 {energies
                   ? energies.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nomSystemEnergitique}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="consommation-user" name="user" data-cy="user" label="User" type="select">
+                <option value="" key="0" />
+                {users
+                  ? users.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.login}
                       </option>
                     ))
                   : null}

@@ -1,6 +1,7 @@
 package com.feb.optiisationenergie.web.rest;
 
 import com.feb.optiisationenergie.domain.Consommation;
+import com.feb.optiisationenergie.domain.Preference;
 import com.feb.optiisationenergie.repository.ConsommationRepository;
 import com.feb.optiisationenergie.service.ConsommationService;
 import com.feb.optiisationenergie.web.rest.errors.BadRequestAlertException;
@@ -147,6 +148,12 @@ public class ConsommationResource {
      * @param id the id of the consommation to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the consommation, or with status {@code 404 (Not Found)}.
      */
+     @GetMapping("/consommations/user")
+    public List<Consommation> getConsommationsByUser(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+        log.debug("REST request to get all Consommations By User");
+        return consommationRepository.findByUserIsCurrentUser();
+    }
+
     @GetMapping("/consommations/{id}")
     public ResponseEntity<Consommation> getConsommation(@PathVariable Long id) {
         log.debug("REST request to get Consommation : {}", id);

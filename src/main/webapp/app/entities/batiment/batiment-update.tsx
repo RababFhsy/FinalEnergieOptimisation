@@ -80,6 +80,8 @@ export const BatimentUpdate = () => {
               {!isNew ? <ValidatedField name="id" required readOnly id="batiment-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Adress" id="batiment-adresse" name="adresse" data-cy="adresse" type="text" />
               <ValidatedField label="Building Name" id="batiment-batimentNom" name="batimentNom" data-cy="batimentNom" type="text" />
+              <ValidatedField label="Number of Floors" id="batiment-nbrEtage" name="nbrEtage" data-cy="nbrEtage" type="text" />
+
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/batiment" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

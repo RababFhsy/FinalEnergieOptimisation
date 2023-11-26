@@ -44,14 +44,14 @@ export const ConsommationDetail = () => {
           <dd>{consommationEntity.locale ? consommationEntity.locale.id : ''}</dd>
           <dt>Energie</dt>
           <dd>{consommationEntity.energie ? consommationEntity.energie.id : ''}</dd>
+          <dt>User</dt>
+          <dd>{consommationEntity.user ? consommationEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/consommation" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
         </Button>
         &nbsp;
-        <Button tag={Link} to={`/consommation/${consommationEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-        </Button>
+
       </Col>
     </Row>
   );

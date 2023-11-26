@@ -51,6 +51,8 @@ public class BatimentServiceImpl implements BatimentService {
                     existingBatiment.setBatimentNom(batiment.getBatimentNom());
                 }
 
+
+
                 return existingBatiment;
             })
             .map(batimentRepository::save);
