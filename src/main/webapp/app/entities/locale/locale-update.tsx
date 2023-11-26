@@ -27,6 +27,8 @@ export const LocaleUpdate = () => {
   const loading = useAppSelector(state => state.locale.loading);
   const updating = useAppSelector(state => state.locale.updating);
   const updateSuccess = useAppSelector(state => state.locale.updateSuccess);
+  const [selectedBatiment, setSelectedBatiment] = useState('');
+  const [etagesDisponibles, setEtagesDisponibles] = useState([]);
 
   const handleClose = () => {
     navigate('/locale');
@@ -48,6 +50,27 @@ export const LocaleUpdate = () => {
     }
   }, [updateSuccess]);
 
+  useEffect(() => {
+    const generateEtageOptions = () => {
+      const selectedBuilding = batiments.find(
+        (it) => it.id.toString() === selectedBatiment.toString()
+      );
+  
+      const options = [];
+      for (let i = 0; i < (selectedBuilding ? selectedBuilding.nbrEtage : 0); i++) {
+        options.push({
+          value: i,
+          label: i === 0 ? 'Ground floor' : `Floor ${i}`,
+        });
+      }
+  
+      setEtagesDisponibles(options);
+    };
+  
+    generateEtageOptions();
+  }, [selectedBatiment, batiments]);
+
+  
   const saveEntity = values => {
     const entity = {
       ...localeEntity,
@@ -79,13 +102,9 @@ export const LocaleUpdate = () => {
 
         };
 
-const etagesDisponibles = [];
-for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0; i++) {
-  etagesDisponibles.push({
-    value: i,
-    label: i === 0 ? 'Ground floor' : `Floor ${i}`,
-  });
-}
+
+
+
 
 
 
@@ -113,7 +132,10 @@ for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0;
                 <option value="Cabinet">Cabinet</option>
               </ValidatedField>
 
-              <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select">
+              <ValidatedField id="locale-batiment" name="batiment" data-cy="batiment" label="Building" type="select" 
+              onChange={(event) => {
+                  setSelectedBatiment(event.target.value);
+                }}>
                 <option value=""/>
                 {batiments
                   ? batiments.map(otherEntity => (
@@ -125,16 +147,27 @@ for (let i = 0; i <= localeEntity.batiment ? localeEntity.batiment.nbrEtage : 0;
               </ValidatedField>
 
 
-              <ValidatedField label="Floor Number" id="locale-numeroEtage" name="numeroEtage" data-cy="numeroEtage" type="select" >
-              <option value=""></option>
-              <option value= "0">Ground Floor</option>
+              <ValidatedField
+                  label="Floor Number"
+                  id="locale-numeroEtage"
+                  name="numeroEtage"
+                  data-cy="numeroEtage"
+                  type="select"
+                  value={defaultValues().numeroEtage}
+                  onChange={(event) => {
+                    // Handle changes if needed
+                  }}
+                >
+                  <option value="" key="0" />
+                  {etagesDisponibles.map((option) => (
+                    <option value={option.value} key={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </ValidatedField>
 
-                <option value= "1">1</option>
-                <option value= "2">2</option>
-                <option value= "3">3</option>
-                <option value="4">4</option>
 
-              </ValidatedField>
+
 
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" className="custom-button-save-back" to="/locale" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
