@@ -34,9 +34,9 @@ export const Consommation = () => {
   return (
     <div>
       <h2 id="consommation-heading" data-cy="ConsommationHeading">
-        Consommations
+        consumptions
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
         </div>
@@ -46,12 +46,11 @@ export const Consommation = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Energie Consommation</th>
-                <th>Date Consommation</th>
-                <th>Local</th>
+                
+                <th>Energy Consumption</th>
+                <th>Consumption</th>
                 <th>Building</th>
-                <th>Energy</th>
+                <th>Local</th>
                 <th>User</th>
 
                 <th />
@@ -61,11 +60,11 @@ export const Consommation = () => {
               {isAdmin
                 ? consommationList.map((consommation, i) => (
                     <tr key={`entity-${i}`} data-cy="entityTable">
-                      <td>
+                      {/* <td>
                         <Button tag={Link} to={`/consommation/${consommation.id}`} color="link" size="sm">
                           {consommation.id}
                         </Button>
-                      </td>
+                      </td> */}
                       <td>{consommation.energieConsommation}</td>
                       <td>
                         {consommation.dateConsommation ? (
@@ -80,11 +79,11 @@ export const Consommation = () => {
 
                       <td className="text-end">
                         <div className="btn-group flex-btn-group-container">
-                          <Button tag={Link} to={`/consommation/${consommation.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                          <Button tag={Link} to={`/consommation/${consommation.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                             <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                           </Button>
 
-                          <Button tag={Link} to={`/consommation/${consommation.id}/delete`}  color="danger"  size="sm" data-cy="entityDeleteButton">
+                          <Button tag={Link} to={`/consommation/${consommation.id}/delete`}  className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
                             <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                           </Button>
                         </div>
@@ -107,7 +106,6 @@ export const Consommation = () => {
                       <td>{consommation.locale ? consommation.locale.numero : ''}</td>
                       <td>{consommation.locale && consommation.locale.batiment ? consommation.locale.batiment.batimentNom : ''}</td>
 
-                      <td>{consommation.energie ? consommation.energie.nomSystemEnergitique : ''}</td>
                       <td>{consommation.user ? consommation.user.login : ''}</td>
 
                       <td className="text-end">
