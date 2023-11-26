@@ -12,6 +12,7 @@ import { IPreference } from 'app/shared/model/preference.model';
 import { getEntities, getEntitiesByUser } from './preference.reducer';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
+
 export const Preference = () => {
 
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
@@ -24,6 +25,26 @@ export const Preference = () => {
   const preferenceListByUser = useAppSelector(state => state.preference.entitiesByUser);
 
   const loading = useAppSelector(state => state.preference.loading);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredPreferenceList = preferenceList
+    .filter((preference) =>
+    preference.user.login.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     dispatch(getEntities({}));

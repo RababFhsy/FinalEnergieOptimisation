@@ -14,7 +14,7 @@ const EntitiesMenu = ({ isAdmin }) => {
       </MenuItem>
       {isAdmin && (
         <MenuItem icon="asterisk" to="/energie">
-          Energy
+          Energy System
         </MenuItem>
       )}
 
@@ -29,11 +29,11 @@ const EntitiesMenu = ({ isAdmin }) => {
         </MenuItem>
       )}
 
-      {isAdmin && (
+      {/* {isAdmin && (
         <MenuItem icon="asterisk" to="/etage">
           Floor
         </MenuItem>
-      )}
+      )} */}
       {isAdmin && (
         <MenuItem icon="asterisk" to="/locale">
           Local
