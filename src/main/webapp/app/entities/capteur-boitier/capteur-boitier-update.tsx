@@ -360,14 +360,14 @@ export const CapteurBoitierUpdate = () => {
                 <td style={{ textAlign: 'center' }}>{mapBoitierType(rowData.boitier)}  </td>
                 <td style={{ textAlign: 'center' }}>{rowData.branche}  </td>
                 <td style={{ textAlign: 'center' }}>{mapCapteurType(rowData.capteur)} </td>
-                <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
+                <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}><FontAwesomeIcon icon="trash" />Delete</button></td>
               </tr>
             ))}
             {CapteurBoitierHistory.map((historyData, index) => (
               <tr key={index}>
-                <td style={{ textAlign: 'center' }}>{historyData.boitier.id}  </td>
+                <td style={{ textAlign: 'center' }}>{mapBoitierType(historyData.boitier.id)}  </td>
                 <td style={{ textAlign: 'center' }}>{historyData.branche}  </td>
-                <td style={{ textAlign: 'center' }}>{historyData.capteur.id} </td>
+                <td style={{ textAlign: 'center' }}>{mapCapteurType(historyData.capteur.id)} </td>
                 <td style={{ textAlign: 'center' }}>
                   <Button tag={Link} to={`/capteur-boitier/${historyData.id}/delete`} size="sm" className="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>

@@ -249,7 +249,13 @@ export const LocaleBoitierUpdate = () => {
     resetForm(); // Reset the form fields
   };
   const currentDate = new Date().toISOString().split('T')[0];
+  
+  const mapBoitierType = (boitierId) => {
+    const boitier = boitiers.find((entity) => entity.id.toString() === boitierId.toString());
+    return boitier ? boitier.boitierReference : '';
+  };
 
+  
 
   return (
     <div className="page-container">
@@ -343,7 +349,6 @@ export const LocaleBoitierUpdate = () => {
     <table className="responsive-table">
           <thead className="table-header">
             <tr>
-              <th className="col col-1" style={{ textAlign: 'center' }}>Building</th>
               <th className="col col-1" style={{ textAlign: 'center' }}>Local</th>
               <th className="col col-1" style={{ textAlign: 'center' }}>Box</th>
               <th className="col col-1" style={{ textAlign: 'center' }}>First date</th>
@@ -354,9 +359,8 @@ export const LocaleBoitierUpdate = () => {
           <tbody>
           {tableData.map((rowData, index) => (
               <tr key={index}>
-                <td style={{ textAlign: 'center' }}>{rowData.batiment}</td>
                 <td style={{ textAlign: 'center' }}>{rowData.locale}</td>
-                <td style={{ textAlign: 'center' }}>{rowData.boitier}</td>
+                <td style={{ textAlign: 'center' }}>{mapBoitierType(rowData.boitier)}</td>
                 <td style={{ textAlign: 'center' }}>
                  <TextFormat type="date" value={currentDate} format={APP_LOCAL_DATE_FORMAT} /> 
                 </td>
@@ -369,8 +373,7 @@ export const LocaleBoitierUpdate = () => {
             {localeBoitierHistory.map((localeBoitier, i) => (
             <tr key={`history-${i}`}>
               {/* Render historical data columns */}
-              <td style={{ textAlign: 'center' }}>{localeBoitier.batiment}</td>
-              <td style={{ textAlign: 'center' }}>{localeBoitier.locale.numero}</td>
+              <td style={{ textAlign: 'center' }}>{localeBoitier.locale.id}</td>
               <td style={{ textAlign: 'center' }}>{localeBoitier.boitier.boitierReference}</td>
               <td style={{ textAlign: 'center' }}>
                 <TextFormat type="date" value={localeBoitier.dateDebut} format={APP_LOCAL_DATE_FORMAT} />
