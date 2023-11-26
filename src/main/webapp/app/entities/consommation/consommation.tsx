@@ -8,6 +8,7 @@ import { getEntities, getEntitiesByUser } from './consommation.reducer';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 export const Consommation = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,31 @@ export const Consommation = () => {
   const consommationListByUser = useAppSelector(state => state.consommation.entitiesByUser);
 
   const loading = useAppSelector(state => state.consommation.loading);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredconsommationList = consommationList
+    .filter((consommation) =>
+    consommation.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+    const filteredconsommationListByUser = consommationList
+    .filter((consommation) =>
+    consommation.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);  
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -42,7 +68,18 @@ export const Consommation = () => {
         </div>
       </h2>
       <div className="table-responsive">
-        {consommationList && consommationList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Energy System..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredconsommationList && filteredconsommationList.length > 0 ? (
+       
           <Table responsive>
             <thead>
               <tr>
@@ -50,7 +87,7 @@ export const Consommation = () => {
                 <th>Quantity of energy Consumption</th>
                 <th>Consumption date</th>
                 <th>Building</th>
-                <th>Local</th>
+                <th>Local Number</th>
                 <th>User</th>
                 <th style={{ textAlign: 'center' }}>Action</th>
 
@@ -59,7 +96,7 @@ export const Consommation = () => {
             </thead>
             <tbody>
               {isAdmin
-                ? consommationList.map((consommation, i) => (
+                ? filteredconsommationList.map((consommation, i) => (
                     <tr key={`entity-${i}`} data-cy="entityTable">
                       {/* <td>
                         <Button tag={Link} to={`/consommation/${consommation.id}`} color="link" size="sm">
@@ -90,7 +127,7 @@ export const Consommation = () => {
                       </td>
                     </tr>
                   ))
-                : consommationListByUser.map((consommation, i) => (
+                : filteredconsommationListByUser.map((consommation, i) => (
                     <tr key={`entity-${i}`} data-cy="entityTable">
                       {/* <td>
                         <Button tag={Link} to={`/consommation/${consommation.id}`} color="link" size="sm">
@@ -133,7 +170,21 @@ export const Consommation = () => {
         ) : (
           !loading && <div className="alert alert-warning">No Consumptions found</div>
         )}
+        <Pagination>
+          {Array.from({ length: Math.ceil(consommationList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
+      
       
     </div>
   );
