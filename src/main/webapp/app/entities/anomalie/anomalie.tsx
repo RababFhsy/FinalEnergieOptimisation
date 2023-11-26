@@ -32,13 +32,12 @@ export const Anomalie = () => {
       <h2 id="anomalie-heading" data-cy="AnomalieHeading">
         Anomalies
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
+        <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="/anomalie/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
+         {/* <Link to="/anomalie/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Create a new Anomalie
-          </Link>
+            &nbsp; New Anomalie
+  </Link>*/}
         </div>
       </h2>
       <div className="table-responsive">
@@ -46,41 +45,42 @@ export const Anomalie = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Zone Normale Min</th>
-                <th>Zone Normale Max</th>
-                <th>Date Anomalie</th>
-                <th>Description Anomalie</th>
-                <th>Locale</th>
-                <th>Energie</th>
+                
+                <th>Min of zone normal </th>
+                <th>Max of zone normale </th>
+                <th>Anomalie date</th>
+                <th>Anomalie description </th>
+                <th>Local</th>
+                <th>Building</th>
+                <th>Energy</th>
                 <th />
               </tr>
             </thead>
             <tbody>
               {anomalieList.map((anomalie, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/*<td>
                     <Button tag={Link} to={`/anomalie/${anomalie.id}`} color="link" size="sm">
                       {anomalie.id}
                     </Button>
-                  </td>
+              </td>*/}
                   <td>{anomalie.zoneNormaleMin}</td>
                   <td>{anomalie.zoneNormaleMax}</td>
                   <td>
                     {anomalie.dateAnomalie ? <TextFormat type="date" value={anomalie.dateAnomalie} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{anomalie.descriptionAnomalie}</td>
-                  <td>{anomalie.locale ? <Link to={`/locale/${anomalie.locale.id}`}>{anomalie.locale.id}</Link> : ''}</td>
-                  <td>{anomalie.energie ? <Link to={`/energie/${anomalie.energie.id}`}>{anomalie.energie.id}</Link> : ''}</td>
+                  <td>{anomalie.locale ? anomalie.locale.batiment.batimentNom: ''}</td>
+                  <td>{anomalie.energie ? anomalie.energie.id: ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/anomalie/${anomalie.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                      {/* <Button tag={Link} to={`/anomalie/${anomalie.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                      </Button>
-                      <Button tag={Link} to={`/anomalie/${anomalie.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                      </Button> */}
+                      {/* <Button tag={Link} to={`/anomalie/${anomalie.id}/edit`} className="custom-button-edit" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button>
-                      <Button tag={Link} to={`/anomalie/${anomalie.id}/delete`} color="danger" size="sm" data-cy="entityDeleteButton">
+                      </Button> */}
+                      <Button tag={Link} to={`/anomalie/${anomalie.id}/delete`} className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
                     </div>
