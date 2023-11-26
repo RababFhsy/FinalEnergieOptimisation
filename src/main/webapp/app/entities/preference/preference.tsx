@@ -66,10 +66,12 @@ export const Preference = () => {
       <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
         <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
       </Button>
-      <Link to="/preference/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
-        <FontAwesomeIcon icon="plus" />
-        &nbsp; new Preference
-      </Link>
+      {!isAdmin && (
+            <Link to="/preference/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
+              <FontAwesomeIcon icon="plus" />
+              &nbsp; New Preference
+            </Link>
+          )}
     </div>
   </h2>
   <div className="table-responsive">
@@ -114,6 +116,7 @@ export const Preference = () => {
             )
           ) : (
             preferenceListByUser.map((preference, i) => (
+              
               <tr key={`entity-${i}`} data-cy="entityTable">
                 <td>{preference.id}</td>
                 <td>{preference.tempMinValue}</td>
