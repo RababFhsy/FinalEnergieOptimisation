@@ -111,7 +111,7 @@ export const Consommation = () => {
                         ) : null}
                       </td>
                       <td>{consommation.locale && consommation.locale.batiment ? consommation.locale.batiment.batimentNom : ''}</td>
-                      <td>{consommation.locale ? consommation.locale.numero : ''}</td>
+                      <td>N°{consommation.locale ? consommation.locale.numero : ''}</td>
                       <td>{consommation.user ? consommation.user.login : ''}</td>
 
                       <td style={{ textAlign: 'center' }}>

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IAnomalie } from 'app/shared/model/anomalie.model';
 import { getEntities } from './anomalie.reducer';
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 export const Anomalie = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,26 @@ export const Anomalie = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredAnomalieList = anomalieList
+    .filter((anomalie) =>
+    anomalie.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div>
@@ -41,7 +62,17 @@ export const Anomalie = () => {
         </div>
       </h2>
       <div className="table-responsive">
-        {anomalieList && anomalieList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Energy System..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredAnomalieList && filteredAnomalieList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -58,7 +89,7 @@ export const Anomalie = () => {
               </tr>
             </thead>
             <tbody>
-              {anomalieList.map((anomalie, i) => (
+              {filteredAnomalieList.map((anomalie, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   {/*<td>
                     <Button tag={Link} to={`/anomalie/${anomalie.id}`} color="link" size="sm">
@@ -94,6 +125,19 @@ export const Anomalie = () => {
         ) : (
           !loading && <div className="alert alert-warning">No Anomalies found</div>
         )}
+        <Pagination>
+          {Array.from({ length: Math.ceil(anomalieList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
     </div>
   );

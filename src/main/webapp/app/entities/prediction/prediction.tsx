@@ -108,7 +108,7 @@ export const Prediction = () => {
                   </td>
                   <td>{prediction.consommationPredit}</td>
                   <td>{prediction.precision}</td>
-                  <td>{prediction.locale ? prediction.locale.numero : ''}</td>
+                  <td>N°{prediction.locale ? prediction.locale.numero : ''}</td>
                   <td>{prediction.locale ? prediction.locale.batiment.batimentNom: ''}</td>
                   <td>{prediction.energie ? prediction.energie.nomSystemEnergitique : ''}</td>
                   <td className="text-end">
