@@ -37,7 +37,7 @@ export const Anomalie = () => {
          {/* <Link to="/anomalie/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
             &nbsp; New Anomalie
-  </Link>*/}
+  </Link> */}
         </div>
       </h2>
       <div className="table-responsive">
@@ -53,6 +53,7 @@ export const Anomalie = () => {
                 <th>Local</th>
                 <th>Building</th>
                 <th>Energy</th>
+                <th style={{ textAlign: 'center' }}>Action</th>
                 <th />
               </tr>
             </thead>
@@ -70,9 +71,10 @@ export const Anomalie = () => {
                     {anomalie.dateAnomalie ? <TextFormat type="date" value={anomalie.dateAnomalie} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{anomalie.descriptionAnomalie}</td>
+                  <td>{anomalie.locale ? anomalie.locale.numero: ''}</td>
                   <td>{anomalie.locale ? anomalie.locale.batiment.batimentNom: ''}</td>
-                  <td>{anomalie.energie ? anomalie.energie.id: ''}</td>
-                  <td className="text-end">
+                  <td>{anomalie.energie ? anomalie.energie.nomSystemEnergitique: ''}</td>
+                  <td style={{ textAlign: 'center' }}>
                     <div className="btn-group flex-btn-group-container">
                       {/* <Button tag={Link} to={`/anomalie/${anomalie.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>

@@ -46,12 +46,13 @@ export const Consommation = () => {
           <Table responsive>
             <thead>
               <tr>
-                
-                <th>Quantity of Energy Consumption</th>
+                <th>Energy type</th>
+                <th>Quantity of energy Consumption</th>
                 <th>Consumption date</th>
                 <th>Building</th>
                 <th>Local</th>
                 <th>User</th>
+                <th style={{ textAlign: 'center' }}>Action</th>
 
                 <th />
               </tr>
@@ -65,21 +66,18 @@ export const Consommation = () => {
                           {consommation.id}
                         </Button>
                       </td> */}
+                      <td>{consommation.energie ? consommation.energie.nomSystemEnergitique : ''}</td>
                       <td>{consommation.energieConsommation}</td>
                       <td>
                         {consommation.dateConsommation ? (
                           <TextFormat type="date" value={consommation.dateConsommation} format={APP_LOCAL_DATE_FORMAT} />
                         ) : null}
                       </td>
-                      <td>{consommation.locale ? consommation.locale.numero : ''}</td>
                       <td>{consommation.locale && consommation.locale.batiment ? consommation.locale.batiment.batimentNom : ''}</td>
-                     
-                      
-
-                      <td>{consommation.energie ? consommation.energie.nomSystemEnergitique : ''}</td>
+                      <td>{consommation.locale ? consommation.locale.numero : ''}</td>
                       <td>{consommation.user ? consommation.user.login : ''}</td>
 
-                      <td className="text-end">
+                      <td style={{ textAlign: 'center' }}>
                         <div className="btn-group flex-btn-group-container">
                           {/* <Button tag={Link} to={`/consommation/${consommation.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                             <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
@@ -94,11 +92,11 @@ export const Consommation = () => {
                   ))
                 : consommationListByUser.map((consommation, i) => (
                     <tr key={`entity-${i}`} data-cy="entityTable">
-                      <td>
+                      {/* <td>
                         <Button tag={Link} to={`/consommation/${consommation.id}`} color="link" size="sm">
                           {consommation.id}
                         </Button>
-                      </td>
+                      </td> */}
                       <td>{consommation.energieConsommation}</td>
                       <td>
                         {consommation.dateConsommation ? (
