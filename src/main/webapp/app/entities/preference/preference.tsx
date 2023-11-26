@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IPreference } from 'app/shared/model/preference.model';
 import { getEntities, getEntitiesByUser } from './preference.reducer';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 
 export const Preference = () => {
@@ -38,13 +39,18 @@ export const Preference = () => {
 
   const filteredPreferenceList = preferenceList
     .filter((preference) =>
-    preference.user.login.toLowerCase().includes(searchQuery.toLowerCase())
+    preference.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
     )
     .slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const filteredPreferenceListByUser =  preferenceListByUser
+  .filter((preference) =>
+  preference.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+  .slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -75,7 +81,18 @@ export const Preference = () => {
     </div>
   </h2>
   <div className="table-responsive">
-    {preferenceList && preferenceList.length > 0 ? (
+  <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Energy System..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredPreferenceList && filteredPreferenceList.length > 0 ? (
+   
       <Table responsive>
         <thead>
           <tr>
@@ -90,7 +107,7 @@ export const Preference = () => {
         </thead>
         <tbody>
           {isAdmin ? (
-            preferenceList.map((preference, i) => (
+            filteredPreferenceList.map((preference, i) => (
               <tr key={`entity-${i}`} data-cy="entityTable">
                 <td>{preference.id}</td>
                 <td>{preference.tempMinValue}</td>
@@ -115,7 +132,7 @@ export const Preference = () => {
             )
             )
           ) : (
-            preferenceListByUser.map((preference, i) => (
+            filteredPreferenceListByUser.map((preference, i) => (
               
               <tr key={`entity-${i}`} data-cy="entityTable">
                 <td>{preference.id}</td>
@@ -146,6 +163,19 @@ export const Preference = () => {
     ) : (
       !loading && <div className="alert alert-warning">No Preferences found</div>
     )}
+    <Pagination>
+          {Array.from({ length: Math.ceil(preferenceList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
   </div>
 </div>
 
