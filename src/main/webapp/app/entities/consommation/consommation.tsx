@@ -112,7 +112,8 @@ export const Consommation = () => {
                         <div className="btn-group flex-btn-group-container">
                           {/* <Button tag={Link} to={`/consommation/${consommation.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                             <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                          </Button> */}
+                          </Button>
+                           */}
 
                           <Button
                             tag={Link}
