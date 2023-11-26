@@ -89,10 +89,10 @@ export const UserManagement = () => {
       <h2 id="user-management-page-heading" data-cy="userManagementPageHeading">
         Users
         <div className="d-flex justify-content-end">
-          <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
+          <Button  className="me-2 btn-light custom-button-refresh"  onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
           </Button>
-          <Link to="new" className="btn btn-primary jh-create-entity">
+          <Link to="new" className="btn btn-light jh-create-entity custom-button-new">
             <FontAwesomeIcon icon="plus" /> Create a new user
           </Link>
         </div>
@@ -112,8 +112,9 @@ export const UserManagement = () => {
               Email
               <FontAwesomeIcon icon="sort" />
             </th>
-            <th />
+            <th>State</th>
             <th>Profiles</th>
+            
             <th className="hand" onClick={sort('createdDate')}>
               Created date
               <FontAwesomeIcon icon="sort" />
@@ -133,9 +134,9 @@ export const UserManagement = () => {
           {users.map((user, i) => (
             <tr id={user.login} key={`user-${i}`}>
               <td>
-                <Button tag={Link} to={user.login} color="link" size="sm">
+                
                   {user.id}
-                </Button>
+               
               </td>
               <td>{user.login}</td>
               <td>{user.email}</td>
@@ -154,7 +155,7 @@ export const UserManagement = () => {
                 {user.authorities
                   ? user.authorities.map((authority, j) => (
                       <div key={`user-auth-${i}-${j}`}>
-                        <Badge color="info">{authority}</Badge>
+                        {authority}
                       </div>
                     ))
                   : null}
@@ -170,13 +171,13 @@ export const UserManagement = () => {
               </td>
               <td className="text-end">
                 <div className="btn-group flex-btn-group-container">
-                  <Button tag={Link} to={user.login} color="info" size="sm">
+                  <Button tag={Link} to={user.login} className="custom-button-view" size="sm">
                     <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                   </Button>
-                  <Button tag={Link} to={`${user.login}/edit`} color="primary" size="sm">
+                  <Button tag={Link} to={`${user.login}/edit`} className="custom-button-edit" size="sm">
                     <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
                   </Button>
-                  <Button tag={Link} to={`${user.login}/delete`} color="danger" size="sm" disabled={account.login === user.login}>
+                  <Button tag={Link} to={`${user.login}/delete`} className="custom-button-delete" size="sm" disabled={account.login === user.login}>
                     <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                   </Button>
                 </div>
