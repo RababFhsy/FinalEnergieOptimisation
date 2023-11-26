@@ -47,7 +47,7 @@ export const Consommation = () => {
             <thead>
               <tr>
                 
-                <th>Energy Consumption</th>
+                <th>Quantity of Energy Consumption</th>
                 <th>Consumption date</th>
                 <th>Building</th>
                 <th>Local</th>
@@ -73,15 +73,17 @@ export const Consommation = () => {
                       </td>
                       <td>{consommation.locale ? consommation.locale.numero : ''}</td>
                       <td>{consommation.locale && consommation.locale.batiment ? consommation.locale.batiment.batimentNom : ''}</td>
+                     
+                      
 
                       <td>{consommation.energie ? consommation.energie.nomSystemEnergitique : ''}</td>
                       <td>{consommation.user ? consommation.user.login : ''}</td>
 
                       <td className="text-end">
                         <div className="btn-group flex-btn-group-container">
-                          <Button tag={Link} to={`/consommation/${consommation.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
+                          {/* <Button tag={Link} to={`/consommation/${consommation.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                             <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                          </Button>
+                          </Button> */}
 
                           <Button tag={Link} to={`/consommation/${consommation.id}/delete`}  className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
                             <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>

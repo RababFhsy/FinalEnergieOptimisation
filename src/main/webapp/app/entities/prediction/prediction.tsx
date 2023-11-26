@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IPrediction } from 'app/shared/model/prediction.model';
 import { getEntities } from './prediction.reducer';
+import {  Pagination,Form,FormControl } from 'react-bootstrap';
+
 
 export const Prediction = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +28,26 @@ export const Prediction = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to the first page when the search query changes
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredPredictionList = predictionList
+    .filter((prediction) =>
+    prediction.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   console.log('predictionList', JSON.stringify(predictionList));
 
   return (
@@ -42,8 +64,19 @@ export const Prediction = () => {
           </Link> */}
         </div>
       </h2>
+
       <div className="table-responsive">
-        {predictionList && predictionList.length > 0 ? (
+      <Form >
+        <FormControl
+          type="text"
+          placeholder="Search Energy System..."
+          className="mr-sm-2"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Form>
+      <br></br>
+      {filteredPredictionList && filteredPredictionList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
@@ -55,11 +88,12 @@ export const Prediction = () => {
                 <th>Local Number</th>
                 <th>Building</th>
                 <th>Energy System</th>
+                <th>Action</th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {predictionList.map((prediction, i) => (
+              {filteredPredictionList.map((prediction, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   {/* <td>
                     <Button tag={Link} to={`/prediction/${prediction.id}`} color="link" size="sm">
@@ -79,12 +113,12 @@ export const Prediction = () => {
                   <td>{prediction.energie ? prediction.energie.nomSystemEnergitique : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/prediction/${prediction.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
+                      {/* <Button tag={Link} to={`/prediction/${prediction.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
                         <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                       </Button>
                       <Button tag={Link} to={`/prediction/${prediction.id}/edit`} className="custom-button-edit" size="sm" data-cy="entityEditButton">
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button>
+                      </Button> */}
                       <Button tag={Link} to={`/prediction/${prediction.id}/delete`} className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
                       </Button>
@@ -97,6 +131,19 @@ export const Prediction = () => {
         ) : (
           !loading && <div className="alert alert-warning">No Predictions found</div>
         )}
+        <Pagination>
+          {Array.from({ length: Math.ceil(predictionList.length / itemsPerPage) }).map(
+            (_, index) => (
+              <Pagination.Item
+                key={index + 1}
+                active={index + 1 === currentPage}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </Pagination.Item>
+            )
+          )}
+        </Pagination>
       </div>
     </div>
   );
