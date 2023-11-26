@@ -48,7 +48,7 @@ export const Consommation = () => {
               <tr>
                 
                 <th>Energy Consumption</th>
-                <th>Consumption</th>
+                <th>Consumption date</th>
                 <th>Building</th>
                 <th>Local</th>
                 <th>User</th>
@@ -110,9 +110,9 @@ export const Consommation = () => {
 
                       <td className="text-end">
                         <div className="btn-group flex-btn-group-container">
-                          <Button tag={Link} to={`/consommation/${consommation.id}`} color="info" size="sm" data-cy="entityDetailsButton">
+                          {/* <Button tag={Link} to={`/consommation/${consommation.id}`} color="info" size="sm" data-cy="entityDetailsButton">
                             <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                          </Button>
+                          </Button> */}
 
                           <Button
                             tag={Link}
@@ -130,9 +130,10 @@ export const Consommation = () => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Consommations found</div>
+          !loading && <div className="alert alert-warning">No Consumptions found</div>
         )}
       </div>
+      
     </div>
   );
 };
