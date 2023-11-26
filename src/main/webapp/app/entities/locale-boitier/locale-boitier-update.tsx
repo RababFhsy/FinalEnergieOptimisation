@@ -50,6 +50,7 @@ export const LocaleBoitierUpdate = () => {
   const [filteredLocales, setFilteredLocales] = useState([]);
   const [filteredEtages, setFilteredEtages] = useState([]);
   const [localeBoitierHistory, setLocaleBoitierHistory] = useState([]);
+  const [etagesDisponibles, setEtagesDisponibles] = useState([]);
 
 
   
@@ -121,38 +122,46 @@ export const LocaleBoitierUpdate = () => {
     const { name, value } = e.target;
     if(name === 'batiment'){
       const selectedBatimentId = parseInt(value);
-      // // console.log("Batiment :",selectedBatimentId)
-      const filteredEtages = etages.filter(
-       (etage) => etage.batiment.id === selectedBatimentId
+      const selectedBatiment = batiments.find(
+        (batiment) => batiment.id === selectedBatimentId
       );
-    
-      console.log("Locales list:", filteredEtages);
-      // console.log("Batiments list:", batiments);
-      // console.log("Etages list:", etages);
-      // console.log("Filtered locales:", filteredLocales);
-
-      setFilteredEtages(filteredEtages);
+  
+      const options = [];
+      for (let i = 0; i <= (selectedBatiment ? selectedBatiment.nbrEtage : 0); i++) {
+        options.push({
+          value: i,
+          label: i === 0 ? 'Ground floor' : `Floor ${i}`,
+        });
+      }
+  
+      setEtagesDisponibles(options);
+  
       setSelectedBatiment(value);
-      setBuildingDisabled(true); // Disable the selection of "building"
-      setLocaleDisabled(false); // Enable the selection of "locale" with the filtered locales
+      setBuildingDisabled(true);
+      setLocaleDisabled(false);
+  
     }else if(name ==='etage'){
       setSelectedEtage(value);
-      const selectedEtageId = parseInt(value);
-      // // console.log("Batiment :",selectedBatimentId)
-      const filteredLocales = locales.filter(
-       (locale) => locale.etage.id === selectedEtageId
-      );
-      setFilteredLocales(filteredLocales);
-      setEtageDisabled(true);
+    const selectedEtageId = parseInt(value);
+
+    const filteredLocales = locales.filter(
+      (locale) => locale.numeroEtage === selectedEtageId
+    );
+
+    setFilteredLocales(filteredLocales);
+    setEtageDisabled(true);
     } else if (name === 'locale') {
       setSelectedLocale(value);
-      const selectedLocalId = parseInt(value);
-      setLocaleDisabled(true); // Disable the selection of "locale"
-     
-      // Fetch localBoitierList based on the selected locale
-      const localeBoitierHistory = localeBoitierList.filter(item => item.locale.id === selectedLocalId);
-      setLocaleBoitierHistory(localeBoitierHistory);
-      console.log(localeBoitierHistory);
+    const selectedLocalId = parseInt(value);
+    setLocaleDisabled(true);
+
+    // Fetch localBoitierList based on the selected locale
+    const localeBoitierHistory = localeBoitierList.filter(
+      (item) => item.locale.id === selectedLocalId
+    );
+
+    setLocaleBoitierHistory(localeBoitierHistory);
+    console.log(localeBoitierHistory);
 
     } else if (name === 'boitier') {
       const currentDate = new Date();
@@ -271,7 +280,7 @@ export const LocaleBoitierUpdate = () => {
               {!isNew ? (
                 <ValidatedField name="id" required readOnly id="locale-boitier-id" label="ID" onChange={handleInputChange} validate={{ required: true }} />
               ) : null}
-              <ValidatedField id="locale-boitier-locale" name="batiment" data-cy="batiment" label="Building" type="select" disabled={buildingDisabled} onChange={handleInputChange}>
+              <ValidatedField id="locale-boitier-locale" name="batiment" data-cy="batiment" label="Building Name" type="select" disabled={buildingDisabled} onChange={handleInputChange}>
                 <option value="" key="0" />
                 {batiments
                   ? batiments.map(otherEntity => (
@@ -281,27 +290,35 @@ export const LocaleBoitierUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="locale-boitier-locale" name="etage" data-cy="etage" label="Floor" type="select" disabled={etageDisabled} onChange={handleInputChange}>
-                <option value="" key="0" />
-                {filteredEtages
-                  ? filteredEtages.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.etageNumero}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="locale-boitier-locale" name="locale" data-cy="locale" label="Local" type="select" disabled={localeDisabled} onChange={handleInputChange}>
+              <ValidatedField
+                  id="locale-boitier-locale"
+                  name="etage"
+                  data-cy="etage"
+                  label="Floor number"
+                  type="select"
+                  disabled={etageDisabled}
+                  onChange={handleInputChange}
+                  value={selectedEtage} // assuming 'selectedEtage' is a state variable to manage the selected floor
+                >
+                  <option value="" key="0" />
+                  {etagesDisponibles.map((option) => (
+                    <option value={option.value} key={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </ValidatedField>
+
+              <ValidatedField id="locale-boitier-locale" name="locale" data-cy="locale" label="Local number" type="select" disabled={localeDisabled} onChange={handleInputChange}>
               <option value="" key="0" />
               {filteredLocales
                 ? filteredLocales.map((otherEntity) => (
-                    <option value={otherEntity.id} key={otherEntity.id}>
-                      {otherEntity.numero}
+                    <option value={otherEntity.numero} key={otherEntity.id}>
+                      {`N°${otherEntity.numero}`}
                     </option>
                   ))
                 : null}
               </ValidatedField>
-              <ValidatedField id="locale-boitier-boitier" name="boitier" data-cy="boitier" label="Box" type="select" onChange={handleInputChange} value={formData.boitier}>
+              <ValidatedField id="locale-boitier-boitier" name="boitier" data-cy="boitier" label="Box reference" type="select" onChange={handleInputChange} value={formData.boitier}>
                 <option value="" key="0" />
                 {boitiers
                   ? boitiers.map(otherEntity => (
