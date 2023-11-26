@@ -161,7 +161,7 @@ export const Energie = () => {
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Floor</Modal.Title>
+          <Modal.Title>Edit Energy System</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row className="justify-content-center">
