@@ -1,6 +1,8 @@
-# feOptimisationEnergie
+# Smart Building Energy Optimization Platform
+Welcome to our innovative Smart Building Energy Optimization Platform, a groundbreaking solution designed to revolutionize energy efficiency in the realm of smart buildings. This project is a fusion of cutting-edge technologies, leveraging the power of the Internet of Things (IoT) and Artificial Intelligence (AI) models to maximize energy optimization within built environments.
 
-This application was generated using JHipster 7.9.4, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.4](https://www.jhipster.tech/documentation-archive/v7.9.4).
+## Project Description
+Our Smart Building Energy Optimization Platform offers an innovative solution for seamlessly managing individual spaces within a building. Through strategically deployed sensors, intricately connected to Arduino microcontrollers, we establish a robust network that captures real-time data on localized environmental conditions. These Arduino devices, acting as intelligent hubs, facilitate communication with local systems, enabling dynamic control over energy consumption. By leveraging this interconnected infrastructure, our platform empowers users to optimize energy usage at the micro-level, ensuring a fine-tuned and efficient operation of building resources. From sensors to Arduinos, and finally to localized control, our platform represents a sophisticated approach to enhancing energy efficiency within each unique space.
 
 ## Project Structure
 
