@@ -2,7 +2,14 @@
 Welcome to our innovative Smart Building Energy Optimization Platform, a groundbreaking solution designed to revolutionize energy efficiency in the realm of smart buildings. This project is a fusion of cutting-edge technologies, leveraging the power of the Internet of Things (IoT) and Artificial Intelligence (AI) models to maximize energy optimization within built environments.
 
 ## Project Description
-Our Smart Building Energy Optimization Platform offers an innovative solution for seamlessly managing individual spaces within a building. Through strategically deployed sensors, intricately connected to Arduino microcontrollers, we establish a robust network that captures real-time data on localized environmental conditions. These Arduino devices, acting as intelligent hubs, facilitate communication with local systems, enabling dynamic control over energy consumption. By leveraging this interconnected infrastructure, our platform empowers users to optimize energy usage at the micro-level, ensuring a fine-tuned and efficient operation of building resources. From sensors to Arduinos, and finally to localized control, our platform represents a sophisticated approach to enhancing energy efficiency within each unique space.
+The software platform developed for this smart building energy optimization project leverages both the Internet of Things (IoT) and Artificial Intelligence (AI). It collects real-time data from various sensors deployed throughout the buildings via a robust IoT infrastructure. These data feed into AI predictive models that anticipate energy demand and identify inefficiencies, including energy leaks. The adaptability of AI enables dynamic adjustments to changes, ensuring continuous optimization. The platform provides a user-friendly interface for real-time monitoring, visualization of AI-generated recommendations, and manual adjustments. In summary, this software represents a significant advancement in intelligent energy management, fostering more efficient and sustainable smart buildings.
+
+## Table of Contents
+
+
+## Software architecture
+The architecture comprises three distinct sections: application, hardware, and artificial intelligence. In the application section, our energy optimization platform's software architecture utilizes Spring Boot for the backend and React.js for the frontend. Spring Boot controllers manage incoming requests, directing them to the service layer, which houses the application's business logic. This logic interacts with the MySQL database for data storage and retrieval, handling information from sensors. The React.js frontend organizes the user interface into components, promoting a modular and responsive design. React's state management ensures dynamic user experiences, with components making API calls to the Spring Boot backend for real-time data updates. Seamless interaction between the backend and frontend is achieved through RESTful APIs, ensuring efficient data processing and storage with MySQL and delivering an intuitive user interface.
+
 
 ## Project Structure
 
