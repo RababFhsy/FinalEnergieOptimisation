@@ -1,4 +1,6 @@
 # Smart Building Energy Optimization Platform
+
+### Project members : Houda EL KORAINI - Rabab FAHSSI - Saad BAKANZIZE
 Welcome to our innovative Smart Building Energy Optimization Platform, a groundbreaking solution designed to revolutionize energy efficiency in the realm of smart buildings. This project is a fusion of cutting-edge technologies, leveraging the power of the Internet of Things (IoT) and Artificial Intelligence (AI) models to maximize energy optimization within built environments.
 
 ## Project Description
