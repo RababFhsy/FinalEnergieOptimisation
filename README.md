@@ -1,6 +1,6 @@
 # Smart Building Energy Optimization Platform
 
-### Project members : Houda EL KORAINI - Rabab FAHSSI - Saad BAKANZIZE
+<h4 align="center"> Project members : Houda EL KORAINI - Rabab FAHSSI - Saad  </h4>
 Welcome to our innovative Smart Building Energy Optimization Platform, a groundbreaking solution designed to revolutionize energy efficiency in the realm of smart buildings. This project is a fusion of cutting-edge technologies, leveraging the power of the Internet of Things (IoT) and Artificial Intelligence (AI) models to maximize energy optimization within built environments.
 
 ## Project Description
@@ -11,7 +11,7 @@ The software platform developed for this smart building energy optimization proj
 
 ## Software architecture
 The architecture comprises three distinct sections: application, hardware, and artificial intelligence. In the application section, our energy optimization platform's software architecture utilizes Spring Boot for the backend and React.js for the frontend. Spring Boot controllers manage incoming requests, directing them to the service layer, which houses the application's business logic. This logic interacts with the MySQL database for data storage and retrieval, handling information from sensors. The React.js frontend organizes the user interface into components, promoting a modular and responsive design. React's state management ensures dynamic user experiences, with components making API calls to the Spring Boot backend for real-time data updates. Seamless interaction between the backend and frontend is achieved through RESTful APIs, ensuring efficient data processing and storage with MySQL and delivering an intuitive user interface.
-![image info](images/image.png)
+![image info](images/archiFinal.png)
 
 ## Project Structure
 
