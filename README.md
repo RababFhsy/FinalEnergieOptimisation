@@ -6,18 +6,28 @@ Welcome to our innovative Smart Building Energy Optimization Platform, a groundb
 ## Project Description
 The software platform developed for this smart building energy optimization project leverages both the Internet of Things (IoT) and Artificial Intelligence (AI). It collects real-time data from various sensors deployed throughout the buildings via a robust IoT infrastructure. These data feed into AI predictive models that anticipate energy demand and identify inefficiencies, including energy leaks. The adaptability of AI enables dynamic adjustments to changes, ensuring continuous optimization. The platform provides a user-friendly interface for real-time monitoring, visualization of AI-generated recommendations, and manual adjustments. In summary, this software represents a significant advancement in intelligent energy management, fostering more efficient and sustainable smart buildings.
 
+<details>
+<summary>
 ## Table of Contents
+</summary>
 
 - [Introduction](#introduction)
-- [Software architecture](## Software architecture)
+- [Software architecture](# Software architecture)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+</details>
+
+
 
 ## Software architecture
 The architecture comprises three distinct sections: application, hardware, and artificial intelligence. In the application section, our energy optimization platform's software architecture utilizes Spring Boot for the backend and React.js for the frontend. Spring Boot controllers manage incoming requests, directing them to the service layer, which houses the application's business logic. This logic interacts with the MySQL database for data storage and retrieval, handling information from sensors. The React.js frontend organizes the user interface into components, promoting a modular and responsive design. React's state management ensures dynamic user experiences, with components making API calls to the Spring Boot backend for real-time data updates. Seamless interaction between the backend and frontend is achieved through RESTful APIs, ensuring efficient data processing and storage with MySQL and delivering an intuitive user interface.
 ![image info](images/archiFinal.png)
+
+## How to Install and Run the Project
+
+## How to Use the Project
 
 ## Project Structure
 
