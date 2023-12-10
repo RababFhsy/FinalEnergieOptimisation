@@ -11,7 +11,7 @@ The software platform developed for this smart building energy optimization proj
 
 ## Software architecture
 The architecture comprises three distinct sections: application, hardware, and artificial intelligence. In the application section, our energy optimization platform's software architecture utilizes Spring Boot for the backend and React.js for the frontend. Spring Boot controllers manage incoming requests, directing them to the service layer, which houses the application's business logic. This logic interacts with the MySQL database for data storage and retrieval, handling information from sensors. The React.js frontend organizes the user interface into components, promoting a modular and responsive design. React's state management ensures dynamic user experiences, with components making API calls to the Spring Boot backend for real-time data updates. Seamless interaction between the backend and frontend is achieved through RESTful APIs, ensuring efficient data processing and storage with MySQL and delivering an intuitive user interface.
-
+![image info](images/image.png)
 
 ## Project Structure
 
