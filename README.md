@@ -1,6 +1,6 @@
 # Smart Building Energy Optimization Platform
 
-<h4 align="center"> Project members : Houda EL KORAINI - Rabab FAHSSI - Saad BAKANZIZE  </h4>
+<h4><center> Project members : Houda EL KORAINI - Rabab FAHSSI - Saad BAKANZIZE  </center></h4>
 Welcome to our innovative Smart Building Energy Optimization Platform, a groundbreaking solution designed to revolutionize energy efficiency in the realm of smart buildings. This project is a fusion of cutting-edge technologies, leveraging the power of the Internet of Things (IoT) and Artificial Intelligence (AI) models to maximize energy optimization within built environments.
 
 ## Project Description
@@ -11,12 +11,16 @@ The software platform developed for this smart building energy optimization proj
 <h2>Table of Contents</h2>
 </summary>
 
-- [Introduction](#introduction)
+- [Introduction](#Project Description)
 - [Software architecture](#Software architecture)
 - [Built With](#Built With)
-- [How to Install and Run the Project](#How to Install and Run the Project)
-- [How to Use the Project](#How to Use the Project)
 - [Project Structure](#Project Structure)
+- [Prerequisites](#Prerequisites)
+- [How to Install and Run the Project](#How to Install and Run the Project)
+- [Managing dependencies](#Managing dependencies)
+- [Building for production](#Building for production)
+- [Testing](#Testing)
+- [Using Docker to simplify development](#Using Docker to simplify development)
 </details>
 
 
