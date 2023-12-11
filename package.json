@@ -79,6 +79,7 @@
     "axios": "0.27.2",
     "bootstrap": "^5.2.0",
     "bootswatch": "5.2.0",
+    "chart.js": "^4.4.0",
     "datatables.net-bs5": "^1.13.8",
     "dayjs": "1.11.5",
     "lodash": "4.17.21",
