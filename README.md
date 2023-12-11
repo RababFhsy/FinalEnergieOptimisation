@@ -8,15 +8,15 @@ The software platform developed for this smart building energy optimization proj
 
 <details>
 <summary>
-## Table of Contents
+<h2>Table of Contents</h2>
 </summary>
 
 - [Introduction](#introduction)
-- [Software architecture](# Software architecture)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Software architecture](#Software architecture)
+- [Built With](#Built With)
+- [How to Install and Run the Project](#How to Install and Run the Project)
+- [How to Use the Project](#How to Use the Project)
+- [Project Structure](#Project Structure)
 </details>
 
 
@@ -25,9 +25,56 @@ The software platform developed for this smart building energy optimization proj
 The architecture comprises three distinct sections: application, hardware, and artificial intelligence. In the application section, our energy optimization platform's software architecture utilizes Spring Boot for the backend and React.js for the frontend. Spring Boot controllers manage incoming requests, directing them to the service layer, which houses the application's business logic. This logic interacts with the MySQL database for data storage and retrieval, handling information from sensors. The React.js frontend organizes the user interface into components, promoting a modular and responsive design. React's state management ensures dynamic user experiences, with components making API calls to the Spring Boot backend for real-time data updates. Seamless interaction between the backend and frontend is achieved through RESTful APIs, ensuring efficient data processing and storage with MySQL and delivering an intuitive user interface.
 ![image info](images/archiFinal.png)
 
+## Built With
+
+- [React.js](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [Spring Boot](https://spring.io/projects/spring-boot) - An extension of the Spring framework to simplify the development of Java applications
+- [MySQL](https://www.mysql.com/) - An open-source relational database management system
+
+## Prerequisites
+
+Before you begin, ensure that your development environment has the following software installed:
+
+- **Node.js:** Make sure you have Node.js installed on your machine. You can download it from [https://nodejs.org/](https://nodejs.org/).
+
+- **Java Development Kit (JDK):** The project uses Java for the backend. Ensure you have the Java Development Kit installed. You can download it from [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html).
+
+- **MySQL:** This project relies on a MySQL database. Ensure you have MySQL installed and running on your machine. You can download it from [https://www.mysql.com/](https://www.mysql.com/).
+
+- **Git:** You'll need Git to clone the project repository. Download Git from [https://git-scm.com/](https://git-scm.com/).
+
+- **npm (Node Package Manager):** npm is used for managing frontend dependencies. It comes with Node.js, so if you've installed Node.js, you should have npm as well.
+
+- **Integrated Development Environment (IDE):** For Java development, we recommend using an IDE such as IntelliJ IDEA or Eclipse.
+
+
+
 ## How to Install and Run the Project
 
-## How to Use the Project
+**Clone the Repository:**
+   ```bash
+   git clone https://gitlab.com/helko1/projetoptimisationenergitique
+   cd projetoptimisationenergitique
+  ```
+
+**Database Configuration:**
+
+Create a MySQL database and update the configuration in the application.properties file of the backend.
+
+**Frontend Setup (React.js):**
+```bash
+   npm install
+   npm start
+  ```
+
+**Backend Setup (Spring Boot):**
+```bash
+   ./mvnw 
+
+  ```
+**Access the Application:**
+
+Open your web browser and go to http://localhost:3000.
 
 ## Project Structure
 
