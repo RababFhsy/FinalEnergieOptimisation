@@ -85,12 +85,9 @@ const LoginModal = (props: ILoginModalProps) => {
   </div>
 			</div>
 			<div className="right">
-				<div className="right-text">
-        <h2>Energy Optimisation</h2>
-					<h5>in smart buildings</h5>
-				</div>
-				<div className="right-inductor">
-          <img src="" alt=""/></div>
+				
+        
+				
 			</div>
 		</div>
 	</section>

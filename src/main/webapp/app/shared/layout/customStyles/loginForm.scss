@@ -82,10 +82,14 @@ img{
 
 
 .right {
-	background: linear-gradient(212.38deg, rgba(83, 128, 242, 0.7) 0%, rgba(46, 35, 162, 0.71) 100%),url(https://onekeyresources.milwaukeetool.com/hubfs/smart%20building%20concept%20vector.jpg);
-	color: #fff;
-	position: relative;
+  background: linear-gradient(212.38deg, rgba(47, 106, 255, 0.7) 0%, rgba(46, 35, 162, 0.71) 100%), url('logo.png') center / cover no-repeat;;
+
+  color: #fff;
+  position: relative;
+  background-size: 80%; /* Adjust the percentage to increase or decrease the size */
 }
+
+
 
 .right .right-text{
   height: 100%;
