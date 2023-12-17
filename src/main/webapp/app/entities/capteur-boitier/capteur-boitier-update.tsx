@@ -21,10 +21,10 @@ export const CapteurBoitierUpdate = () => {
   const [availableBranches, setAvailableBranches] = useState([]);
   const [remainingBranches, setRemainingBranches] = useState(0);
   const [tableData, setTableData] = useState([]);
-  const [selectedBoitier, setSelectedBoitier] = useState(null); // State to track selected Boitier
+  const [selectedBoitierState, setSelectedBoitier] = useState(null); // State to track selected Boitier
   const [boitierDisabled, setBoitierDisabled] = useState(false);
   const [generatedOptions, setGeneratedOptions] = useState([]);
-  const [CapteurBoitierHistory, setCapteurBoitierHistory] = useState([]);
+  const [CapteurBoitierHistoryState, setCapteurBoitierHistory] = useState([]);
 
   const navigate = useNavigate();
 
@@ -106,8 +106,8 @@ export const CapteurBoitierUpdate = () => {
         };
 
         const handleAddRow = () => {
-          if (selectedBoitier) {
-            const newRow = { ...formData, boitier: selectedBoitier };
+          if (selectedBoitierState) {
+            const newRow = { ...formData, boitier: selectedBoitierState };
             const exists = tableData.some(
               (data) => data.boitier === newRow.boitier && data.branche === newRow.branche
             );
@@ -155,11 +155,11 @@ export const CapteurBoitierUpdate = () => {
       const { name, value } = event.target;
       if (name === 'boitier') {
         setSelectedBoitier(value);
-        const selectedBoitierxId = parseInt(value);
+        const selectedBoitierxId = parseInt(value, 10);
         setBoitierDisabled(true); // Disable "boitier" selection
         const CapteurBoitierHistory = capteurBoitierList.filter(item => item.boitier.id === selectedBoitierxId);
         setCapteurBoitierHistory(CapteurBoitierHistory);
-        console.log(CapteurBoitierHistory);
+        // console.log(CapteurBoitierHistory);
       }
       setFormData({
         ...formData,
@@ -168,7 +168,7 @@ export const CapteurBoitierUpdate = () => {
 
       if (selectedBoitier) {
         const usedBranchesForSelectedBoitier = capteurBoitierList
-          .filter(item => item.boitier.id === parseInt(selectedBoitierId))
+          .filter(item => item.boitier.id === parseInt(selectedBoitierId, 10))
           .map(item => item.branche);
               
         // console.log('usedBranchesForSelectedBoitier:', usedBranchesForSelectedBoitier); // Add this log
@@ -191,7 +191,7 @@ export const CapteurBoitierUpdate = () => {
   
   
   const removeRowHistory = (index) => {
-    const updatedHistoryData = [...CapteurBoitierHistory];
+    const updatedHistoryData = [...CapteurBoitierHistoryState];
     updatedHistoryData.splice(index, 1);
     setCapteurBoitierHistory(updatedHistoryData);
   };
@@ -226,7 +226,7 @@ export const CapteurBoitierUpdate = () => {
     resetForm(); // Reset the form fields
   };
  
-  console.log("nchoof", JSON.stringify(CapteurBoitierHistory));
+  // console.log("nchoof", JSON.stringify(CapteurBoitierHistory));
   // const handleDeleteClick = async () => {
   //   try {
   //     // Construct the deletion URL dynamically
@@ -367,7 +367,7 @@ export const CapteurBoitierUpdate = () => {
                 <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
-            {CapteurBoitierHistory.map((historyData, index) => (
+            {CapteurBoitierHistoryState.map((historyData, index) => (
               <tr key={index}>
                 <td style={{ textAlign: 'center' }}>{historyData.boitier.boitierReference}  </td>
                 <td style={{ textAlign: 'center' }}>{historyData.branche}  </td>
