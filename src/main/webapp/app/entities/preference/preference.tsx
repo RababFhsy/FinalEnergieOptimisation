@@ -71,7 +71,7 @@ export const Preference = () => {
        
           energie: preferenceEntity?.energie?.id,
         };
-        console.log(JSON.stringify("hhhhhhhhhhhhhhhhhh"+energies, null, 2));
+        
       
 
   const indexOfLastItem = currentPage * itemsPerPage;

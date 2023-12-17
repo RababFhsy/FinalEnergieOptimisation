@@ -48,7 +48,7 @@ export const Prediction = () => {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  console.log('predictionList', JSON.stringify(predictionList));
+  //console.log('predictionList', JSON.stringify(predictionList));
 
   return (
     <div>
