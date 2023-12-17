@@ -39,7 +39,7 @@ export const LocaleBoitierUpdate = () => {
   const updateSuccess = useAppSelector(state => state.localeBoitier.updateSuccess);
 
   const [selectedLocale, setSelectedLocale] = useState(null);
-  const [selectedBatiment, setSelectedBatiment] = useState(null);
+  const [selectedBatimentState, setSelectedBatiment] = useState(null);
   const [selectedEtage, setSelectedEtage] = useState(null);
   const [selectedBoitier, setSelectedBoitier] = useState(null);
   const [localeDisabled, setLocaleDisabled] = useState(false);
@@ -47,9 +47,9 @@ export const LocaleBoitierUpdate = () => {
   const [etageDisabled, setEtageDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [tableData, setTableData] = useState([]);
-  const [filteredLocales, setFilteredLocales] = useState([]);
+  const [filteredLocalesState, setFilteredLocales] = useState([]);
   const [filteredEtages, setFilteredEtages] = useState([]);
-  const [localeBoitierHistory, setLocaleBoitierHistory] = useState([]);
+  const [localeBoitierHistoryState, setLocaleBoitierHistory] = useState([]);
   const [etagesDisponibles, setEtagesDisponibles] = useState([]);
 
 
@@ -118,10 +118,10 @@ export const LocaleBoitierUpdate = () => {
   };
   
   
-  const handleInputChange = async (e) =>{
+  const handleInputChange =  (e) =>{
     const { name, value } = e.target;
     if(name === 'batiment'){
-      const selectedBatimentId = parseInt(value);
+      const selectedBatimentId = parseInt(value, 10);
       const selectedBatiment = batiments.find(
         (batiment) => batiment.id === selectedBatimentId
       );
@@ -142,7 +142,7 @@ export const LocaleBoitierUpdate = () => {
   
     }else if(name ==='etage'){
       setSelectedEtage(value);
-    const selectedEtageId = parseInt(value);
+    const selectedEtageId = parseInt(value, 10);
 
     const filteredLocales = locales.filter(
       (locale) => locale.numeroEtage === selectedEtageId
@@ -152,7 +152,7 @@ export const LocaleBoitierUpdate = () => {
     setEtageDisabled(true);
     } else if (name === 'locale') {
       setSelectedLocale(value);
-    const selectedLocalId = parseInt(value);
+    const selectedLocalId = parseInt(value, 10);
     setLocaleDisabled(true);
 
     // Fetch localBoitierList based on the selected locale
@@ -161,7 +161,7 @@ export const LocaleBoitierUpdate = () => {
     );
 
     setLocaleBoitierHistory(localeBoitierHistory);
-    console.log(localeBoitierHistory);
+    //console.log(localeBoitierHistory);
 
     } else if (name === 'boitier') {
       const currentDate = new Date();
@@ -310,8 +310,8 @@ export const LocaleBoitierUpdate = () => {
 
               <ValidatedField id="locale-boitier-locale" name="locale" data-cy="locale" label="Local number" type="select" disabled={localeDisabled} onChange={handleInputChange}>
               <option value="" key="0" />
-              {filteredLocales
-                ? filteredLocales.map((otherEntity) => (
+              {filteredLocalesState
+                ? filteredLocalesState.map((otherEntity) => (
                     <option value={otherEntity.numero} key={otherEntity.id}>
                       {`N°${otherEntity.numero}`}
                     </option>
@@ -387,7 +387,7 @@ export const LocaleBoitierUpdate = () => {
                 <td style={{ textAlign: 'center' }}><button className="btn btn-danger btn-sm" onClick={() => removeRow(index)}>Remove</button></td>
               </tr>
             ))}
-            {localeBoitierHistory.map((localeBoitier, i) => (
+            {localeBoitierHistoryState.map((localeBoitier, i) => (
             <tr key={`history-${i}`}>
               {/* Render historical data columns */}
               <td style={{ textAlign: 'center' }}>{localeBoitier.locale.id}</td>
