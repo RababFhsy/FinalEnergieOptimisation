@@ -1,3 +1,4 @@
 {
-    "screencastMode.verticalOffset": 20
+    "screencastMode.verticalOffset": 20,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

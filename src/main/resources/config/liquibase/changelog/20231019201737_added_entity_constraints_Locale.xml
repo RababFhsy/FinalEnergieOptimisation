@@ -10,7 +10,7 @@
 
          <addForeignKeyConstraint baseColumnNames="batiment_id"
                                  baseTableName="locale"
-                                 constraintName="fk_etage__batiment_id"
+                                 constraintName="fk_locale__batiment_id"
                                  referencedColumnNames="id"
                                  referencedTableName="batiment"/>
 
