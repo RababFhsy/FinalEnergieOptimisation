@@ -91,7 +91,7 @@ export const Boitier = () => {
     dispatch(getEntity(boitier.id)); // Déplacez la logique ici
     setShow(true);
   };
-  console.log(capteurBoitierList);
+  // console.log(capteurBoitierList);
  
 
   useEffect(() => {
@@ -111,7 +111,7 @@ export const Boitier = () => {
   };
 
   const defaultValues = () => boitierEntity;
-  console.log("capteurBoitierList: " + JSON.stringify(capteurBoitierList, null, 2));
+  // console.log("capteurBoitierList: " + JSON.stringify(capteurBoitierList, null, 2));
   
 
   
