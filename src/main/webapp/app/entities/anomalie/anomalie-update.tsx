@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Row, Col} from 'reactstrap';
+import { ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { ILocale } from 'app/shared/model/locale.model';
 import { getEntities as getLocales } from 'app/entities/locale/locale.reducer';
-import { IEnergie } from 'app/shared/model/energie.model';
 import { getEntities as getEnergies } from 'app/entities/energie/energie.reducer';
-import { IAnomalie } from 'app/shared/model/anomalie.model';
 import { getEntity, updateEntity, createEntity, reset } from './anomalie.reducer';
 
 export const AnomalieUpdate = () => {

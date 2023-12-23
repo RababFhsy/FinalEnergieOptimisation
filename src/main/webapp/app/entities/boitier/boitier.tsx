@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate } from 'react-jhipster';
 import 'app/shared/layout/customStyles/customStyles.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {Col, Image, Modal, Row} from "react-bootstrap";
-import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {Col, Modal, Row} from "react-bootstrap";
+import {  ValidatedField, ValidatedForm } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IBoitier } from 'app/shared/model/boitier.model';
 import { getEntities, getEntity, updateEntity } from './boitier.reducer';
 import { getEntities as getBoitiersDetail } from 'app/entities/capteur-boitier/capteur-boitier.reducer';
 import {  Pagination ,Form, FormControl} from 'react-bootstrap';
@@ -20,22 +16,12 @@ import {  Pagination ,Form, FormControl} from 'react-bootstrap';
 
 export const Boitier = () => {
   const dispatch = useAppDispatch();
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const boitierList = useAppSelector(state => state.boitier.entities);
   const loading = useAppSelector(state => state.boitier.loading);
   const updating = useAppSelector(state => state.boitier.updating);
   const updateSuccess = useAppSelector(state => state.boitier.updateSuccess);
-
   const [selectedBoitier, setSelectedBoitier] = useState(null);
   const capteurBoitierList = useAppSelector(state => state.capteurBoitier.entities);
-  const capteurs = useAppSelector(state => state.capteur.entities);
-  const boitiers = useAppSelector(state => state.boitier.entities);
-  const capteurBoitierEntity = useAppSelector(state => state.capteurBoitier.entity);
-  
-  
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5; // Set the number of items per page

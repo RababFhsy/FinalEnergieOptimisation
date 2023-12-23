@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {  APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IAnomalie } from 'app/shared/model/anomalie.model';
 import { getEntities } from './anomalie.reducer';
 import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 export const Anomalie = () => {
   const dispatch = useAppDispatch();
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const anomalieList = useAppSelector(state => state.anomalie.entities);
   const loading = useAppSelector(state => state.anomalie.loading);
 

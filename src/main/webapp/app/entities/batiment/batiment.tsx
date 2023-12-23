@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Col, Image, Modal, Row } from 'react-bootstrap';
-import { isNumber, ValidatedField, ValidatedForm, ValidatedBlobField } from 'react-jhipster';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { Col, Modal, Row } from 'react-bootstrap';
+import {  ValidatedField, ValidatedForm } from 'react-jhipster';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IBatiment } from 'app/shared/model/batiment.model';
 import { getEntities, getEntity, updateEntity } from './batiment.reducer';
 import {  Pagination,Form,FormControl } from 'react-bootstrap';
 
 export const Batiment = () => {
   const dispatch = useAppDispatch();
-
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const batimentList = useAppSelector(state => state.batiment.entities);
   const loading = useAppSelector(state => state.batiment.loading);
