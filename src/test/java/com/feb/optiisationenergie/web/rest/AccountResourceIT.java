@@ -14,7 +14,6 @@ import com.feb.optiisationenergie.security.AuthoritiesConstants;
 import com.feb.optiisationenergie.service.UserService;
 import com.feb.optiisationenergie.service.dto.AdminUserDTO;
 import com.feb.optiisationenergie.service.dto.PasswordChangeDTO;
-import com.feb.optiisationenergie.service.dto.UserDTO;
 import com.feb.optiisationenergie.web.rest.vm.KeyAndPasswordVM;
 import com.feb.optiisationenergie.web.rest.vm.ManagedUserVM;
 import java.time.Instant;

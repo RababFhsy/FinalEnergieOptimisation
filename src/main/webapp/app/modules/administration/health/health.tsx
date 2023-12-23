@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import HealthModal from './health-modal';
 import { getSystemHealth } from '../administration.reducer';
 
+
 export const HealthPage = () => {
   const [healthObject, setHealthObject] = useState({});
   const [showModal, setShowModal] = useState(false);
@@ -40,7 +41,7 @@ export const HealthPage = () => {
 
   return (
     <div>
-      <h2 id="health-page-heading" data-cy="healthPageHeading">
+      {/* <h2 id="health-page-heading" data-cy="healthPageHeading">
         Health Checks
       </h2>
       <p>
@@ -81,7 +82,8 @@ export const HealthPage = () => {
           </Table>
         </Col>
       </Row>
-      {renderModal()}
+      {renderModal()} */}
+       {/* <WebSocketClient /> */}
     </div>
   );
 };
