@@ -1,6 +1,6 @@
 package com.feb.optiisationenergie;
 
-import com.feb.optiisationenergie.FeOptimisationEnergieApp;
+
 import com.feb.optiisationenergie.config.AsyncSyncConfiguration;
 import com.feb.optiisationenergie.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;
