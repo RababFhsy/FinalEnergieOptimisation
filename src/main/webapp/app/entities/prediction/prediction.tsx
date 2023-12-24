@@ -1,152 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import React, { useState } from 'react';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+const Prediction: React.FC = () => {
+  const [tempMin, setTempMin] = useState(0);
+  const [tempMax, setTempMax] = useState(0);
+  const [pressure, setPressure] = useState(0);
+  const [humidity, setHumidity] = useState(0);
+  const [windSpeed, setWindSpeed] = useState(0);
+  const [lon, setLon] = useState(0);
+  const [lat, setLat] = useState(0);
+  const [prediction, setPrediction] = useState<number | null>(null);
 
-import { IPrediction } from 'app/shared/model/prediction.model';
-import { getEntities } from './prediction.reducer';
-import {  Pagination,Form,FormControl } from 'react-bootstrap';
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
+    try {
+      const response = await fetch('http://localhost:8000/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Temp_Min: tempMin,
+          Temp_Max: tempMax,
+          Pressure: pressure,
+          Humidity: humidity,
+          Wind_Speed: windSpeed,
+          Lon: lon,
+          Lat: lat,
+          // Ajoutez d'autres fonctionnalités au besoin
+        }),
+      });
 
-export const Prediction = () => {
-  const dispatch = useAppDispatch();
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const predictionList = useAppSelector(state => state.prediction.entities);
-  const loading = useAppSelector(state => state.prediction.loading);
-
-  useEffect(() => {
-    dispatch(getEntities({}));
-  }, []);
-
-  const handleSyncList = () => {
-    dispatch(getEntities({}));
+      const data = await response.json();
+      setPrediction(data.prediction);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
-  const [searchQuery, setSearchQuery] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Set the number of items per page
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to the first page when the search query changes
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-  const filteredPredictionList = predictionList
-    .filter((prediction) =>
-    prediction.energie.nomSystemEnergitique.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-  //console.log('predictionList', JSON.stringify(predictionList));
 
   return (
-    <div>
-      <h2 id="prediction-heading" data-cy="PredictionHeading">
-        Predictions
-        <div className="d-flex justify-content-end">
-          <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
-          </Button>
-          {/* <Link to="/prediction/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;  new Prediction
-          </Link> */}
+    <div className="container mt-5">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Température Min:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={tempMin}
+            onChange={(e) => setTempMin(parseFloat(e.target.value))}
+          />
         </div>
-      </h2>
+        <div className="mb-3">
+          <label className="form-label">Température Max:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={tempMax}
+            onChange={(e) => setTempMax(parseFloat(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Pression:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={pressure}
+            onChange={(e) => setPressure(parseFloat(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Humidité:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={humidity}
+            onChange={(e) => setHumidity(parseFloat(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Vitesse du vent:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={windSpeed}
+            onChange={(e) => setWindSpeed(parseFloat(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Longitude:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={lon}
+            onChange={(e) => setLon(parseFloat(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Latitude:</label>
+          <input
+            type="number"
+            className="form-control"
+            value={lat}
+            onChange={(e) => setLat(parseFloat(e.target.value))}
+          />
+        </div>
+        {/* Ajoutez d'autres champs de saisie pour les fonctionnalités au besoin */}
+        <button type="submit" className="btn btn-primary">
+          Soumettre
+        </button>
+      </form>
 
-      <div className="table-responsive">
-      <Form >
-        <FormControl
-          type="text"
-          placeholder="Search Energy System..."
-          className="mr-sm-2"
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
-      </Form>
-      <br></br>
-      {filteredPredictionList && filteredPredictionList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Predicted Consumption</th>
-                <th>Precision</th>
-                <th>Local Number</th>
-                <th>Building</th>
-                <th>Energy System</th>
-                <th>Action</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {filteredPredictionList.map((prediction, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  {/* <td>
-                    <Button tag={Link} to={`/prediction/${prediction.id}`} color="link" size="sm">
-                      {prediction.id}
-                    </Button>
-                  </td> */}
-                  <td>
-                    {prediction.dateDebut ? <TextFormat type="date" value={prediction.dateDebut} format={APP_LOCAL_DATE_FORMAT} /> : null}
-                  </td>
-                  <td>
-                    {prediction.dateFin ? <TextFormat type="date" value={prediction.dateFin} format={APP_LOCAL_DATE_FORMAT} /> : null}
-                  </td>
-                  <td>{prediction.consommationPredit}</td>
-                  <td>{prediction.precision}</td>
-                  <td>N°{prediction.locale ? prediction.locale.numero : ''}</td>
-                  <td>{prediction.locale ? prediction.locale.batiment.batimentNom: ''}</td>
-                  <td>{prediction.energie ? prediction.energie.nomSystemEnergitique : ''}</td>
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      {/* <Button tag={Link} to={`/prediction/${prediction.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                      </Button>
-                      <Button tag={Link} to={`/prediction/${prediction.id}/edit`} className="custom-button-edit" size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button> */}
-                      <Button tag={Link} to={`/prediction/${prediction.id}/delete`} className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        ) : (
-          !loading && <div className="alert alert-warning">No Predictions found</div>
-        )}
-        <Pagination>
-          {Array.from({ length: Math.ceil(predictionList.length / itemsPerPage) }).map(
-            (_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={index + 1 === currentPage}
-                onClick={() => paginate(index + 1)}
-              >
-                {index + 1}
-              </Pagination.Item>
-            )
-          )}
-        </Pagination>
-      </div>
+      <h1 className="mt-5">Prédiction :</h1>
+      {prediction !== null ? (
+        <p>La température prédite est : {prediction}</p>
+      ) : (
+        <p>Chargement en cours...</p>
+      )}
     </div>
   );
 };
 
-export default Prediction;
+export default Prediction
