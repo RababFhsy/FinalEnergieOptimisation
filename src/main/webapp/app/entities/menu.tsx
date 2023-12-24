@@ -18,11 +18,11 @@ const EntitiesMenu = ({ isAdmin }) => {
         </MenuItem>
       )}
 
-      {isAdmin && (
+      {/* {isAdmin && (
         <MenuItem icon="asterisk" to="/anomalie">
           Anomaly
         </MenuItem>
-      )}
+      )} */}
       {isAdmin && (
         <MenuItem icon="asterisk" to="/prediction">
           Prediction

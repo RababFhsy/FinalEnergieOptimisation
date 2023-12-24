@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import {  TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getEntities, getEntitiesByUser } from './consommation.reducer';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
+import { APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import {  Pagination,Form,FormControl } from 'react-bootstrap';
@@ -13,12 +13,7 @@ import {  Pagination,Form,FormControl } from 'react-bootstrap';
 export const Consommation = () => {
   const dispatch = useAppDispatch();
   const isAdmin = useAppSelector(state => hasAnyAuthority(state.authentication.account.authorities, [AUTHORITIES.ADMIN]));
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const consommationList = useAppSelector(state => state.consommation.entities);
-  const consommationListByUser = useAppSelector(state => state.consommation.entitiesByUser);
 
   const loading = useAppSelector(state => state.consommation.loading);
   const [searchQuery, setSearchQuery] = useState('');
@@ -129,19 +124,18 @@ export const Consommation = () => {
                   ))
                 : filteredconsommationListByUser.map((consommation, i) => (
                     <tr key={`entity-${i}`} data-cy="entityTable">
-                      {/* <td>
-                        <Button tag={Link} to={`/consommation/${consommation.id}`} color="link" size="sm">
-                          {consommation.id}
-                        </Button>
-                      </td> */}
+                        <td>{consommation.energie ? consommation.energie.nomSystemEnergitique : ''}</td>
                       <td>{consommation.energieConsommation}</td>
                       <td>
                         {consommation.dateConsommation ? (
                           <TextFormat type="date" value={consommation.dateConsommation} format={APP_LOCAL_DATE_FORMAT} />
                         ) : null}
                       </td>
-                      <td>{consommation.locale ? consommation.locale.numero : ''}</td>
                       <td>{consommation.locale && consommation.locale.batiment ? consommation.locale.batiment.batimentNom : ''}</td>
+                    
+                      <td>{consommation.locale ? consommation.locale.numero : ''}</td>
+                     
+                      
 
                       <td>{consommation.user ? consommation.user.login : ''}</td>
 
