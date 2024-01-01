@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
-import { IPrediction } from 'app/shared/model/prediction.model';
 import { getEntities } from './prediction.reducer';
-import {  Pagination,Form,FormControl } from 'react-bootstrap';
-
+import { Pagination } from 'react-bootstrap';
+import { VictoryChart, VictoryLine, VictoryAxis } from 'victory';
 
 export const Prediction = () => {
   const dispatch = useAppDispatch();
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const predictionList = useAppSelector(state => state.prediction.entities);
   const loading = useAppSelector(state => state.prediction.loading);
 
@@ -28,102 +18,48 @@ export const Prediction = () => {
   const handleSyncList = () => {
     dispatch(getEntities({}));
   };
-  const [searchQuery, setSearchQuery] = useState('');
+
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Set the number of items per page
-  const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to the first page when the search query changes
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-
+  const itemsPerPage = 5;
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  //console.log('predictionList', JSON.stringify(predictionList));
 
   return (
     <div>
       <h2 id="prediction-heading" data-cy="PredictionHeading">
         Predictions
-        <div className="d-flex justify-content-end">
-          <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
-            <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list
-          </Button>
-          {/* <Link to="/prediction/new" className="btn btn-light jh-create-entity custom-button-new" id="jh-create-entity" data-cy="entityCreateButton">
-            <FontAwesomeIcon icon="plus" />
-            &nbsp;  new Prediction
-          </Link> */}
-        </div>
+
       </h2>
 
-      <div className="table-responsive">
-
-      <br></br>
-      {predictionList && predictionList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-
-                <th> Date</th>
-                <th>Predicted Temperature</th>
-
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {predictionList.map((prediction, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  {/* <td>
-                    <Button tag={Link} to={`/prediction/${prediction.id}`} color="link" size="sm">
-                      {prediction.id}
-                    </Button>
-                  </td> */}
-                  <td>
-                    {prediction.dateDebut ? <TextFormat type="date" value={prediction.dateDebut} format={APP_LOCAL_DATE_FORMAT} /> : null}
-                  </td>
-
-                  <td>{prediction.consommationPredit.toFixed(2)} °C</td>
+      <div className="graph-container">
+        {predictionList && predictionList.length > 0 ? (
+          <div>
+            <VictoryChart
+              domainPadding={20}
+              width={600}
+              height={300}
+              scale={{ x: 'time' }}
+            >
+              <VictoryAxis
+                tickFormat={(x) => new Date(x).toLocaleDateString()}
+                label="Date"
+              />
+              <VictoryAxis dependentAxis label="Temperature (°C)" />
+              <VictoryLine
+                data={predictionList.map((prediction) => ({
+                  x: new Date(prediction.dateDebut),
+                  y: prediction.consommationPredit,
+                }))}
+              />
+            </VictoryChart>
 
 
-
-                  <td className="text-end">
-                    <div className="btn-group flex-btn-group-container">
-                      {/* <Button tag={Link} to={`/prediction/${prediction.id}`} className="custom-button-view" size="sm" data-cy="entityDetailsButton">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
-                      </Button>
-                      <Button tag={Link} to={`/prediction/${prediction.id}/edit`} className="custom-button-edit" size="sm" data-cy="entityEditButton">
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
-                      </Button> */}
-                      <Button tag={Link} to={`/prediction/${prediction.id}/delete`} className="custom-button-delete" size="sm" data-cy="entityDeleteButton">
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          </div>
         ) : (
           !loading && <div className="alert alert-warning">No Predictions found</div>
         )}
-        <Pagination>
-          {Array.from({ length: Math.ceil(predictionList.length / itemsPerPage) }).map(
-            (_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={index + 1 === currentPage}
-                onClick={() => paginate(index + 1)}
-              >
-                {index + 1}
-              </Pagination.Item>
-            )
-          )}
-        </Pagination>
       </div>
     </div>
   );
