@@ -11,6 +11,8 @@ services:
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     ports:
       - 127.0.0.1:8080:8080
+    networks:
+      - mynetwork
 
   feoptimisationenergie-mysql:
     image: mysql:8.0.30
@@ -22,6 +24,8 @@ services:
     ports:
       - 127.0.0.1:3306:3306
     command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    networks:
+      - mynetwork
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -31,9 +35,23 @@ services:
     environment:
       - PMA_HOST=feoptimisationenergie-mysql
       - PMA_PORT=3306
+    networks:
+      - mynetwork
 
   db:
     image: mariadb:10.6
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: notSecureChangeMe
+    networks:
+      - mynetwork
+
+  temperature-predictor:
+    build: .
+    depends_on:
+      - feoptimisationenergie-mysql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

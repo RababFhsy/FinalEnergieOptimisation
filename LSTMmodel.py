@@ -11,7 +11,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Read the CSV file
-df = pd.read_csv(r'C:/Users/baknz/Downloads/testset.csv')
+df = pd.read_csv(r'testset.csv')
 data = pd.DataFrame(list(df[' _tempm']), index=df['datetime_utc'], columns=['temp'])
 df = data[:365].dropna(axis=0)['temp'].values.reshape(-1, 1)
 
@@ -74,7 +74,7 @@ for i, prediction in enumerate(predicted_temps):
 
 # Connect to the database
 db_connection = mysql.connector.connect(
-    host="localhost",
+    host="feoptimisationenergie-mysql",
     user="root",
     password="",
     database="feoptimisationenergie"
