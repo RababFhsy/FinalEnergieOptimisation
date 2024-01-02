@@ -53,17 +53,6 @@ const LineChart: React.FC<LineChartProps> = ({ predictionList }) => {
             },
           };
           
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
 
         // Check if chart instance exists and destroy it before creating a new one
         if (chartInstance.current) {
@@ -72,8 +61,8 @@ const LineChart: React.FC<LineChartProps> = ({ predictionList }) => {
 
         chartInstance.current = new Chart(ctx, {
           type: 'line',
-          data: data,
-          options: options,
+          data,
+          options,
         });
       }
     }
