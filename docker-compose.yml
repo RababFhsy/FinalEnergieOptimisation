@@ -38,16 +38,16 @@ services:
     networks:
       - mynetwork
 
-  db:
-    image: mariadb:10.6
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: notSecureChangeMe
-    networks:
-      - mynetwork
+  # db:
+  #   image: mariadb:10.6
+  #   restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: notSecureChangeMe
+  #   networks:
+  #     - mynetwork
 
   temperature-predictor:
-    build: .
+    image: helk1111/projetoptimisationenergitique-temperature-predictor
     depends_on:
       - feoptimisationenergie-mysql
     networks:
