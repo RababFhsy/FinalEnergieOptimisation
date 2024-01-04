@@ -48,7 +48,7 @@ temp_input = list(data_scaled[:20, 0])
 lst_output = []
 
 n_steps = 20
-for i in range(30):
+for i in range(356):
     if len(temp_input) > 20:
         x_input = np.array(temp_input[1:])
         x_input = x_input.reshape(1, -1, 1)
@@ -74,7 +74,7 @@ for i, prediction in enumerate(predicted_temps):
 
 # Connect to the database
 db_connection = mysql.connector.connect(
-    host="feoptimisationenergie-mysql",
+    host="localhost",
     user="root",
     password="",
     database="feoptimisationenergie"
