@@ -23,6 +23,8 @@ export const getEntities = createAsyncThunk('anomalie/fetch_entity_list', async 
   return axios.get<IAnomalie[]>(requestUrl);
 });
 
+
+
 export const getEntity = createAsyncThunk(
   'anomalie/fetch_entity',
   async (id: string | number) => {

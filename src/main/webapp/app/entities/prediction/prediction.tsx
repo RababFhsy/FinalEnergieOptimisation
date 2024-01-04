@@ -7,14 +7,19 @@ import { Pagination } from 'react-bootstrap';
 import LineChart from './linechart'; // Import the LineChart component
 import { Link } from 'react-router-dom';
 import { TextFormat } from 'react-jhipster';
+import { getEntities as getAnomalieEntities} from 'app/entities/anomalie/anomalie.reducer';
 
 export const Prediction = () => {
   const dispatch = useAppDispatch();
   const predictionList = useAppSelector(state => state.prediction.entities);
+  const reelList = useAppSelector(state => state.anomalie.entities);
   const loading = useAppSelector(state => state.prediction.loading);
 
   useEffect(() => {
     dispatch(getEntities({}));
+  }, []);
+  useEffect(() => {
+    dispatch(getAnomalieEntities({}));
   }, []);
 
   const handleSyncList = () => {
@@ -29,7 +34,7 @@ export const Prediction = () => {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
   };
-
+  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -40,7 +45,7 @@ export const Prediction = () => {
   return (
     <div>
       <h2 id="prediction-heading" data-cy="PredictionHeading">
-        Predicted Average  Temperature  of  The Day in the next Month
+        Predicted Temperature And Real Values  
         <div className="d-flex justify-content-end">
           
         </div>
@@ -50,7 +55,7 @@ export const Prediction = () => {
       
         {predictionList && predictionList.length > 0 ? (
           <div>
-            <LineChart predictionList={predictionList} /> {/* Include the LineChart component */}
+            <LineChart predictionList={predictionList} reelList={reelList} />{/* Include the LineChart component */}
             <div className="d-flex justify-content-end">
             <Button className="me-2 btn-light custom-button-refresh" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh list

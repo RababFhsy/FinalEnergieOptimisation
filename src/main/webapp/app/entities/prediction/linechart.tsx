@@ -2,16 +2,18 @@ import React, { useEffect, useRef } from 'react';
 import Chart, { ChartOptions } from 'chart.js/auto';
 import 'chartjs-adapter-moment';
 
-
-
 interface LineChartProps {
   predictionList: {
     dateDebut: string;
     consommationPredit: number;
   }[];
+  reelList: {
+    dateAnomalie: string;
+    zoneNormaleMin: number;
+  }[];
 }
 
-const LineChart: React.FC<LineChartProps> = ({ predictionList }) => {
+const LineChart: React.FC<LineChartProps> = ({ predictionList, reelList }) => {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -24,35 +26,44 @@ const LineChart: React.FC<LineChartProps> = ({ predictionList }) => {
           labels: predictionList.map((prediction) => new Date(prediction.dateDebut).toLocaleDateString()),
           datasets: [
             {
-              label: 'Temperature',
+              label: 'Predicted Temperature',
               data: predictionList.map((prediction) => prediction.consommationPredit),
-              borderColor: 'rgba(75, 192, 192, 1)',
+              borderColor: 'rgb(255, 165, 0)',
+              borderWidth: 2,
+              fill: true,
+            },
+          
+            {
+              label: 'Real Temperature',
+              data: reelList.map((reel) => reel.zoneNormaleMin),
+              borderColor: 'rgba(0, 0, 255)', // Change color for real values
               borderWidth: 2,
               fill: true,
             },
           ],
         };
 
+        
+      
+
         const options: ChartOptions = {
-            scales: {
-              x: {
-                
+          scales: {
+            x: {
+              display: true,
+              title: {
                 display: true,
-                title: {
-                  display: true,
-                  text: 'Date',
-                },
-              },
-              y: {
-                type: 'linear',
-                title: {
-                  display: true,
-                  text: 'Temperature°C',
-                },
+                text: 'Date',
               },
             },
-          };
-          
+            y: {
+              type: 'linear',
+              title: {
+                display: true,
+                text: 'Temperature°C',
+              },
+            },
+          },
+        };
 
         // Check if chart instance exists and destroy it before creating a new one
         if (chartInstance.current) {
@@ -61,7 +72,10 @@ const LineChart: React.FC<LineChartProps> = ({ predictionList }) => {
 
         chartInstance.current = new Chart(ctx, {
           type: 'line',
-          data,
+          data: {
+            labels: [...data.labels],
+            datasets: [...data.datasets],
+          },
           options,
         });
       }
@@ -73,7 +87,7 @@ const LineChart: React.FC<LineChartProps> = ({ predictionList }) => {
         chartInstance.current.destroy();
       }
     };
-  }, [predictionList]);
+  }, [predictionList, reelList]);
 
   return (
     <div>

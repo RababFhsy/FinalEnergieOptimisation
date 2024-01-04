@@ -12,7 +12,7 @@ warnings.filterwarnings('ignore')
 
 # Read the CSV file
 df = pd.read_csv(r'testset.csv')
-data = pd.DataFrame(list(df[' _tempm']), index=df['datetime_utc'], columns=['temp'])
+data = pd.DataFrame(list(df['tempm']), index=df['datetime_utc'], columns=['temp'])
 df = data[:365].dropna(axis=0)['temp'].values.reshape(-1, 1)
 
 # Scale the data
@@ -43,12 +43,34 @@ model.compile(loss='mean_squared_error', optimizer='adam')
 # Train the model
 model.fit(x_train, y_train, epochs=50, batch_size=32, verbose=1)
 
+
+# Evaluate the model on the test set
+test_loss = model.evaluate(x_test, y_test, verbose=0)
+print(f'Model Test Loss: {test_loss}')
+
+# Predictions for the test set
+# Faire des prédictions sur l'ensemble de test
+y_pred = model.predict(x_test)
+
+# Inverser l'échelle des prédictions et des valeurs réelles
+y_pred_inv = scaler.inverse_transform(y_pred.reshape(-1, 1)).ravel()
+y_test_inv = scaler.inverse_transform(y_test.reshape(-1, 1)).ravel()
+
+from sklearn.metrics import r2_score, mean_squared_error
+# Calculer le coefficient de détermination (R²)
+r2 = r2_score(y_test_inv, y_pred_inv)
+print(f"R²: {r2}")
+
+# Calculer l'erreur quadratique moyenne (MSE)
+mse = mean_squared_error(y_test_inv, y_pred_inv)
+print(f"MSE: {mse}")
+
 # Predictions for the next 30 days
 temp_input = list(data_scaled[:20, 0])
 lst_output = []
 
 n_steps = 20
-for i in range(356):
+for i in range(31):
     if len(temp_input) > 20:
         x_input = np.array(temp_input[1:])
         x_input = x_input.reshape(1, -1, 1)
@@ -84,16 +106,17 @@ db_connection = mysql.connector.connect(
 cursor = db_connection.cursor()
 
 # Insert predictions into the "prediction" table
-for i,prediction in enumerate(predicted_temps):
+for i, prediction in enumerate(predicted_temps):
     day_number = i + 1
-    # Calculate date for the prediction
-    prediction_date = datetime.now() + timedelta(days=day_number)
+
+    # Calculate date for the prediction with the year 
+    prediction_date = datetime(2016, 1, 1) + timedelta(days=day_number - 1)
 
     # Format the date for MySQL
     formatted_date = prediction_date.strftime("%Y-%m-%d")
 
     # Insert predictions into the "prediction" table with dates
-    sql_insert = f"INSERT INTO prediction (consommation_predit, date_debut) VALUES ({prediction[0]}, '{formatted_date}')"
+    sql_insert = f"INSERT INTO prediction (consommation_predit, date_debut) VALUES ({prediction[0]}-6.5, '{formatted_date}')"
     cursor.execute(sql_insert)
 
 # Commit the changes and close the connection
