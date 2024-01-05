@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : mar. 02 jan. 2024 à 04:55
--- Version du serveur : 10.4.28-MariaDB
--- Version de PHP : 8.0.28
+-- Hôte : feoptimisationenergie-mysql:3306
+-- Généré le : ven. 05 jan. 2024 à 01:27
+-- Version du serveur : 8.0.30
+-- Version de PHP : 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,13 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `anomalie` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint NOT NULL,
   `zone_normale_min` double DEFAULT NULL,
   `zone_normale_max` double DEFAULT NULL,
   `date_anomalie` date DEFAULT NULL,
-  `description_anomalie` varchar(255) DEFAULT NULL,
-  `locale_id` bigint(20) DEFAULT NULL,
-  `energie_id` bigint(20) DEFAULT NULL
+  `description_anomalie` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `locale_id` bigint DEFAULT NULL,
+  `energie_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -42,7 +42,37 @@ CREATE TABLE `anomalie` (
 --
 
 INSERT INTO `anomalie` (`id`, `zone_normale_min`, `zone_normale_max`, `date_anomalie`, `description_anomalie`, `locale_id`, `energie_id`) VALUES
-(10, 93163, 84571, '2023-10-19', 'Centralized azure', 15, 11);
+(1, 13.208333333333334, NULL, '2000-01-01', NULL, NULL, NULL),
+(2, 13.217391304347826, NULL, '2000-01-02', NULL, NULL, NULL),
+(3, 11.714285714285714, NULL, '2000-01-03', NULL, NULL, NULL),
+(4, 11.5, NULL, '2000-01-04', NULL, NULL, NULL),
+(5, 10.727272727272727, NULL, '2000-01-05', NULL, NULL, NULL),
+(6, 9.954545454545455, NULL, '2000-01-06', NULL, NULL, NULL),
+(7, 10.304347826086957, NULL, '2000-01-07', NULL, NULL, NULL),
+(8, 13.210526315789474, NULL, '2000-01-08', NULL, NULL, NULL),
+(9, 12.318181818181818, NULL, '2000-01-09', NULL, NULL, NULL),
+(10, 13.652173913043478, NULL, '2000-01-10', NULL, NULL, NULL),
+(11, 16.2, NULL, '2000-01-11', NULL, NULL, NULL),
+(12, 16.823529411764707, NULL, '2000-01-12', NULL, NULL, NULL),
+(13, 15.045454545454545, NULL, '2000-01-13', NULL, NULL, NULL),
+(14, 12.952380952380953, NULL, '2000-01-14', NULL, NULL, NULL),
+(15, 11.619047619047619, NULL, '2000-01-15', NULL, NULL, NULL),
+(16, 10.291666666666666, NULL, '2000-01-16', NULL, NULL, NULL),
+(17, 11.565217391304348, NULL, '2000-01-17', NULL, NULL, NULL),
+(18, 13.636363636363637, NULL, '2000-01-18', NULL, NULL, NULL),
+(19, 14.5, NULL, '2000-01-19', NULL, NULL, NULL),
+(20, 15.368421052631579, NULL, '2000-01-20', NULL, NULL, NULL),
+(21, 16.82608695652174, NULL, '2000-01-21', NULL, NULL, NULL),
+(22, 14.5, NULL, '2000-01-22', NULL, NULL, NULL),
+(23, 15.454545454545455, NULL, '2000-01-23', NULL, NULL, NULL),
+(24, 15.958333333333334, NULL, '2000-01-24', NULL, NULL, NULL),
+(25, 15.181818181818182, NULL, '2000-01-25', NULL, NULL, NULL),
+(26, 14.631578947368421, NULL, '2000-01-26', NULL, NULL, NULL),
+(27, 13.32, NULL, '2000-01-27', NULL, NULL, NULL),
+(28, 14.181818181818182, NULL, '2000-01-28', NULL, NULL, NULL),
+(29, 14.833333333333334, NULL, '2000-01-29', NULL, NULL, NULL),
+(30, 16.52173913043478, NULL, '2000-01-30', NULL, NULL, NULL),
+(31, 17.63157894736842, NULL, '2000-01-31', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -51,10 +81,10 @@ INSERT INTO `anomalie` (`id`, `zone_normale_min`, `zone_normale_max`, `date_anom
 --
 
 CREATE TABLE `batiment` (
-  `id` bigint(20) NOT NULL,
-  `adresse` varchar(255) DEFAULT NULL,
-  `batiment_nom` varchar(255) DEFAULT NULL,
-  `nbr_etage` int(11) NOT NULL
+  `id` bigint NOT NULL,
+  `adresse` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `batiment_nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nbr_etage` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -86,10 +116,10 @@ INSERT INTO `batiment` (`id`, `adresse`, `batiment_nom`, `nbr_etage`) VALUES
 --
 
 CREATE TABLE `boitier` (
-  `id` bigint(20) NOT NULL,
-  `boitier_reference` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `nbr_branche` int(11) DEFAULT NULL
+  `id` bigint NOT NULL,
+  `boitier_reference` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nbr_branche` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -115,11 +145,11 @@ INSERT INTO `boitier` (`id`, `boitier_reference`, `type`, `nbr_branche`) VALUES
 --
 
 CREATE TABLE `capteur` (
-  `id` bigint(20) NOT NULL,
-  `capteur_reference` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `photo` longblob DEFAULT NULL,
-  `photo_content_type` varchar(255) DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `capteur_reference` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `photo` longblob,
+  `photo_content_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `valeur_min` double DEFAULT NULL,
   `valeur_max` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -142,10 +172,10 @@ INSERT INTO `capteur` (`id`, `capteur_reference`, `type`, `photo`, `photo_conten
 --
 
 CREATE TABLE `capteur_boitier` (
-  `id` bigint(20) NOT NULL,
-  `branche` varchar(255) DEFAULT NULL,
-  `capteur_id` bigint(20) DEFAULT NULL,
-  `boitier_id` bigint(20) DEFAULT NULL
+  `id` bigint NOT NULL,
+  `branche` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `capteur_id` bigint DEFAULT NULL,
+  `boitier_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -181,12 +211,12 @@ INSERT INTO `capteur_boitier` (`id`, `branche`, `capteur_id`, `boitier_id`) VALU
 --
 
 CREATE TABLE `consommation` (
-  `id` bigint(20) NOT NULL,
-  `energie_consommation` varchar(255) DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `energie_consommation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `date_consommation` date DEFAULT NULL,
-  `locale_id` bigint(20) DEFAULT NULL,
-  `energie_id` bigint(20) DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL
+  `locale_id` bigint DEFAULT NULL,
+  `energie_id` bigint DEFAULT NULL,
+  `user_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -504,20 +534,20 @@ INSERT INTO `consommation` (`id`, `energie_consommation`, `date_consommation`, `
 --
 
 CREATE TABLE `databasechangelog` (
-  `ID` varchar(255) NOT NULL,
-  `AUTHOR` varchar(255) NOT NULL,
-  `FILENAME` varchar(255) NOT NULL,
+  `ID` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `AUTHOR` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `FILENAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `DATEEXECUTED` datetime NOT NULL,
-  `ORDEREXECUTED` int(11) NOT NULL,
-  `EXECTYPE` varchar(10) NOT NULL,
-  `MD5SUM` varchar(35) DEFAULT NULL,
-  `DESCRIPTION` varchar(255) DEFAULT NULL,
-  `COMMENTS` varchar(255) DEFAULT NULL,
-  `TAG` varchar(255) DEFAULT NULL,
-  `LIQUIBASE` varchar(20) DEFAULT NULL,
-  `CONTEXTS` varchar(255) DEFAULT NULL,
-  `LABELS` varchar(255) DEFAULT NULL,
-  `DEPLOYMENT_ID` varchar(10) DEFAULT NULL
+  `ORDEREXECUTED` int NOT NULL,
+  `EXECTYPE` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `MD5SUM` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `DESCRIPTION` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `COMMENTS` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `TAG` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `LIQUIBASE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `CONTEXTS` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `LABELS` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `DEPLOYMENT_ID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -525,6 +555,39 @@ CREATE TABLE `databasechangelog` (
 --
 
 INSERT INTO `databasechangelog` (`ID`, `AUTHOR`, `FILENAME`, `DATEEXECUTED`, `ORDEREXECUTED`, `EXECTYPE`, `MD5SUM`, `DESCRIPTION`, `COMMENTS`, `TAG`, `LIQUIBASE`, `CONTEXTS`, `LABELS`, `DEPLOYMENT_ID`) VALUES
+('00000000000001', 'jhipster', 'config/liquibase/changelog/00000000000000_initial_schema.xml', '2023-10-19 23:59:56', 1, 'EXECUTED', '8:f9578f3db92df061a8eab7e8e43043d9', 'createTable tableName=jhi_user; createTable tableName=jhi_authority; createTable tableName=jhi_user_authority; addPrimaryKey tableName=jhi_user_authority; addForeignKeyConstraint baseTableName=jhi_user_authority, constraintName=fk_authority_name, ...', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201731-1', 'jhipster', 'config/liquibase/changelog/20231019201731_added_entity_Preference.xml', '2023-10-19 23:59:56', 2, 'EXECUTED', '8:269a2fbec418308ece012ce2cbc8221c', 'createTable tableName=preference', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201731-1-data', 'jhipster', 'config/liquibase/changelog/20231019201731_added_entity_Preference.xml', '2023-10-19 23:59:56', 3, 'EXECUTED', '8:45f307e21d0b287efdf1a1e5bbffa5c9', 'loadData tableName=preference', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201732-1', 'jhipster', 'config/liquibase/changelog/20231019201732_added_entity_Energie.xml', '2023-10-19 23:59:56', 4, 'EXECUTED', '8:16704c70ea2491452d6df9b504bfd632', 'createTable tableName=energie', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201732-1-data', 'jhipster', 'config/liquibase/changelog/20231019201732_added_entity_Energie.xml', '2023-10-19 23:59:56', 5, 'EXECUTED', '8:1b0f07b078be0095d3160bb599ac488d', 'loadData tableName=energie', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201733-1', 'jhipster', 'config/liquibase/changelog/20231019201733_added_entity_Consommation.xml', '2023-10-19 23:59:56', 6, 'EXECUTED', '8:e0d8deb5096074af97118d29516701e4', 'createTable tableName=consommation', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201733-1-data', 'jhipster', 'config/liquibase/changelog/20231019201733_added_entity_Consommation.xml', '2023-10-19 23:59:56', 7, 'EXECUTED', '8:f02f397142e2abc179106c530b8abed4', 'loadData tableName=consommation', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201734-1', 'jhipster', 'config/liquibase/changelog/20231019201734_added_entity_Anomalie.xml', '2023-10-19 23:59:56', 8, 'EXECUTED', '8:8e0716003afc67c31cc123a322c8b0f6', 'createTable tableName=anomalie', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201734-1-data', 'jhipster', 'config/liquibase/changelog/20231019201734_added_entity_Anomalie.xml', '2023-10-19 23:59:56', 9, 'EXECUTED', '8:ed5ccb6be0f85d33b94cbbbe49a75e6e', 'loadData tableName=anomalie', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201735-1', 'jhipster', 'config/liquibase/changelog/20231019201735_added_entity_Prediction.xml', '2023-10-19 23:59:56', 10, 'EXECUTED', '8:cbd170d6e33bb4f8d8c85adf4473c8ac', 'createTable tableName=prediction', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201735-1-data', 'jhipster', 'config/liquibase/changelog/20231019201735_added_entity_Prediction.xml', '2023-10-19 23:59:56', 11, 'EXECUTED', '8:5e22d3a3e4901c895589772cc4e2238c', 'loadData tableName=prediction', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201736-1', 'jhipster', 'config/liquibase/changelog/20231019201736_added_entity_Etage.xml', '2023-10-19 23:59:56', 12, 'EXECUTED', '8:dc7a704828736df1d0ad16506ba8e47b', 'createTable tableName=etage', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201736-1-data', 'jhipster', 'config/liquibase/changelog/20231019201736_added_entity_Etage.xml', '2023-10-19 23:59:56', 13, 'EXECUTED', '8:e7bfe724e55d286b75d413321d5b35a8', 'loadData tableName=etage', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201737-1', 'jhipster', 'config/liquibase/changelog/20231019201737_added_entity_Locale.xml', '2023-10-19 23:59:56', 14, 'EXECUTED', '8:c28f9c7384efa64e43c7adb2a0d16760', 'createTable tableName=locale', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201737-1-data', 'jhipster', 'config/liquibase/changelog/20231019201737_added_entity_Locale.xml', '2023-10-19 23:59:56', 15, 'EXECUTED', '8:83a189aa5f73a936c400d8685a6d0ab8', 'loadData tableName=locale', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201738-1', 'jhipster', 'config/liquibase/changelog/20231019201738_added_entity_Batiment.xml', '2023-10-19 23:59:56', 16, 'EXECUTED', '8:5a4a6b3c2e9e0d5c250e67483ff2061e', 'createTable tableName=batiment', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201738-1-data', 'jhipster', 'config/liquibase/changelog/20231019201738_added_entity_Batiment.xml', '2023-10-19 23:59:56', 17, 'EXECUTED', '8:265606ed9b283ca44e8bbaeed044be67', 'loadData tableName=batiment', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201739-1', 'jhipster', 'config/liquibase/changelog/20231019201739_added_entity_Capteur.xml', '2023-10-19 23:59:56', 18, 'EXECUTED', '8:b2b1dad98ee72cc25b944d5ad33ef18e', 'createTable tableName=capteur', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201739-1-data', 'jhipster', 'config/liquibase/changelog/20231019201739_added_entity_Capteur.xml', '2023-10-19 23:59:56', 19, 'EXECUTED', '8:113b75474044b3ae9ef158ec9f59baba', 'loadData tableName=capteur', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201740-1', 'jhipster', 'config/liquibase/changelog/20231019201740_added_entity_Boitier.xml', '2023-10-19 23:59:56', 20, 'EXECUTED', '8:4bf3c1064e1a5e29bfbf8120d0fb7b02', 'createTable tableName=boitier', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201740-1-data', 'jhipster', 'config/liquibase/changelog/20231019201740_added_entity_Boitier.xml', '2023-10-19 23:59:57', 21, 'EXECUTED', '8:e9a46a27672ec7ceb51978bbf85eb45d', 'loadData tableName=boitier', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201741-1', 'jhipster', 'config/liquibase/changelog/20231019201741_added_entity_LocaleBoitier.xml', '2023-10-19 23:59:57', 22, 'EXECUTED', '8:7894a982b8b6f5146c27222f1047864b', 'createTable tableName=locale_boitier', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201741-1-data', 'jhipster', 'config/liquibase/changelog/20231019201741_added_entity_LocaleBoitier.xml', '2023-10-19 23:59:57', 23, 'EXECUTED', '8:3f8666c222ab18429186dcb50c3a785e', 'loadData tableName=locale_boitier', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201742-1', 'jhipster', 'config/liquibase/changelog/20231019201742_added_entity_CapteurBoitier.xml', '2023-10-19 23:59:57', 24, 'EXECUTED', '8:8ff6b8c9fb04043fa723874f8ee5436b', 'createTable tableName=capteur_boitier', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201742-1-data', 'jhipster', 'config/liquibase/changelog/20231019201742_added_entity_CapteurBoitier.xml', '2023-10-19 23:59:57', 25, 'EXECUTED', '8:3ce7ed4aeadc8f05607289c85a655355', 'loadData tableName=capteur_boitier', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
+('20231019201731-2', 'jhipster', 'config/liquibase/changelog/20231019201731_added_entity_constraints_Preference.xml', '2023-10-19 23:59:57', 26, 'EXECUTED', '8:0f852b2b08c7da4f231779b9b9fb5c84', 'addForeignKeyConstraint baseTableName=preference, constraintName=fk_preference__user_id, referencedTableName=jhi_user; addForeignKeyConstraint baseTableName=preference, constraintName=fk_preference__energie_id, referencedTableName=energie', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201733-2', 'jhipster', 'config/liquibase/changelog/20231019201733_added_entity_constraints_Consommation.xml', '2023-10-19 23:59:57', 27, 'EXECUTED', '8:6a042ed513a92c661a1489c63cc219d7', 'addForeignKeyConstraint baseTableName=consommation, constraintName=fk_consommation__locale_id, referencedTableName=locale; addForeignKeyConstraint baseTableName=consommation, constraintName=fk_consommation__energie_id, referencedTableName=energie', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201734-2', 'jhipster', 'config/liquibase/changelog/20231019201734_added_entity_constraints_Anomalie.xml', '2023-10-19 23:59:57', 28, 'EXECUTED', '8:b7df6b7946dfc2d735de0c7c46519ef7', 'addForeignKeyConstraint baseTableName=anomalie, constraintName=fk_anomalie__locale_id, referencedTableName=locale; addForeignKeyConstraint baseTableName=anomalie, constraintName=fk_anomalie__energie_id, referencedTableName=energie', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201735-2', 'jhipster', 'config/liquibase/changelog/20231019201735_added_entity_constraints_Prediction.xml', '2023-10-19 23:59:57', 29, 'EXECUTED', '8:5155d5fd27a27090f6385ec85e167ace', 'addForeignKeyConstraint baseTableName=prediction, constraintName=fk_prediction__locale_id, referencedTableName=locale; addForeignKeyConstraint baseTableName=prediction, constraintName=fk_prediction__energie_id, referencedTableName=energie', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201736-2', 'jhipster', 'config/liquibase/changelog/20231019201736_added_entity_constraints_Etage.xml', '2023-10-19 23:59:57', 30, 'EXECUTED', '8:536537bc0e3371a3b795154776a1dcb2', 'addForeignKeyConstraint baseTableName=etage, constraintName=fk_etage__batiment_id, referencedTableName=batiment', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201737-2', 'jhipster', 'config/liquibase/changelog/20231019201737_added_entity_constraints_Locale.xml', '2023-10-19 23:59:57', 31, 'EXECUTED', '8:3b55d8e3891eb07ee68e26c39b078f9a', 'addForeignKeyConstraint baseTableName=locale, constraintName=fk_locale__etage_id, referencedTableName=etage', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201741-2', 'jhipster', 'config/liquibase/changelog/20231019201741_added_entity_constraints_LocaleBoitier.xml', '2023-10-19 23:59:57', 32, 'EXECUTED', '8:2c96ee64cbbc36c726f7b92159dc4812', 'addForeignKeyConstraint baseTableName=locale_boitier, constraintName=fk_locale_boitier__locale_id, referencedTableName=locale; addForeignKeyConstraint baseTableName=locale_boitier, constraintName=fk_locale_boitier__boitier_id, referencedTableName=...', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
+('20231019201742-2', 'jhipster', 'config/liquibase/changelog/20231019201742_added_entity_constraints_CapteurBoitier.xml', '2023-10-19 23:59:57', 33, 'EXECUTED', '8:0bb2c224f5c3fb29527df3b985d22d37', 'addForeignKeyConstraint baseTableName=capteur_boitier, constraintName=fk_capteur_boitier__capteur_id, referencedTableName=capteur; addForeignKeyConstraint baseTableName=capteur_boitier, constraintName=fk_capteur_boitier__boitier_id, referencedTabl...', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
 ('00000000000001', 'jhipster', 'config/liquibase/changelog/00000000000000_initial_schema.xml', '2023-10-19 23:59:56', 1, 'EXECUTED', '8:f9578f3db92df061a8eab7e8e43043d9', 'createTable tableName=jhi_user; createTable tableName=jhi_authority; createTable tableName=jhi_user_authority; addPrimaryKey tableName=jhi_user_authority; addForeignKeyConstraint baseTableName=jhi_user_authority, constraintName=fk_authority_name, ...', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
 ('20231019201731-1', 'jhipster', 'config/liquibase/changelog/20231019201731_added_entity_Preference.xml', '2023-10-19 23:59:56', 2, 'EXECUTED', '8:269a2fbec418308ece012ce2cbc8221c', 'createTable tableName=preference', '', NULL, '4.15.0', NULL, NULL, '7752795787'),
 ('20231019201731-1-data', 'jhipster', 'config/liquibase/changelog/20231019201731_added_entity_Preference.xml', '2023-10-19 23:59:56', 3, 'EXECUTED', '8:45f307e21d0b287efdf1a1e5bbffa5c9', 'loadData tableName=preference', '', NULL, '4.15.0', 'faker', NULL, '7752795787'),
@@ -566,10 +629,10 @@ INSERT INTO `databasechangelog` (`ID`, `AUTHOR`, `FILENAME`, `DATEEXECUTED`, `OR
 --
 
 CREATE TABLE `databasechangeloglock` (
-  `ID` int(11) NOT NULL,
+  `ID` int NOT NULL,
   `LOCKED` bit(1) NOT NULL,
   `LOCKGRANTED` datetime DEFAULT NULL,
-  `LOCKEDBY` varchar(255) DEFAULT NULL
+  `LOCKEDBY` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -586,8 +649,8 @@ INSERT INTO `databasechangeloglock` (`ID`, `LOCKED`, `LOCKGRANTED`, `LOCKEDBY`) 
 --
 
 CREATE TABLE `energie` (
-  `id` bigint(20) NOT NULL,
-  `nom_system_energitique` varchar(255) DEFAULT NULL
+  `id` bigint NOT NULL,
+  `nom_system_energitique` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -606,9 +669,9 @@ INSERT INTO `energie` (`id`, `nom_system_energitique`) VALUES
 --
 
 CREATE TABLE `etage` (
-  `id` bigint(20) NOT NULL,
-  `etage_numero` int(11) DEFAULT NULL,
-  `batiment_id` bigint(20) DEFAULT NULL
+  `id` bigint NOT NULL,
+  `etage_numero` int DEFAULT NULL,
+  `batiment_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -629,7 +692,7 @@ INSERT INTO `etage` (`id`, `etage_numero`, `batiment_id`) VALUES
 --
 
 CREATE TABLE `jhi_authority` (
-  `name` varchar(50) NOT NULL
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -647,21 +710,21 @@ INSERT INTO `jhi_authority` (`name`) VALUES
 --
 
 CREATE TABLE `jhi_user` (
-  `id` bigint(20) NOT NULL,
-  `login` varchar(50) NOT NULL,
-  `password_hash` varchar(60) NOT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
-  `email` varchar(191) DEFAULT NULL,
-  `image_url` varchar(256) DEFAULT NULL,
+  `id` bigint NOT NULL,
+  `login` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `password_hash` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `image_url` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `activated` bit(1) NOT NULL,
-  `lang_key` varchar(10) DEFAULT NULL,
-  `activation_key` varchar(20) DEFAULT NULL,
-  `reset_key` varchar(20) DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
+  `lang_key` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `activation_key` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `reset_key` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_date` timestamp NULL DEFAULT NULL,
   `reset_date` timestamp NULL DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
+  `last_modified_by` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `last_modified_date` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -674,7 +737,6 @@ INSERT INTO `jhi_user` (`id`, `login`, `password_hash`, `first_name`, `last_name
 (2, 'user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'User', 'User', 'user@localhost', '', b'1', 'en', NULL, NULL, 'system', NULL, NULL, 'system', NULL),
 (6, 'lachgar12', '$2a$10$Sp1IUelXLyUFmDoy/qFTfO/zo7u4n8F5JWtCIggAijlDwduohSMXm', NULL, NULL, 'lachgar@gmaim.com', NULL, b'1', 'en', 'RlJW7xxzqVh5IiN4USkw', NULL, 'anonymousUser', '2023-11-05 17:17:05', NULL, 'anonymousUser', '2023-11-05 17:17:05'),
 (7, 'lachgar', '$2a$10$XJlrCi2Q/KKep.PM1vvnOelDcXhC3Fv0KqjIVVsLPc2X0hmGffDBO', NULL, NULL, 'lachgar@gmail.com', NULL, b'1', 'en', 'r0sRlSzGYDGMGuIzrikV', NULL, 'anonymousUser', '2023-11-05 17:21:48', NULL, 'anonymousUser', '2023-11-05 17:21:48'),
-(16, 'rrfahssi', '$2a$10$aETVh3h9oG1Q3s8cANPPb.nEwGq8bVO1EHRlX9Aif2fLklPVKhxiK', NULL, NULL, 'fhsyrabab07@gmail.com', NULL, b'0', 'en', 'Q2EuCe47JUDSC3ae6LYY', NULL, 'anonymousUser', '2023-12-24 18:09:33', NULL, 'anonymousUser', '2023-12-24 18:09:33'),
 (17, 'rim', '$2a$10$7agsfEEhGw.lNaHmExycUuhkTp8FgW5ZydAB4hLLD.RLJwQdoXove', NULL, NULL, 'rim@gmail.com', NULL, b'1', 'en', '4z2Ll8GljGnGwjNbSxXq', NULL, 'anonymousUser', '2023-12-24 18:14:16', NULL, 'admin', '2023-12-24 18:15:01'),
 (18, 'rabab', '$2a$10$KGrlIQ3uk6T0zSYALhRvWevcUjmf84HmKY7lyTQDyGyrcO2Z1SEpW', NULL, NULL, 'rabab@gmail.com', NULL, b'1', 'en', 'XZVbdK9BT8zegurRHiym', NULL, 'anonymousUser', '2023-12-24 18:34:58', NULL, 'admin', '2023-12-24 18:35:24');
 
@@ -685,8 +747,8 @@ INSERT INTO `jhi_user` (`id`, `login`, `password_hash`, `first_name`, `last_name
 --
 
 CREATE TABLE `jhi_user_authority` (
-  `user_id` bigint(20) NOT NULL,
-  `authority_name` varchar(50) NOT NULL
+  `user_id` bigint NOT NULL,
+  `authority_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -699,7 +761,6 @@ INSERT INTO `jhi_user_authority` (`user_id`, `authority_name`) VALUES
 (2, 'ROLE_USER'),
 (6, 'ROLE_USER'),
 (7, 'ROLE_USER'),
-(16, 'ROLE_USER'),
 (17, 'ROLE_USER'),
 (18, 'ROLE_USER');
 
@@ -710,11 +771,11 @@ INSERT INTO `jhi_user_authority` (`user_id`, `authority_name`) VALUES
 --
 
 CREATE TABLE `locale` (
-  `id` bigint(20) NOT NULL,
-  `numero` int(11) DEFAULT NULL,
-  `type_local` varchar(255) DEFAULT NULL,
-  `batiment_id` bigint(20) DEFAULT NULL,
-  `num_etage` int(11) DEFAULT NULL
+  `id` bigint NOT NULL,
+  `numero` int DEFAULT NULL,
+  `type_local` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `batiment_id` bigint DEFAULT NULL,
+  `num_etage` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -733,11 +794,11 @@ INSERT INTO `locale` (`id`, `numero`, `type_local`, `batiment_id`, `num_etage`) 
 --
 
 CREATE TABLE `locale_boitier` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint NOT NULL,
   `date_debut` date DEFAULT NULL,
   `date_fin` date DEFAULT NULL,
-  `locale_id` bigint(20) DEFAULT NULL,
-  `boitier_id` bigint(20) DEFAULT NULL
+  `locale_id` bigint DEFAULT NULL,
+  `boitier_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -755,43 +816,14 @@ INSERT INTO `locale_boitier` (`id`, `date_debut`, `date_fin`, `locale_id`, `boit
 --
 
 CREATE TABLE `prediction` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint NOT NULL,
   `date_debut` date DEFAULT NULL,
   `date_fin` date DEFAULT NULL,
   `consommation_predit` double DEFAULT NULL,
-  `jhi_precision` varchar(255) DEFAULT NULL,
-  `locale_id` bigint(20) DEFAULT NULL,
-  `energie_id` bigint(20) DEFAULT NULL
+  `jhi_precision` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `locale_id` bigint DEFAULT NULL,
+  `energie_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `prediction`
---
-
-INSERT INTO `prediction` (`id`, `date_debut`, `date_fin`, `consommation_predit`, `jhi_precision`, `locale_id`, `energie_id`) VALUES
-(13, '2024-01-03', NULL, 29.33693170547485, NULL, NULL, 12),
-(14, '2024-01-04', NULL, 28.93118286132812, NULL, NULL, 12),
-(15, '2024-01-05', NULL, 27.70999670028686, NULL, NULL, 12),
-(16, '2024-01-06', NULL, 26.374010562896725, NULL, NULL, 12),
-(17, '2024-01-07', NULL, 24.883250236511227, NULL, NULL, 12),
-(18, '2024-01-08', NULL, 23.53557252883911, NULL, NULL, 12),
-(19, '2024-01-09', NULL, 22.452678203582764, NULL, NULL, 12),
-(20, '2024-01-10', NULL, 21.51950764656067, NULL, NULL, 12),
-(21, '2024-01-11', NULL, 20.722918033599854, NULL, NULL, 12),
-(22, '2024-01-12', NULL, 20.085327625274658, NULL, NULL, 12),
-(23, '2024-01-13', NULL, 19.48799180984497, NULL, NULL, 12),
-(24, '2024-01-14', NULL, 18.913397550582886, NULL, NULL, 12),
-(25, '2024-01-15', NULL, 18.36521339416504, NULL, NULL, 12),
-(26, '2024-01-16', NULL, 17.874901294708252, NULL, NULL, 12),
-(27, '2024-01-17', NULL, 17.503421783447266, NULL, NULL, 12),
-(28, '2024-01-18', NULL, 17.342966318130493, NULL, NULL, 12),
-(29, '2024-01-19', NULL, 17.49726414680481, NULL, NULL, 12),
-(30, '2024-01-20', NULL, 18.04181694984436, NULL, NULL, 12),
-(31, '2024-01-21', NULL, 19.022074222564697, NULL, NULL, 12),
-(32, '2024-01-22', NULL, 20.414926052093506, NULL, NULL, 12),
-(33, '2024-01-23', NULL, 22.115676879882812, NULL, NULL, 12),
-(34, '2024-01-24', NULL, 23.99002456665039, NULL, NULL, 12),
-(35, '2024-01-25', NULL, 25.737783432006832, NULL, NULL, 12);
 
 -- --------------------------------------------------------
 
@@ -800,12 +832,12 @@ INSERT INTO `prediction` (`id`, `date_debut`, `date_fin`, `consommation_predit`,
 --
 
 CREATE TABLE `preference` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint NOT NULL,
   `temp_min_value` double DEFAULT NULL,
   `temp_max_value` double DEFAULT NULL,
   `plage_horaire` double DEFAULT NULL,
-  `user_id` bigint(20) DEFAULT NULL,
-  `energie_id` bigint(20) DEFAULT NULL
+  `user_id` bigint DEFAULT NULL,
+  `energie_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -942,79 +974,79 @@ ALTER TABLE `preference`
 -- AUTO_INCREMENT pour la table `anomalie`
 --
 ALTER TABLE `anomalie`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `batiment`
 --
 ALTER TABLE `batiment`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `boitier`
 --
 ALTER TABLE `boitier`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT pour la table `capteur`
 --
 ALTER TABLE `capteur`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `capteur_boitier`
 --
 ALTER TABLE `capteur_boitier`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT pour la table `consommation`
 --
 ALTER TABLE `consommation`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=303;
 
 --
 -- AUTO_INCREMENT pour la table `energie`
 --
 ALTER TABLE `energie`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `etage`
 --
 ALTER TABLE `etage`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `jhi_user`
 --
 ALTER TABLE `jhi_user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `locale`
 --
 ALTER TABLE `locale`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `locale_boitier`
 --
 ALTER TABLE `locale_boitier`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `prediction`
 --
 ALTER TABLE `prediction`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT pour la table `preference`
 --
 ALTER TABLE `preference`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Contraintes pour les tables déchargées
