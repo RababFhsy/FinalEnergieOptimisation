@@ -255,7 +255,12 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 [Link to YouTube Video](https://youtu.be/NLaJlC5gdwU)
 
 ## Users Acounts
--For Admin Account: login:admin password:admin
--For User Account: login:user password:user
+## Admin Account
+- **Login:** admin
+- **Password:** admin
+
+## User Account
+- **Login:** user
+- **Password:** user
 
 
